@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_discuss_24.xml" value="0.21979166666666666" />
+        <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.21979166666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/all_questions_item.xml" value="0.2046875" />
+        <entry key="app/src/main/res/layout/drawer_header.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/layout/fragment_all_questions.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_discussion.xml" value="0.3338541666666667" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.409375" />
+        <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.3338541666666667" />
+        <entry key="app/src/main/res/layout/fragment_question.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/nav_header.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/layout/questions_item.xml" value="0.67" />
+        <entry key="app/src/main/res/menu/home_menu.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/menu/navigation_drawer_menu.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/menu/navigation_question.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

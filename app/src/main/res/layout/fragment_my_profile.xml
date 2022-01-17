@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.MyProfileFragment">
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/user_profile_layout"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        app:cardCornerRadius="250dp"-->
+<!--        android:layout_marginTop="100dp"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        app:cardBackgroundColor="@color/white">-->
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            app:cardCornerRadius="250dp"-->
+<!--            android:layout_gravity="center">-->
+
+            <ImageView
+                android:id="@+id/user_profile_avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_launcher_background"
+                android:contentDescription="@string/user_profile" />
+
+<!--        </androidx.cardview.widget.CardView>-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/user_profile_avatar"
+        android:text="@string/username" />
+
+</RelativeLayout>

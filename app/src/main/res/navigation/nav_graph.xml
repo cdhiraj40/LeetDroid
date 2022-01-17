@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.leetdroid.fragments.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home"/>
+
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.example.leetdroid.fragments.MyProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_my_profile"/>
+
+    <fragment
+        android:id="@+id/discussionFragment"
+        android:name="com.example.leetdroid.fragments.DiscussionFragment"
+        android:label="Discussion"
+        tools:layout="@layout/fragment_discussion"/>
+
+    <fragment
+        android:id="@+id/allQuestionsFragment"
+        android:name="com.example.leetdroid.fragments.AllQuestionsFragment"
+        android:label="All Questions List"
+        tools:layout="@layout/fragment_all_questions">
+        <action
+            android:id="@+id/action_allQuestionsFragment_to_questionFragment"
+            app:destination="@id/questionFragment">
+            <argument
+                android:name="titleSlug"
+                app:argType="string"
+                android:defaultValue="0" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.example.leetdroid.fragments.question.QuestionFragment"
+        android:label="Question"
+        tools:layout="@layout/fragment_question"/>
+
+</navigation>

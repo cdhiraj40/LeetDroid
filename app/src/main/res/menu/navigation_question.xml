@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/questionFragment"
+        android:icon="@drawable/question_icon"
+        android:title="@string/question_description"    />
+    <item
+        android:id="@+id/solutionFragment"
+        android:icon="@drawable/question_solution"
+        android:title="@string/question_solution" />
+    <item
+        android:id="@+id/questionDiscussionFragment"
+        android:icon="@drawable/ic_baseline_discuss_24"
+        android:title="@string/discussions" />
+</menu>

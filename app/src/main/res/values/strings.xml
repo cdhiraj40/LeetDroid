@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">LeetDroid</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="discussions">Discussions</string>
+    <string name="profile">Profile</string>
+    <string name="all_question_list">All Question List</string>
+    <string name="question_description">Question Description</string>
+    <string name="question_solution">Solution</string>
+
+</resources>
