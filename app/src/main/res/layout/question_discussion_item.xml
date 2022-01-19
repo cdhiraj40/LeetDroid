@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/discussion_user_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/user_profile"
+        android:scaleType="centerCrop"
+        android:src="@color/alice_blue"/>
+
+    <TextView
+        android:id="@+id/question_discussion_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toEndOf="@id/discussion_user_avatar"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:scrollHorizontally="true"
+        android:text="[C++/Java/Python] HashMap, Two pointers Solutions - Clean &amp; Concise"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/question_discussion_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/question_discussion_title"
+        android:layout_toEndOf="@id/discussion_user_avatar"
+        android:maxLines="1"
+        android:text="BY AUTHOR"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/question_discussion_creation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/question_discussion_author"
+        android:layout_toEndOf="@id/discussion_user_avatar"
+        android:maxLines="1"
+        android:text="August 31, 2015"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/discussion_views_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/question_discussion_title"
+        android:layout_marginEnd="2dp"
+        android:layout_toStartOf="@id/discussion_views"
+        android:contentDescription="@string/user_profile"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_views_24"
+        app:tint="@color/astros_navy_blue" />
+
+    <TextView
+        android:id="@+id/discussion_views"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:text="25200.5K"
+        android:textColor="@color/black"
+        android:layout_below="@id/question_discussion_title" />
+
+    <ImageView
+        android:id="@+id/discussion_upvotes_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/question_discussion_title"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="2dp"
+        android:layout_toStartOf="@id/discussion_upvotes"
+        android:contentDescription="@string/user_profile"
+        android:scaleType="centerCrop"
+        android:src="@drawable/like"
+        app:tint="@color/azure_blue" />
+
+    <TextView
+        android:id="@+id/discussion_upvotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@id/discussion_views_icon"
+        android:text="252.5K"
+        android:textColor="@color/black"
+        android:layout_below="@id/question_discussion_title" />
+
+    <TextView
+        android:id="@+id/discussion_comment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_alignParentEnd="true"
+        android:text="252.5K"
+        android:textColor="@color/black"
+        android:layout_below="@id/discussion_views"
+        app:drawableLeftCompat="@drawable/ic_baseline_discuss_24" />
+
+</RelativeLayout>

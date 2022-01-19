@@ -21,15 +21,15 @@
 <!--            app:cardCornerRadius="250dp"-->
 <!--            android:layout_gravity="center">-->
 
-            <ImageView
-                android:id="@+id/user_profile_avatar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                android:layout_marginTop="100dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_launcher_background"
-                android:contentDescription="@string/user_profile" />
+    <ImageView
+        android:id="@+id/user_profile_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:contentDescription="@string/user_profile"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background" />
 
 <!--        </androidx.cardview.widget.CardView>-->
 

@@ -41,10 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         navigationView = findViewById(R.id.navigation_view)
 
-//        val questionBottomNavigationView = findViewById<BottomNavigationView>(R.id.question_bottom_navigation)
-//
-//        questionBottomNavigationView.visibility = View.GONE
-        //NavigationUI.setupWithNavController(navigation_view,navController)
         NavigationUI.setupWithNavController(navigationView, navController)
 
     }

@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+
 import androidx.navigation.findNavController
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gdsc_hackathon.extensions.showSnackBar
 import com.example.leetdroid.R
 
 import com.example.leetdroid.adapter.AllQuestionsAdapter
@@ -69,6 +69,7 @@ class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
                     response.body!!.string(),
                     AllQuestionsModel::class.java
                 )
+
                 activity?.runOnUiThread {
                     val allQuestionsAdapter = AllQuestionsAdapter(questionJson)
                     fragmentAllQuestionsBinding.allQuestionsRecyclerView.layoutManager =
@@ -81,9 +82,20 @@ class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
         })
     }
 
-    override fun onItemClick(position: Int, questionTitleSlug:String?) {
-        val bundle = bundleOf("questionTitleSlug" to questionTitleSlug)
-        fragmentAllQuestionsBinding.root.findNavController().navigate(R.id.action_allQuestionsFragment_to_questionFragment,bundle)
+    override fun onItemClick(
+        position: Int,
+        questionTitleSlug: String?,
+        questionHasSolution: Boolean?,
+        questionID:String?
+    ) {
+
+        val bundle = bundleOf(
+            "questionTitleSlug" to questionTitleSlug,
+            "questionHasSolution" to questionHasSolution,
+            "questionID" to questionID
+        )
+        fragmentAllQuestionsBinding.root.findNavController()
+            .navigate(R.id.action_allQuestionsFragment_to_questionFragment, bundle)
     }
 
     object Constant {

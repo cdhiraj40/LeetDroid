@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.model.AllQuestionsModel
 
-class AllQuestionsAdapter(private val allQuestionsList: AllQuestionsModel) : RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>() {
+class AllQuestionsAdapter(
+    private val allQuestionsList: AllQuestionsModel
+) : RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -22,7 +24,7 @@ class AllQuestionsAdapter(private val allQuestionsList: AllQuestionsModel) : Rec
     private var onClick: OnItemClicked? = null
 
     interface OnItemClicked {
-        fun onItemClick(position: Int, questionTitleSlug:String?)
+        fun onItemClick(position: Int, questionTitleSlug: String?, questionHasSolution: Boolean?, questionID:String?)
     }
 
     // binds the list items to a view
@@ -34,8 +36,17 @@ class AllQuestionsAdapter(private val allQuestionsList: AllQuestionsModel) : Rec
         holder.questionTitle.text =
             question?.title
 
-        val questionTitleSlug = allQuestionsList.data?.problemsetQuestionList?.questions?.get(position)?.titleSlug
-        holder.itemView.setOnClickListener { onClick!!.onItemClick(position,questionTitleSlug) }
+        val questionTitleSlug = question?.titleSlug
+        val questionHasSolution = question?.hasSolution
+        val questionId = question?.frontendQuestionId
+        holder.itemView.setOnClickListener {
+            onClick!!.onItemClick(
+                position,
+                questionTitleSlug,
+                questionHasSolution,
+                questionId
+            )
+        }
 
     }
 

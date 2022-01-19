@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.leetdroid.R
 
 import com.example.leetdroid.api.GraphQl
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionBinding
 import com.example.leetdroid.model.QuestionContentModel
+import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 
 import com.example.leetdroid.utils.JsonUtils
 
@@ -22,12 +25,14 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
-
 class QuestionFragment : Fragment() {
 
     private lateinit var fragmentQuestionBinding: FragmentQuestionBinding
     private lateinit var questionContentJson: QuestionContentModel
     private lateinit var questionTitleSlug: String
+    private lateinit var questionID: String
+    private var questionHasSolution: Boolean? = false
+    private lateinit var questionSharedViewModel: QuestionSharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +42,42 @@ class QuestionFragment : Fragment() {
         fragmentQuestionBinding = FragmentQuestionBinding.inflate(layoutInflater)
         val rootView = fragmentQuestionBinding.root
 
+        questionSharedViewModel =
+            ViewModelProvider(requireActivity()).get(QuestionSharedViewModel::class.java)
+
         // get the data = questionTitleSlug from all questions list
         val bundle = arguments
         questionTitleSlug = bundle?.getString("questionTitleSlug").toString()
+        questionHasSolution = bundle?.getBoolean("questionHasSolution")
+        questionID = bundle?.getString("questionID").toString()
+
+        // add title slug and hasSolution in sharedViewModel
+        questionSharedViewModel.getQuestionTitleSlug(questionTitleSlug)
+        questionSharedViewModel.getQuestionHasSolution(questionHasSolution)
+        questionSharedViewModel.getQuestionId(questionID)
+        // bottom navigation for question
+
 
         loadQuestion()
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(requireView(), savedInstanceState)
+
+        fragmentQuestionBinding.questionBottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.solutionFragment -> {
+                    fragmentQuestionBinding.root.findNavController()
+                        .navigate(R.id.action_questionsFragment_to_questionSolutionFragment)
+                }
+                R.id.questionDiscussionFragment -> {
+                    fragmentQuestionBinding.root.findNavController()
+                        .navigate(R.id.action_questionsFragment_to_questionDiscussionFragment)
+                }
+            }
+            true
+        }
     }
 
     private fun loadQuestion() {
@@ -76,13 +111,15 @@ class QuestionFragment : Fragment() {
                         R.string.question_content,
                         questionContentJson.data?.question?.content
                     )
+
                     val questionContent = HtmlCompat.fromHtml(
                         questionContentHtml.toString(),
                         HtmlCompat.FROM_HTML_MODE_LEGACY
                     )
 
 
-                    val example1 = findSubstringIndex(questionContent.toString(), "Example 1", 0)
+                    val example1 =
+                        findSubstringIndex(questionContent.toString(), "Example 1", 0)
                     val constraints =
                         findSubstringIndex(questionContent.toString(), "Constraints", example1)
 
@@ -90,12 +127,12 @@ class QuestionFragment : Fragment() {
                     val exampleStrings = questionContent.substring(example1, constraints).trim()
                     val constraintStrings = questionContent.substring(constraints).trim()
 
-//                    val explanationCount = countMatches(exampleStrings, "Explanation")
-//                    var index = 0
-//                    for (i in 0..explanationCount) {
-//                        index = findSubstringIndex(exampleStrings, "Explanation", index)
-//                        insertString(exampleStrings, "\n ", index - 1)
-//                    }
+                    val explanationCount = countMatches(exampleStrings, "Explanation")
+                    var index = 0
+                    for (i in 0..explanationCount) {
+                        index = findSubstringIndex(exampleStrings, "Explanation", index)
+                        insertString(exampleStrings, "\n ", index - 1)
+                    }
 
                     fragmentQuestionBinding.questionDescriptionText.text =
                         questionDescription

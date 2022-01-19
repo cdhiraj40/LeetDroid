@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.question.QuestionSolutionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/questionTitleText"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <ScrollView
+        android:id="@+id/solutionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/questionTitleText">
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+            <WebView
+                android:id="@+id/solutionView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+<!--        </RelativeLayout>-->
+    </ScrollView>
+
+    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+    <!--        android:id="@+id/question_bottom_navigation"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        android:background="@color/white"-->
+    <!--        app:itemIconTint="@color/black"-->
+    <!--        app:itemTextColor="@color/black"-->
+    <!--        app:labelVisibilityMode="selected"-->
+    <!--        app:menu="@menu/navigation_question" />-->
+
+
+</RelativeLayout>

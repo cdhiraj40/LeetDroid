@@ -9,19 +9,19 @@
         android:id="@+id/homeFragment"
         android:name="com.example.leetdroid.fragments.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/myProfileFragment"
         android:name="com.example.leetdroid.fragments.MyProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_my_profile"/>
+        tools:layout="@layout/fragment_my_profile" />
 
     <fragment
         android:id="@+id/discussionFragment"
         android:name="com.example.leetdroid.fragments.DiscussionFragment"
         android:label="Discussion"
-        tools:layout="@layout/fragment_discussion"/>
+        tools:layout="@layout/fragment_discussion" />
 
     <fragment
         android:id="@+id/allQuestionsFragment"
@@ -33,8 +33,16 @@
             app:destination="@id/questionFragment">
             <argument
                 android:name="titleSlug"
-                app:argType="string"
-                android:defaultValue="0" />
+                android:defaultValue="0"
+                app:argType="string" />
+            <argument
+                android:name="hasSolution"
+                android:defaultValue="true"
+                app:argType="boolean" />
+            <argument
+                android:name="questionID"
+                android:defaultValue="0"
+                app:argType="string" />
         </action>
     </fragment>
 
@@ -42,6 +50,25 @@
         android:id="@+id/questionFragment"
         android:name="com.example.leetdroid.fragments.question.QuestionFragment"
         android:label="Question"
-        tools:layout="@layout/fragment_question"/>
+        tools:layout="@layout/fragment_question">
+        <action
+            android:id="@+id/action_questionsFragment_to_questionSolutionFragment"
+            app:destination="@id/questionSolutionFragment" />
+        <action
+            android:id="@+id/action_questionsFragment_to_questionDiscussionFragment"
+            app:destination="@id/questionDiscussionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/questionSolutionFragment"
+        android:name="com.example.leetdroid.fragments.question.QuestionSolutionFragment"
+        android:label="Solution"
+        tools:layout="@layout/fragment_question_solution" />
+
+    <fragment
+        android:id="@+id/questionDiscussionFragment"
+        android:name="com.example.leetdroid.fragments.question.QuestionDiscussionFragment"
+        android:label="Discussion"
+        tools:layout="@layout/fragment_question_discussion" />
 
 </navigation>

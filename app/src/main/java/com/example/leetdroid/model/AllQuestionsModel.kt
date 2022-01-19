@@ -19,14 +19,15 @@ class AllQuestionsModel : Serializable {
     class DataNode : Serializable {
         /**
          * problemsetQuestionList: {"total": 2137,"questions": [ { "acRate": 48.10413384552075, "difficulty": "Easy", "frontendQuestionId": "1", "paidOnly": false, "title": "Two Sum",
-         * "titleSlug": "two-sum", "topicTags": [ { "name": "Array", "id": "VG9waWNUYWdOb2RlOjU=","slug": "array"},{"name": "Hash Table","id": "VG9waWNUYWdOb2RlOjY=","slug": "hash-table" } ] } ] } } }
+         * "titleSlug": "two-sum", "topicTags": [ { "name": "Array", "id": "VG9waWNUYWdOb2RlOjU=","slug": "array"},{"name": "Hash Table","id": "VG9waWNUYWdOb2RlOjY=","slug": "hash-table" } ]
+         * "hasSolution": true  } ] } } }
          */
 
         var problemsetQuestionList: ProblemSetQuestionListNode? = null
 
         class ProblemSetQuestionListNode : Serializable {
 
-            var total: Int = 0;
+            var total: Int = 0
             var questions: List<Questions>? = null
 
             class Questions : Serializable {
@@ -49,6 +50,7 @@ class AllQuestionsModel : Serializable {
                     var id: String? = null
                     var slug: String? = null
                 }
+                var hasSolution: Boolean? = null
             }
         }
     }

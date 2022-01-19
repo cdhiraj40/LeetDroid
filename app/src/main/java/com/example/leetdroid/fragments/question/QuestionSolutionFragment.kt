@@ -5,16 +5,54 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.leetdroid.R
+import androidx.lifecycle.ViewModelProvider
+import com.example.leetdroid.databinding.FragmentQuestionSolutionBinding
+import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
+import android.webkit.WebViewClient
+
 
 class QuestionSolutionFragment : Fragment() {
+
+    private lateinit var fragmentSolutionBinding:FragmentQuestionSolutionBinding
+    private lateinit var questionTitleSlug: String
+    private var questionHasSolution: Boolean = false
+    private lateinit var questionSharedViewModel:QuestionSharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_question_solution, container, false)
+        fragmentSolutionBinding = FragmentQuestionSolutionBinding.inflate(layoutInflater)
+        val rootView = fragmentSolutionBinding.root
+
+
+        val solutionView = fragmentSolutionBinding.solutionView
+        questionSharedViewModel = ViewModelProvider(requireActivity()).get(QuestionSharedViewModel::class.java)
+
+        questionSharedViewModel.questionTitleSlug.observe(viewLifecycleOwner, {
+            // updating data in Title-Text
+            questionTitleSlug = it
+
+            solutionView.loadUrl("https://leetcode.com/problems/$questionTitleSlug/solution/")
+
+            solutionView.settings.javaScriptEnabled = true
+
+            solutionView.webViewClient = WebViewClient()
+            fragmentSolutionBinding.questionTitleText.text = questionTitleSlug
+        })
+
+        questionSharedViewModel.questionHasSolution.observe(viewLifecycleOwner, {
+            // updating data in Title-Text
+            questionHasSolution = it
+        })
+
+        if(!questionHasSolution){
+            fragmentSolutionBinding.questionTitleText.text = "No Solution for this question"
+        }
+
+
+        return rootView
     }
 
 }

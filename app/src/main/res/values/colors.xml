@@ -12,6 +12,7 @@
 
 
     <!-- for color name search "color name and hue"-->
-    <!-- Question Fragment   -->
     <color name="alice_blue">#E6EFFF</color>
+    <color name="azure_blue">#007FFF</color>
+    <color name="astros_navy_blue">#002D62</color>
 </resources>
