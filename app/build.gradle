@@ -59,4 +59,8 @@ dependencies {
     //GSON
     implementation 'com.google.code.gson:gson:2.8.9'
 
+    //MarkWon
+    implementation 'ru.noties.markwon:core:3.0.0'
+
+
 }

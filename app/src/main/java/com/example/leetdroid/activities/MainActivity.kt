@@ -39,8 +39,6 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
 
-        navigationView = findViewById(R.id.navigation_view)
-
         NavigationUI.setupWithNavController(navigationView, navController)
 
     }

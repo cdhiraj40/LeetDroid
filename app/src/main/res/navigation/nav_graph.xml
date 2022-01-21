@@ -69,6 +69,20 @@
         android:id="@+id/questionDiscussionFragment"
         android:name="com.example.leetdroid.fragments.question.QuestionDiscussionFragment"
         android:label="Discussion"
-        tools:layout="@layout/fragment_question_discussion" />
+        tools:layout="@layout/fragment_question_discussion" >
 
+        <action
+            android:id="@+id/action_questionDiscussionFragment_to_discussionItemFragment"
+            app:destination="@id/discussionItemFragment">
+            <argument
+                android:name="discussionId"
+                app:argType="integer" />
+        </action>
+
+    </fragment>
+    <fragment
+        android:id="@+id/discussionItemFragment"
+        android:name="com.example.leetdroid.fragments.question.DiscussionItemFragment"
+        android:label="%s"
+        tools:layout="@layout/fragment_discussion_item" />
 </navigation>

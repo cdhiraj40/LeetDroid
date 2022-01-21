@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/drawer_header.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/fragment_all_questions.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_discussion.xml" value="0.3338541666666667" />
+        <entry key="app/src/main/res/layout/fragment_discussion_item.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.409375" />
         <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.3338541666666667" />
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.18" />
@@ -18,6 +19,7 @@
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/question_discussion_item.xml" value="0.3645833333333333" />
         <entry key="app/src/main/res/layout/questions_item.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/toolbar.xml" value="0.2171875" />
         <entry key="app/src/main/res/menu/home_menu.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/menu/navigation_drawer_menu.xml" value="0.20364583333333333" />

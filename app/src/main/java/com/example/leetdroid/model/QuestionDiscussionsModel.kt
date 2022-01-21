@@ -2,7 +2,7 @@ package com.example.leetdroid.model
 
 import java.io.Serializable
 
-class QuestionDiscussionModel : Serializable {
+class QuestionDiscussionsModel : Serializable {
     /**
      * data: { "questionTopicsList": { "totalNum": 7776, "edges": [ { "node": { "id": "17", "title": "Here is a Python solution in O(n) time", "commentCount": 334,"viewCount": 292750,"tags": [],
      * "post": { "id": 17, "voteCount": 837,"creationDate": 1440998099, "author": { "username": "Nathan_Fegard", "isActive": true,"nameColor": null, "activeBadge": null, "profile": {

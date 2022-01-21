@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import androidx.lifecycle.ViewModelProvider
 import com.example.leetdroid.databinding.FragmentQuestionSolutionBinding
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
@@ -36,8 +37,12 @@ class QuestionSolutionFragment : Fragment() {
 
             solutionView.loadUrl("https://leetcode.com/problems/$questionTitleSlug/solution/")
 
-            solutionView.settings.javaScriptEnabled = true
+            val solutionViewSettings = solutionView.settings
+            solutionViewSettings.javaScriptEnabled = true
+            solutionViewSettings.domStorageEnabled = true
+            solutionViewSettings.databaseEnabled = true
 
+            solutionViewSettings.cacheMode = WebSettings.LOAD_DEFAULT
             solutionView.webViewClient = WebViewClient()
             fragmentSolutionBinding.questionTitleText.text = questionTitleSlug
         })

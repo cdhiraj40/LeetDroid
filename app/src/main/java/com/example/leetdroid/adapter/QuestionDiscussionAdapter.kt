@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.leetdroid.R
 
-import com.example.leetdroid.model.QuestionDiscussionModel
+import com.example.leetdroid.model.QuestionDiscussionsModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class QuestionDiscussionAdapter(
-    private val questionDiscussionList: QuestionDiscussionModel, private val context: Context
+    private val questionDiscussionsList: QuestionDiscussionsModel, private val context: Context
 ) : RecyclerView.Adapter<QuestionDiscussionAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,17 +28,17 @@ class QuestionDiscussionAdapter(
         return ViewHolder(view)
     }
 
-//    private var onClick: OnItemClicked? = null
-//
-//    interface OnItemClicked {
-//        fun onItemClick(position: Int, questionTitleSlug: String?, questionHasSolution: Boolean?)
-//    }
+    private var onClick: OnItemClicked? = null
+
+    interface OnItemClicked {
+        fun onItemClick(position: Int, discussionId: Int?)
+    }
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         // sets the title of a question to the imageview from our itemHolder class
-        val question = questionDiscussionList.data?.questionTopicsList?.edges?.get(position)?.node
+        val question = questionDiscussionsList.data?.questionTopicsList?.edges?.get(position)?.node
 
 
         holder.questionDiscussionTitle.text =
@@ -64,7 +64,7 @@ class QuestionDiscussionAdapter(
         holder.questionDiscussionCommentCount.text = question.commentCount.toString()
         holder.questionDiscussionUpvotes.text = question.post?.voteCount.toString()
 
-        val format = SimpleDateFormat("yyyy-MM-dd",Locale.getDefault())
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val time = format.format(question.post?.creationDate?.times(1000L))
         var date: Date? = null
         try {
@@ -75,11 +75,19 @@ class QuestionDiscussionAdapter(
         val dateString = String.format(Locale.ENGLISH, "%tB %<te,  %<tY", date)
         holder.questionDiscussionCreationDate.text = dateString
 
+        val discussionId = question.post?.id
+        holder.itemView.setOnClickListener {
+            onClick!!.onItemClick(
+                position,
+                discussionId
+            )
+        }
+
     }
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
-        return questionDiscussionList.data?.questionTopicsList?.edges?.size!!
+        return questionDiscussionsList.data?.questionTopicsList?.edges?.size!!
     }
 
     // Holds the views for adding it to image and text
@@ -97,9 +105,9 @@ class QuestionDiscussionAdapter(
             itemView.findViewById(R.id.discussion_comment_count)
     }
 
-//    fun setOnClick(onClick: OnItemClicked?) {
-//        this.onClick = onClick
-//    }
+    fun setOnClick(onClick: OnItemClicked?) {
+        this.onClick = onClick
+    }
 
 }
 

@@ -6,16 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.leetdroid.R
 import com.example.leetdroid.adapter.QuestionDiscussionAdapter
 import com.example.leetdroid.api.GraphQl
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionDiscussionBinding
 import com.example.leetdroid.fragments.AllQuestionsFragment
 
-import com.example.leetdroid.model.QuestionDiscussionModel
+import com.example.leetdroid.model.QuestionDiscussionsModel
 import com.example.leetdroid.utils.JsonUtils
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -24,11 +27,11 @@ import java.io.IOException
 import java.util.*
 
 
-class QuestionDiscussionFragment : Fragment() {
+class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemClicked {
 
     private lateinit var fragmentQuestionDiscussionBinding: FragmentQuestionDiscussionBinding
     private lateinit var questionId: String
-    private lateinit var questionDiscussionJson: QuestionDiscussionModel
+    private lateinit var questionDiscussionsJson: QuestionDiscussionsModel
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
 
     override fun onCreateView(
@@ -55,7 +58,7 @@ class QuestionDiscussionFragment : Fragment() {
     private fun loadQuestionDiscussionList(questionId: String) {
         val okHttpClient = OkHttpClient()
         val postBody: String =
-            java.lang.String.format(Locale.ENGLISH,GraphQl.QUESTION_DISCUSSION, "most_votes", 0, 15, questionId)
+            java.lang.String.format(Locale.ENGLISH,GraphQl.QUESTION_DISCUSSION_LIST, "most_votes", 0, 15, questionId)
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
@@ -75,20 +78,30 @@ class QuestionDiscussionFragment : Fragment() {
 
             override fun onResponse(call: Call, response: Response) {
 
-                questionDiscussionJson = JsonUtils.generateObjectFromJson(
+                questionDiscussionsJson = JsonUtils.generateObjectFromJson(
                     response.body!!.string(),
-                    QuestionDiscussionModel::class.java
+                    QuestionDiscussionsModel::class.java
                 )
 
                 activity?.runOnUiThread {
-                    val allQuestionsAdapter =
-                        QuestionDiscussionAdapter(questionDiscussionJson, requireContext())
+                    val allDiscussionAdapter =
+                        QuestionDiscussionAdapter(questionDiscussionsJson, requireContext())
                     fragmentQuestionDiscussionBinding.questionDiscussionsRecyclerView.layoutManager =
                         LinearLayoutManager(context)
                     fragmentQuestionDiscussionBinding.questionDiscussionsRecyclerView.adapter =
-                        allQuestionsAdapter
+                        allDiscussionAdapter
+
+                    allDiscussionAdapter.setOnClick(this@QuestionDiscussionFragment)
                 }
             }
         })
+    }
+
+    override fun onItemClick(position: Int, discussionId: Int?) {
+        val bundle = bundleOf(
+            "discussionId" to discussionId,
+        )
+        fragmentQuestionDiscussionBinding.root.findNavController()
+            .navigate(R.id.action_questionDiscussionFragment_to_discussionItemFragment, bundle)
     }
 }
