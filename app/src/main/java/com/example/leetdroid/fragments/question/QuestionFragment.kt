@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.gdsc_hackathon.extensions.showSnackBar
 import com.example.leetdroid.R
 
 import com.example.leetdroid.api.GraphQl
@@ -24,6 +25,8 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+import java.lang.Exception
+import java.lang.StringBuilder
 
 class QuestionFragment : Fragment() {
 
@@ -56,6 +59,16 @@ class QuestionFragment : Fragment() {
         questionSharedViewModel.getQuestionHasSolution(questionHasSolution)
         questionSharedViewModel.getQuestionId(questionID)
         // bottom navigation for question
+
+//        val webSettings: WebSettings = fragmentQuestionBinding.questionDescriptionView.settings
+//        webSettings.javaScriptEnabled = true
+//        webSettings.domStorageEnabled = true
+//
+//        webSettings.databaseEnabled = true
+//
+//        webSettings.cacheMode = WebSettings.LOAD_DEFAULT
+//
+//        webSettings.loadWithOverviewMode = true
 
 
         loadQuestion()
@@ -106,26 +119,22 @@ class QuestionFragment : Fragment() {
                     response.body!!.string(),
                     QuestionContentModel::class.java
                 )
+
+
                 activity?.runOnUiThread {
                     val questionContentHtml = context?.getString(
                         R.string.question_content,
                         questionContentJson.data?.question?.content
                     )
 
-                    val questionContent = HtmlCompat.fromHtml(
-                        questionContentHtml.toString(),
-                        HtmlCompat.FROM_HTML_MODE_LEGACY
-                    )
-
-
                     val example1 =
-                        findSubstringIndex(questionContent.toString(), "Example 1", 0)
+                        findSubstringIndex(questionContentHtml.toString(), "Example 1", 0)
                     val constraints =
-                        findSubstringIndex(questionContent.toString(), "Constraints", example1)
+                        findSubstringIndex(questionContentHtml.toString(), "Constraints", example1)
 
-                    val questionDescription = questionContent.substring(0, example1).trim()
-                    val exampleStrings = questionContent.substring(example1, constraints).trim()
-                    val constraintStrings = questionContent.substring(constraints).trim()
+                    val questionDescription = questionContentHtml!!.substring(0, example1).trim()
+                    var exampleStrings = questionContentHtml.substring(example1, constraints)
+                    val constraintStrings = questionContentHtml.substring(constraints).trim()
 
                     val explanationCount = countMatches(exampleStrings, "Explanation")
                     var index = 0
@@ -134,15 +143,18 @@ class QuestionFragment : Fragment() {
                         insertString(exampleStrings, "\n ", index - 1)
                     }
 
-                    fragmentQuestionBinding.questionDescriptionText.text =
-                        questionDescription
+                    fragmentQuestionBinding.questionDescriptionText.setHtml(
+                        questionDescription.trim()
+                    )
 
                     fragmentQuestionBinding.questionExamplesText.visibility = View.VISIBLE
-                    fragmentQuestionBinding.questionExamplesText.text =
-                        exampleStrings
+                    fragmentQuestionBinding.questionExamplesText.setHtml(
+                        exampleStrings.substring(0, exampleStrings.length - 25)
+                    )
 
-                    fragmentQuestionBinding.questionConstraintsText.text =
-                        constraintStrings
+                    fragmentQuestionBinding.questionConstraintsText.setHtml(
+                        constraintStrings.trim()
+                    )
 
                 }
             }

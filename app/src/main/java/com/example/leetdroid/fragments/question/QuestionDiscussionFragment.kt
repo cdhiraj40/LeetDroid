@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
@@ -33,6 +34,8 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
     private lateinit var questionId: String
     private lateinit var questionDiscussionsJson: QuestionDiscussionsModel
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
+    private var questionDiscussionAdapter: QuestionDiscussionAdapter? = null
+    private var limit = 10
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,20 +48,43 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
 
         questionSharedViewModel =
             ViewModelProvider(requireActivity()).get(QuestionSharedViewModel::class.java)
-
         questionSharedViewModel.questionID.observe(viewLifecycleOwner, {
             // sending questionID to load discussion list
             questionId = it
-            loadQuestionDiscussionList(questionId)
+            loadQuestionDiscussionList(questionId, limit)
         })
+        // adding pagination
+        fragmentQuestionDiscussionBinding.allDiscussionNested.setOnScrollChangeListener(
+            NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                // on scroll change we are checking when users scroll as bottom.
+                if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                    // fetch more 10 questions when reached end
+                    limit += 10
+                    fragmentQuestionDiscussionBinding.discussionListProgressBar.visibility =
+                        View.VISIBLE
+
+                    questionSharedViewModel.questionID.observe(viewLifecycleOwner, {
+                        // sending questionID to load discussion list
+                        questionId = it
+                        loadQuestionDiscussionList(questionId, limit)
+                    })
+                }
+            })
 
         return rootView
     }
 
-    private fun loadQuestionDiscussionList(questionId: String) {
+    private fun loadQuestionDiscussionList(questionId: String, limit: Int) {
         val okHttpClient = OkHttpClient()
         val postBody: String =
-            java.lang.String.format(Locale.ENGLISH,GraphQl.QUESTION_DISCUSSION_LIST, "most_votes", 0, 15, questionId)
+            java.lang.String.format(
+                Locale.ENGLISH,
+                GraphQl.QUESTION_DISCUSSION_LIST,
+                "most_votes",
+                0,
+                limit,
+                questionId
+            )
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
@@ -84,17 +110,26 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
                 )
 
                 activity?.runOnUiThread {
-                    val allDiscussionAdapter =
+                    questionDiscussionAdapter =
                         QuestionDiscussionAdapter(questionDiscussionsJson, requireContext())
                     fragmentQuestionDiscussionBinding.questionDiscussionsRecyclerView.layoutManager =
                         LinearLayoutManager(context)
                     fragmentQuestionDiscussionBinding.questionDiscussionsRecyclerView.adapter =
-                        allDiscussionAdapter
+                        questionDiscussionAdapter
 
-                    allDiscussionAdapter.setOnClick(this@QuestionDiscussionFragment)
+                    questionDiscussionAdapter!!.setOnClick(this@QuestionDiscussionFragment)
+                    checkIfEmpty()
                 }
             }
         })
+    }
+
+    private fun checkIfEmpty() {
+        if (questionDiscussionAdapter!!.getDataItemCount() == 0) {
+            fragmentQuestionDiscussionBinding.discussionListProgressBar.visibility = View.VISIBLE
+        } else {
+            fragmentQuestionDiscussionBinding.discussionListProgressBar.visibility = View.GONE
+        }
     }
 
     override fun onItemClick(position: Int, discussionId: Int?) {

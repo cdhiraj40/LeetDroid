@@ -10,9 +10,10 @@ import com.example.leetdroid.R
 import com.example.leetdroid.model.AllQuestionsModel
 
 class AllQuestionsAdapter(
-    private val allQuestionsList: AllQuestionsModel
+    allQuestionsList: AllQuestionsModel
 ) : RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>() {
 
+    private val questions =  allQuestionsList.data?.problemsetQuestionList?.questions
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(parent.context)
@@ -31,14 +32,14 @@ class AllQuestionsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         // sets the title of a question to the imageview from our itemHolder class
-        val question = allQuestionsList.data?.problemsetQuestionList?.questions?.get(position)
+        val questionItem = questions?.get(position)
 
         holder.questionTitle.text =
-            question?.title
+            questionItem?.title
 
-        val questionTitleSlug = question?.titleSlug
-        val questionHasSolution = question?.hasSolution
-        val questionId = question?.frontendQuestionId
+        val questionTitleSlug = questionItem?.titleSlug
+        val questionHasSolution = questionItem?.hasSolution
+        val questionId = questionItem?.frontendQuestionId
         holder.itemView.setOnClickListener {
             onClick!!.onItemClick(
                 position,
@@ -52,9 +53,12 @@ class AllQuestionsAdapter(
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
-        return allQuestionsList.data?.problemsetQuestionList?.questions?.size!!
+        return questions?.size!!
     }
 
+    fun getDataItemCount(): Int {
+        return questions?.size ?: 0
+    }
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val questionTitle: TextView = itemView.findViewById(R.id.all_questions_item_title)

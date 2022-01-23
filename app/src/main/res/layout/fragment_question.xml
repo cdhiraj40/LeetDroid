@@ -7,6 +7,13 @@
     android:fillViewport="true"
     tools:context=".fragments.question.QuestionFragment">
 
+    <RelativeLayout
+        android:id="@+id/fake_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_above="@id/question_bottom_navigation"
+        android:layout_alignParentBottom="true" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,34 +23,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+
+            <org.sufficientlysecure.htmltextview.HtmlTextView
                 android:id="@+id/questionDescriptionText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:padding="16dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/black" />
 
-            <TextView
+            <org.sufficientlysecure.htmltextview.HtmlTextView
                 android:id="@+id/questionExamplesText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/questionDescriptionText"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
                 android:background="@color/alice_blue"
                 android:padding="16dp"
+                android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/black"
                 android:visibility="invisible" />
 
-            <TextView
+            <org.sufficientlysecure.htmltextview.HtmlTextView
                 android:id="@+id/questionConstraintsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/questionExamplesText"
                 android:layout_margin="16dp"
+                android:textAppearance="@android:style/TextAppearance.Medium"
                 android:padding="16dp"
                 android:textColor="@color/black" />
         </RelativeLayout>

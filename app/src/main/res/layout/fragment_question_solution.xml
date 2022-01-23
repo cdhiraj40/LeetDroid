@@ -14,34 +14,27 @@
         android:layout_centerHorizontal="true"
         android:text="@string/hello_blank_fragment" />
 
-    <ScrollView
-        android:id="@+id/solutionLayout"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/solution_swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/questionTitleText">
+        <ScrollView
+            android:id="@+id/solutionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/solutionView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never" />
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-<!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-            <WebView
-                android:id="@+id/solutionView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-<!--        </RelativeLayout>-->
-    </ScrollView>
-
-    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-    <!--        android:id="@+id/question_bottom_navigation"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_gravity="bottom"-->
-    <!--        android:background="@color/white"-->
-    <!--        app:itemIconTint="@color/black"-->
-    <!--        app:itemTextColor="@color/black"-->
-    <!--        app:labelVisibilityMode="selected"-->
-    <!--        app:menu="@menu/navigation_question" />-->
-
-
+    <ViewStub
+        android:id="@+id/stub_no_solution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout="@layout/layout_no_solution" />
 </RelativeLayout>

@@ -25,7 +25,6 @@ object JsonUtils {
             var line: String
             while (bufferedReader.readLine().also { line = it } != null) {
                 stringBuilder.append(line)
-                Log.d(TAG, "getJson: $line")
             }
         } catch (e: IOException) {
             e.printStackTrace()
