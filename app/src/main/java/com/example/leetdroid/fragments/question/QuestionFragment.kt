@@ -25,6 +25,10 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+import com.example.leetdroid.activities.MainActivity
+
+
+
 
 class QuestionFragment : Fragment() {
 
@@ -175,6 +179,6 @@ class QuestionFragment : Fragment() {
     }
 
     object Constant {
-        const val TAG = "QuestionFragment"
+        val TAG = QuestionFragment::class.qualifiedName
     }
 }

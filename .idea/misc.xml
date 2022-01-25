@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/fragment_discussion.xml" value="0.3338541666666667" />
         <entry key="app/src/main/res/layout/fragment_discussion_item.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_general_discussion.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/layout/fragment_general_discussion_item.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.409375" />
         <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.3338541666666667" />
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.18" />

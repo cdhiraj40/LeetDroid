@@ -6,13 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
+import androidx.navigation.findNavController
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gdsc_hackathon.extensions.showSnackBar
+import com.example.leetdroid.R
+
 import com.example.leetdroid.adapter.GeneralDiscussionAdapter
 import com.example.leetdroid.api.*
 import com.example.leetdroid.databinding.FragmentGeneralDiscussionBinding
+import com.example.leetdroid.fragments.GeneralDiscussionFragment.Constant.TAG
+
 import com.example.leetdroid.model.GeneralDiscussionModel
 
 import com.example.leetdroid.utils.JsonUtils
@@ -41,7 +46,7 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
             FragmentGeneralDiscussionBinding.inflate(layoutInflater)
         val rootView = fragmentGeneralDiscussionBinding.root
 
-        loadQuestionDiscussionList(limit)
+        loadGeneralDiscussionList(limit)
 
         // adding pagination
         fragmentGeneralDiscussionBinding.generalDiscussionNested.setOnScrollChangeListener(
@@ -52,17 +57,17 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     limit += 10
                     fragmentGeneralDiscussionBinding.discussionListProgressBar.visibility =
                         View.VISIBLE
-                    loadQuestionDiscussionList(limit)
+                    loadGeneralDiscussionList(limit)
                 }
             })
 
         return rootView
     }
 
-    private fun loadQuestionDiscussionList(limit: Int) {
+    private fun loadGeneralDiscussionList(limit: Int) {
         val okHttpClient = OkHttpClient()
         val postBody: String =
-            Gson().toJson(LeetCodeRequests.Helper.generalDiscussionRequest)
+            Gson().toJson(LeetCodeRequests.Helper.generalDiscussionRequest(limit))
 
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
@@ -79,7 +84,7 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(AllQuestionsFragment.Constant.TAG, call.toString(), e)
+                Log.d(TAG, call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -113,7 +118,14 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
     }
 
     override fun onItemClick(position: Int, discussionId: Int?) {
-        showSnackBar(requireActivity(), "ADASdas")
-        TODO("Not yet implemented")
+        val bundle = bundleOf(
+            "discussionId" to discussionId,
+        )
+        fragmentGeneralDiscussionBinding.root.findNavController()
+            .navigate(R.id.action_generalDiscussionFragment_to_generalDiscussionItemFragment, bundle)
+    }
+
+    object Constant {
+        val TAG = GeneralDiscussionFragment::class.qualifiedName
     }
 }

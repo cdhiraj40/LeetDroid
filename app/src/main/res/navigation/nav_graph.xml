@@ -21,8 +21,21 @@
         android:id="@+id/generalDiscussionFragment"
         android:name="com.example.leetdroid.fragments.GeneralDiscussionFragment"
         android:label="Discussion"
-        tools:layout="@layout/fragment_general_discussion" />
+        tools:layout="@layout/fragment_general_discussion" >
+        <action
+            android:id="@+id/action_generalDiscussionFragment_to_generalDiscussionItemFragment"
+            app:destination="@id/generalDiscussionItemFragment">
+            <argument
+                android:name="discussionId"
+                app:argType="integer" />
+        </action>
+    </fragment>
 
+    <fragment
+        android:id="@+id/generalDiscussionItemFragment"
+        android:name="com.example.leetdroid.fragments.GeneralDiscussionItemFragment"
+        android:label="Discussion Item"
+        tools:layout="@layout/general_discussion_item" />
     <fragment
         android:id="@+id/allQuestionsFragment"
         android:name="com.example.leetdroid.fragments.AllQuestionsFragment"

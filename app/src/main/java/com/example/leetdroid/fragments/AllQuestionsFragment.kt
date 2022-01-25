@@ -21,7 +21,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 import java.lang.String.*
 import androidx.core.widget.NestedScrollView
-import com.example.gdsc_hackathon.extensions.showSnackBar
+import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.api.LeetCodeRequests
 import com.google.gson.Gson
 import java.util.*

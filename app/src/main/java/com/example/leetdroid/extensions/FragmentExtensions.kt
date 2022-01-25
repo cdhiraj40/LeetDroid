@@ -1,4 +1,4 @@
-package com.example.gdsc_hackathon.extensions
+package com.example.leetdroid.extensions
 
 import android.app.Activity
 import android.app.DownloadManager

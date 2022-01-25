@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import com.example.gdsc_hackathon.extensions.showSnackBar
+import com.example.leetdroid.extensions.showSnackBar
 
 fun openEmailApp(context: Context, activity: Activity){
     try {

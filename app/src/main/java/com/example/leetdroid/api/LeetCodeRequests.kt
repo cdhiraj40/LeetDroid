@@ -17,9 +17,9 @@ data class LeetCodeRequests(
                 first = limit,
                 categories = listOf("interview-experience"),
             ),
-            query = "query categoryTopicList(\$categories: [String!]!, \$first: Int!, \$orderBy: TopicSortingOption, \$skip: Int, \$query: String, \$tags: [String!]) { categoryTopicList(categories:" +
-                    " \$categories, orderBy: \$orderBy, skip: \$skip, query: \$query, first: \$first, tags: \$tags) { ...TopicsList } } fragment TopicsList on TopicConnection { totalNum  edges {  node {" +
-                    "  id title commentCount  viewCount  tags { name slug } post { id voteCount creationDate author { username profile { userAvatar } } } } } }"
+            query = "query categoryTopicList(\$categories: [String!]!, \$first: Int!, \$orderBy: TopicSortingOption, \$skip: Int, \$query: String, \$tags: [String!]) { categoryTopicList" +
+                    "(categories: \$categories, orderBy: \$orderBy, skip: \$skip, query: \$query, first: \$first, tags: \$tags) { ...TopicsList } } fragment TopicsList on TopicConnection " +
+                    "{ totalNum  edges {  node {  id title commentCount  viewCount  tags { name slug } post { id voteCount creationDate author { username profile { userAvatar } } } } } }"
         )
 
         val getUserProfileRequest = fun(userName: String) = LeetCodeRequests(
@@ -88,6 +88,15 @@ data class LeetCodeRequests(
             ),
             query = "query upcomingContests { upcomingContests { title titleSlug startTime duration } } "
         )
+
+        val generalDiscussionItemRequest = fun(topicId: Int?) = LeetCodeRequests(
+            operationName = "DiscussTopic",
+            variables = Variables(
+                topicId = topicId,
+            ),
+            query = "query DiscussTopic(\$topicId: Int!) { topic(id: \$topicId) { id viewCount topLevelCommentCount title pinned tags post { ...DiscussPost } } }" +
+                    "fragment DiscussPost on PostNode { id voteCount content updationDate creationDate author { username profile { userAvatar reputation } } } "
+        )
     }
 
     data class Variables(
@@ -102,7 +111,7 @@ data class LeetCodeRequests(
         val filters: Filters? = null,
         val questionId: String? = null,
         val topicId: Int? = null,
-        val tags : List<String>? = null
+        val tags: List<String>? = null
     )
 
     data class Filters(
