@@ -10,23 +10,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.gdsc_hackathon.extensions.showSnackBar
 import com.example.leetdroid.R
 
-import com.example.leetdroid.api.GraphQl
+import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionBinding
 import com.example.leetdroid.model.QuestionContentModel
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 
 import com.example.leetdroid.utils.JsonUtils
+import com.google.gson.Gson
 
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
-import java.lang.Exception
-import java.lang.StringBuilder
 
 class QuestionFragment : Fragment() {
 
@@ -58,18 +56,6 @@ class QuestionFragment : Fragment() {
         questionSharedViewModel.getQuestionTitleSlug(questionTitleSlug)
         questionSharedViewModel.getQuestionHasSolution(questionHasSolution)
         questionSharedViewModel.getQuestionId(questionID)
-        // bottom navigation for question
-
-//        val webSettings: WebSettings = fragmentQuestionBinding.questionDescriptionView.settings
-//        webSettings.javaScriptEnabled = true
-//        webSettings.domStorageEnabled = true
-//
-//        webSettings.databaseEnabled = true
-//
-//        webSettings.cacheMode = WebSettings.LOAD_DEFAULT
-//
-//        webSettings.loadWithOverviewMode = true
-
 
         loadQuestion()
         return rootView
@@ -95,7 +81,8 @@ class QuestionFragment : Fragment() {
 
     private fun loadQuestion() {
         val okHttpClient = OkHttpClient()
-        val postBody = java.lang.String.format(GraphQl.QUESTION_ITEM_DATA, questionTitleSlug)
+        val postBody: String =
+            Gson().toJson(LeetCodeRequests.Helper.getQuestionContent(questionTitleSlug))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()

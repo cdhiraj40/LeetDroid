@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_my_profile" />
 
     <fragment
-        android:id="@+id/discussionFragment"
-        android:name="com.example.leetdroid.fragments.DiscussionFragment"
+        android:id="@+id/generalDiscussionFragment"
+        android:name="com.example.leetdroid.fragments.GeneralDiscussionFragment"
         android:label="Discussion"
-        tools:layout="@layout/fragment_discussion" />
+        tools:layout="@layout/fragment_general_discussion" />
 
     <fragment
         android:id="@+id/allQuestionsFragment"

@@ -34,9 +34,9 @@ class QuestionDiscussionsModel : Serializable {
                  * "post": { "id": 17, "voteCount": 837,"creationDate": 1440998099, "author": { "username": "Nathan_Fegard", "isActive": true,"nameColor": null, "activeBadge": null, "profile": {
                  * "userAvatar": "https://assets.leetcode.com/users/nathan_fegard/avatar_1536531058.png" } }, "status": null } } } ] } } }
                  */
-                var node: NodeNode? = null
+                var node: Node? = null
 
-                class NodeNode : Serializable {
+                class Node : Serializable {
                     /**
                      * id : 17
                      * title : Here is a Python solution in O(n) time

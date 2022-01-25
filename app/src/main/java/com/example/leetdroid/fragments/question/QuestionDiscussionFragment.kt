@@ -14,13 +14,15 @@ import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leetdroid.R
 import com.example.leetdroid.adapter.QuestionDiscussionAdapter
-import com.example.leetdroid.api.GraphQl
+
+import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionDiscussionBinding
 import com.example.leetdroid.fragments.AllQuestionsFragment
 
 import com.example.leetdroid.model.QuestionDiscussionsModel
 import com.example.leetdroid.utils.JsonUtils
+import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -77,13 +79,12 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
     private fun loadQuestionDiscussionList(questionId: String, limit: Int) {
         val okHttpClient = OkHttpClient()
         val postBody: String =
-            java.lang.String.format(
-                Locale.ENGLISH,
-                GraphQl.QUESTION_DISCUSSION_LIST,
-                "most_votes",
-                0,
-                limit,
-                questionId
+            Gson().toJson(
+                LeetCodeRequests.Helper.getQuestionDiscussions(
+                    questionId,
+                    "most_votes",
+                    limit
+                )
             )
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())

@@ -9,12 +9,13 @@ import android.view.ViewGroup
 
 import com.bumptech.glide.Glide
 
-import com.example.leetdroid.api.GraphQl
+import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 
 import com.example.leetdroid.databinding.FragmentMyProfileBinding
 import com.example.leetdroid.model.UserProfileModel
 import com.example.leetdroid.utils.JsonUtils
+import com.google.gson.Gson
 
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -38,7 +39,7 @@ class MyProfileFragment : Fragment() {
 
     private fun loadData() {
         val okHttpClient = OkHttpClient()
-        val postBody = java.lang.String.format(GraphQl.GET_USER_PROFILE, "cdhiraj40")
+        val postBody =Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest("cdhiraj40"))
         val requestBody: RequestBody =
             RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), postBody)
         val headers: Headers = Headers.Builder()

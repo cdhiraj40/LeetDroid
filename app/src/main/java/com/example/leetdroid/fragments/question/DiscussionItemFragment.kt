@@ -7,18 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.example.leetdroid.api.GraphQl
+import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentDiscussionItemBinding
 import com.example.leetdroid.fragments.AllQuestionsFragment
 import com.example.leetdroid.model.DiscussionItemModel
 import com.example.leetdroid.utils.JsonUtils
+import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import ru.noties.markwon.Markwon
 import java.io.IOException
-import java.util.*
 
 class DiscussionItemFragment : Fragment() {
     private lateinit var fragmentDiscussionItemBinding: FragmentDiscussionItemBinding
@@ -49,11 +49,7 @@ class DiscussionItemFragment : Fragment() {
 
     private fun loadDiscussionItemContent(discussionId: Int?) {
         val okHttpClient = OkHttpClient()
-        val postBody: String =
-            java.lang.String.format(
-                Locale.ENGLISH,
-                GraphQl.DISCUSS_ITEM, discussionId
-            )
+        val postBody = Gson().toJson(LeetCodeRequests.Helper.getQuestionDiscussionItem(discussionId))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()

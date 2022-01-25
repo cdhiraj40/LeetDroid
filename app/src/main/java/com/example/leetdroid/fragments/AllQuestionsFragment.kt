@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leetdroid.R
 import com.example.leetdroid.adapter.AllQuestionsAdapter
-import com.example.leetdroid.api.GraphQl
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentAllQuestionsBinding
 import com.example.leetdroid.model.AllQuestionsModel
@@ -23,6 +22,8 @@ import java.io.IOException
 import java.lang.String.*
 import androidx.core.widget.NestedScrollView
 import com.example.gdsc_hackathon.extensions.showSnackBar
+import com.example.leetdroid.api.LeetCodeRequests
+import com.google.gson.Gson
 import java.util.*
 
 
@@ -57,9 +58,10 @@ class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
         return rootView
     }
 
-    private fun loadQuestionList(page: Int) {
+    private fun loadQuestionList(limit: Int) {
         val okHttpClient = OkHttpClient()
-        val postBody: String = format(GraphQl.ALL_QUESTION_LIST, "", 0, page)
+        val postBody: String =
+            Gson().toJson(LeetCodeRequests.Helper.getAllQuestionsRequest("",limit))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()

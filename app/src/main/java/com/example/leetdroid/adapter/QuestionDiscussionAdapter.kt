@@ -37,7 +37,6 @@ class QuestionDiscussionAdapter(
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        // sets the title of a question to the imageview from our itemHolder class
         val question = questionDiscussionsList.data?.questionTopicsList?.edges?.get(position)?.node
 
 

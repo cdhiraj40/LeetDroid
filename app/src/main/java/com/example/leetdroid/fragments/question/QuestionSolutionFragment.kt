@@ -10,14 +10,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.leetdroid.databinding.FragmentQuestionSolutionBinding
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 import android.webkit.WebViewClient
+import com.example.leetdroid.api.LeetCodeRequests
+import com.google.gson.Gson
 
 
 class QuestionSolutionFragment : Fragment() {
 
-    private lateinit var fragmentSolutionBinding:FragmentQuestionSolutionBinding
+    private lateinit var fragmentSolutionBinding: FragmentQuestionSolutionBinding
     private lateinit var questionTitleSlug: String
     private var questionHasSolution: Boolean = false
-    private lateinit var questionSharedViewModel:QuestionSharedViewModel
+    private lateinit var questionSharedViewModel: QuestionSharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,9 +29,11 @@ class QuestionSolutionFragment : Fragment() {
         fragmentSolutionBinding = FragmentQuestionSolutionBinding.inflate(layoutInflater)
         val rootView = fragmentSolutionBinding.root
 
-
+//        val postBody: String =
+//            Gson().toJson(LeetCodeRequests.Helper.getQuestionContent(questionTitleSlug))
         val solutionView = fragmentSolutionBinding.solutionView
-        questionSharedViewModel = ViewModelProvider(requireActivity()).get(QuestionSharedViewModel::class.java)
+        questionSharedViewModel =
+            ViewModelProvider(requireActivity()).get(QuestionSharedViewModel::class.java)
 
         questionSharedViewModel.questionTitleSlug.observe(viewLifecycleOwner, {
             // updating data in Title-Text
@@ -52,7 +56,7 @@ class QuestionSolutionFragment : Fragment() {
             questionHasSolution = it
         })
 
-        if(!questionHasSolution){
+        if (!questionHasSolution) {
             fragmentSolutionBinding.questionTitleText.text = "No Solution for this question"
         }
 
