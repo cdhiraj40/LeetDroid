@@ -4,6 +4,7 @@ import android.content.Context
 
 import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.JsonArray
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -33,6 +34,12 @@ object JsonUtils {
     }
 
     fun <T> generateObjectFromJson(json: String?, type: Class<T>?): T {
+        val gson = Gson()
+        Log.d(TAG, gson.toString())
+        return gson.fromJson(json, type)
+    }
+
+    fun <T> generateFromJsonArray(json: JsonArray?, type: Class<T>?): T {
         val gson = Gson()
         Log.d(TAG, gson.toString())
         return gson.fromJson(json, type)

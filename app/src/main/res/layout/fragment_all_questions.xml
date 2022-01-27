@@ -4,7 +4,7 @@
     android:id="@+id/all_questions_nested"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AllQuestionsFragment">
+    tools:context=".ui.fragments.AllQuestionsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

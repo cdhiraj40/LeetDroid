@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.leetdroid.fragments.HomeFragment"
+        android:name="com.example.leetdroid.ui.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.example.leetdroid.fragments.MyProfileFragment"
+        android:name="com.example.leetdroid.ui.fragments.MyProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_my_profile" />
 
     <fragment
         android:id="@+id/generalDiscussionFragment"
-        android:name="com.example.leetdroid.fragments.GeneralDiscussionFragment"
+        android:name="com.example.leetdroid.ui.fragments.GeneralDiscussionFragment"
         android:label="Discussion"
         tools:layout="@layout/fragment_general_discussion" >
         <action
@@ -33,12 +33,12 @@
 
     <fragment
         android:id="@+id/generalDiscussionItemFragment"
-        android:name="com.example.leetdroid.fragments.GeneralDiscussionItemFragment"
+        android:name="com.example.leetdroid.ui.fragments.GeneralDiscussionItemFragment"
         android:label="Discussion Item"
         tools:layout="@layout/general_discussion_item" />
     <fragment
         android:id="@+id/allQuestionsFragment"
-        android:name="com.example.leetdroid.fragments.AllQuestionsFragment"
+        android:name="com.example.leetdroid.ui.fragments.AllQuestionsFragment"
         android:label="All Questions List"
         tools:layout="@layout/fragment_all_questions">
         <action
@@ -61,7 +61,7 @@
 
     <fragment
         android:id="@+id/questionFragment"
-        android:name="com.example.leetdroid.fragments.question.QuestionFragment"
+        android:name="com.example.leetdroid.ui.fragments.question.QuestionFragment"
         android:label="Question"
         tools:layout="@layout/fragment_question">
         <action
@@ -74,13 +74,13 @@
 
     <fragment
         android:id="@+id/questionSolutionFragment"
-        android:name="com.example.leetdroid.fragments.question.QuestionSolutionFragment"
+        android:name="com.example.leetdroid.ui.fragments.question.QuestionSolutionFragment"
         android:label="Solution"
         tools:layout="@layout/fragment_question_solution" />
 
     <fragment
         android:id="@+id/questionDiscussionFragment"
-        android:name="com.example.leetdroid.fragments.question.QuestionDiscussionFragment"
+        android:name="com.example.leetdroid.ui.fragments.question.QuestionDiscussionFragment"
         android:label="Discussion"
         tools:layout="@layout/fragment_question_discussion" >
 
@@ -95,7 +95,7 @@
     </fragment>
     <fragment
         android:id="@+id/discussionItemFragment"
-        android:name="com.example.leetdroid.fragments.question.DiscussionItemFragment"
+        android:name="com.example.leetdroid.ui.fragments.question.DiscussionItemFragment"
         android:label="%s"
         tools:layout="@layout/fragment_discussion_item" />
 </navigation>

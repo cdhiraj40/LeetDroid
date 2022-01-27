@@ -31,9 +31,9 @@ class AllQuestionsAdapter(
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        // sets the title of a question to the imageview from our itemHolder class
         val questionItem = questions?.get(position)
 
+        // sets the title of a question to the textView from our itemHolder class
         holder.questionTitle.text =
             questionItem?.title
 
@@ -59,7 +59,6 @@ class AllQuestionsAdapter(
     fun getDataItemCount(): Int {
         return questions?.size ?: 0
     }
-    // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val questionTitle: TextView = itemView.findViewById(R.id.all_questions_item_title)
     }

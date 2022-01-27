@@ -1,4 +1,4 @@
-package com.example.leetdroid.fragments.question
+package com.example.leetdroid.ui.fragments.question
 
 import android.os.Bundle
 import android.util.Log
@@ -25,9 +25,6 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
-import com.example.leetdroid.activities.MainActivity
-
-
 
 
 class QuestionFragment : Fragment() {
@@ -124,7 +121,7 @@ class QuestionFragment : Fragment() {
                         findSubstringIndex(questionContentHtml.toString(), "Constraints", example1)
 
                     val questionDescription = questionContentHtml!!.substring(0, example1).trim()
-                    var exampleStrings = questionContentHtml.substring(example1, constraints)
+                    val exampleStrings = questionContentHtml.substring(example1, constraints)
                     val constraintStrings = questionContentHtml.substring(constraints).trim()
 
                     val explanationCount = countMatches(exampleStrings, "Explanation")

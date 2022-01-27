@@ -1,4 +1,4 @@
-package com.example.leetdroid.fragments.question
+package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +9,7 @@ import android.view.ViewGroup
 
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
-import com.example.leetdroid.databinding.FragmentDiscussionItemBinding
-import com.example.leetdroid.fragments.AllQuestionsFragment
+import com.example.leetdroid.databinding.FragmentGeneralDiscussionItemBinding
 import com.example.leetdroid.model.DiscussionItemModel
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
@@ -20,8 +19,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import ru.noties.markwon.Markwon
 import java.io.IOException
 
-class DiscussionItemFragment : Fragment() {
-    private lateinit var fragmentDiscussionItemBinding: FragmentDiscussionItemBinding
+class GeneralDiscussionItemFragment : Fragment() {
+    private lateinit var fragmentGeneralDiscussionItemBinding: FragmentGeneralDiscussionItemBinding
     private var markwon: Markwon? = null
     private var discussionId: Int? = 0
     private lateinit var discussionContentJson: DiscussionItemModel
@@ -32,9 +31,10 @@ class DiscussionItemFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
 
-        fragmentDiscussionItemBinding = FragmentDiscussionItemBinding.inflate(inflater)
+        fragmentGeneralDiscussionItemBinding =
+            FragmentGeneralDiscussionItemBinding.inflate(inflater)
 
-        val rootView = fragmentDiscussionItemBinding.root
+        val rootView = fragmentGeneralDiscussionItemBinding.root
 
         val bundle = arguments
 
@@ -49,7 +49,8 @@ class DiscussionItemFragment : Fragment() {
 
     private fun loadDiscussionItemContent(discussionId: Int?) {
         val okHttpClient = OkHttpClient()
-        val postBody = Gson().toJson(LeetCodeRequests.Helper.getQuestionDiscussionItem(discussionId))
+        val postBody =
+            Gson().toJson(LeetCodeRequests.Helper.generalDiscussionItemRequest(discussionId))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
@@ -81,12 +82,12 @@ class DiscussionItemFragment : Fragment() {
                     discussionContent = discussionContent.replace("\\n", "\n")
                     discussionContent = discussionContent.replace("\\t", "\t")
                     markwon!!.setMarkdown(
-                        fragmentDiscussionItemBinding.discussionContent,
+                        fragmentGeneralDiscussionItemBinding.discussionContent,
                         discussionContent
                     )
 
-                    fragmentDiscussionItemBinding.topicTitle.isSelected = true
-                    fragmentDiscussionItemBinding.topicTitle.text =
+                    fragmentGeneralDiscussionItemBinding.discussionTitle.isSelected = true
+                    fragmentGeneralDiscussionItemBinding.discussionTitle.text =
                         discussionContentJson.data?.topic?.title
 
                 }

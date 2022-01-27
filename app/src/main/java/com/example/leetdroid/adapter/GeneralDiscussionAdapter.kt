@@ -98,7 +98,6 @@ class GeneralDiscussionAdapter(
         return generalDiscussionsList.data?.categoryTopicList?.edges?.size ?: 0
     }
 
-    // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         var discussionUserAvatar: ImageView = itemView.findViewById(R.id.discussion_user_avatar)
         val generalDiscussionTitle: TextView =

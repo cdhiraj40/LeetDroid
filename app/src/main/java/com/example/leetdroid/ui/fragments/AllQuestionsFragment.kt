@@ -1,4 +1,4 @@
-package com.example.leetdroid.fragments
+package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +23,7 @@ import java.lang.String.*
 import androidx.core.widget.NestedScrollView
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.api.LeetCodeRequests
+import com.example.leetdroid.ui.fragments.question.QuestionFragment
 import com.google.gson.Gson
 import java.util.*
 
@@ -127,6 +128,6 @@ class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
     }
 
     object Constant {
-        const val TAG = "AllQuestionsFragment"
+        val TAG = AllQuestionsFragment::class.qualifiedName
     }
 }

@@ -3,18 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/btn_blue_normal.xml" value="0.21944444444444444" />
+        <entry key="app/src/main/res/drawable/btn_blue_pressed.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/btn_blue_selector.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/contest_selected_dot_blue.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/contest_selected_dot_white.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/contest_unselected_dot_orange.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/contest_unselected_dot_white.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/contest_viewpager_selector_white.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_discuss_24.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/drawable/ic_round_person_24.xml" value="0.22135416666666666" />
+        <entry key="app/src/main/res/drawable/onboarding_unselected_dot_blue.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/round_background.xml" value="0.3074074074074074" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_questions_item.xml" value="0.2046875" />
+        <entry key="app/src/main/res/layout/contest_pager_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/contest_view_pager_item.xml" value="0.2595419847328244" />
         <entry key="app/src/main/res/layout/drawer_header.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/layout/fragment_all_questions.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_discussion.xml" value="0.3338541666666667" />
         <entry key="app/src/main/res/layout/fragment_discussion_item.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_general_discussion.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/fragment_general_discussion_item.xml" value="0.203125" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.409375" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.3338541666666667" />
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_question_discussion.xml" value="0.30950510604870385" />

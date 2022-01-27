@@ -1,4 +1,4 @@
-package com.example.leetdroid.fragments.question
+package com.example.leetdroid.ui.fragments.question
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.leetdroid.databinding.FragmentQuestionSolutionBinding
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 import android.webkit.WebViewClient
-import com.example.leetdroid.api.LeetCodeRequests
-import com.google.gson.Gson
 
 
 class QuestionSolutionFragment : Fragment() {

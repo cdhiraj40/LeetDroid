@@ -1,4 +1,4 @@
-package com.example.leetdroid.fragments
+package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,7 @@ import com.example.leetdroid.R
 import com.example.leetdroid.adapter.GeneralDiscussionAdapter
 import com.example.leetdroid.api.*
 import com.example.leetdroid.databinding.FragmentGeneralDiscussionBinding
-import com.example.leetdroid.fragments.GeneralDiscussionFragment.Constant.TAG
+import com.example.leetdroid.ui.fragments.GeneralDiscussionFragment.Constant.TAG
 
 import com.example.leetdroid.model.GeneralDiscussionModel
 

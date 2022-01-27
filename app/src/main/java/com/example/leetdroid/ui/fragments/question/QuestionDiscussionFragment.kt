@@ -1,4 +1,4 @@
-package com.example.leetdroid.fragments.question
+package com.example.leetdroid.ui.fragments.question
 
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +18,7 @@ import com.example.leetdroid.adapter.QuestionDiscussionAdapter
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionDiscussionBinding
-import com.example.leetdroid.fragments.AllQuestionsFragment
+import com.example.leetdroid.ui.fragments.AllQuestionsFragment
 
 import com.example.leetdroid.model.QuestionDiscussionsModel
 import com.example.leetdroid.utils.JsonUtils

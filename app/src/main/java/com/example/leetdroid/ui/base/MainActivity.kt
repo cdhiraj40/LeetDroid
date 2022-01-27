@@ -1,4 +1,4 @@
-package com.example.leetdroid.activities
+package com.example.leetdroid.ui.base
 
 import android.os.Bundle
 
