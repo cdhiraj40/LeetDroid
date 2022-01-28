@@ -2,29 +2,47 @@ package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 
 import com.bumptech.glide.Glide
 
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 
+import com.example.leetdroid.data.db.UserDatabase
+import com.example.leetdroid.data.entitiy.User
+
 import com.example.leetdroid.databinding.FragmentMyProfileBinding
 import com.example.leetdroid.model.UserProfileModel
+import com.example.leetdroid.ui.base.BaseFragment
+
+import com.example.leetdroid.utils.Converters.ContributionsNodeConverters.fromContributionsNode
+import com.example.leetdroid.utils.Converters.ContributionsNodeConverters.fromStringContributions
+import com.example.leetdroid.utils.Converters.MatchedUserNodeConverters.fromMatchedUserNode
+import com.example.leetdroid.utils.Converters.MatchedUserNodeConverters.fromStringMatchedUser
+
+import com.example.leetdroid.utils.Converters.ProfileNodeConverters.fromProfileNode
+import com.example.leetdroid.utils.Converters.ProfileNodeConverters.fromStringProfileNode
+import com.example.leetdroid.utils.Converters.SubmitStatsNodeConverters.fromStringSubmitStats
+
+import com.example.leetdroid.utils.Converters.SubmitStatsNodeConverters.fromSubmitStatsNode
 import com.example.leetdroid.utils.JsonUtils
+import com.example.leetdroid.utils.Preferences
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
-class MyProfileFragment : Fragment() {
+class MyProfileFragment : BaseFragment() {
 
     private lateinit var myProfileBinding: FragmentMyProfileBinding
-
+    private var user: User? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,15 +51,42 @@ class MyProfileFragment : Fragment() {
         myProfileBinding = FragmentMyProfileBinding.inflate(layoutInflater)
         val rootView = myProfileBinding.root
 
-        loadData()
+        val preferences = Preferences(requireContext())
+        if (!preferences.questionsFetched) {
+            loadUser()
+            preferences.questionsFetched = true
+        } else {
+            lifecycleScope.launch {
+                user = UserDatabase.getInstance(requireContext()).userDao().getUser(1)
+                setupProfile(user!!)
+            }
+        }
         return rootView
     }
 
-    private fun loadData() {
+    private fun setupProfile(user: User) {
+        val matchedUser = fromStringMatchedUser(user.matchedUser)
+        val contributions = fromStringContributions(user.contributions)
+        val profile = fromStringProfileNode(user.profile)
+        val acSubmissionNum = fromStringSubmitStats(user.acSubmissionNum)
+        val totalSubmissionNum = fromStringSubmitStats(user.totalSubmissionNum)
+
+        myProfileBinding.username.text =
+            profile?.realName
+        Glide.with(requireContext())
+            .load(
+                profile?.userAvatar
+            )
+            .circleCrop()
+            .placeholder(android.R.drawable.progress_indeterminate_horizontal)
+            .into(myProfileBinding.userProfileAvatar)
+    }
+
+    private fun loadUser() {
         val okHttpClient = OkHttpClient()
-        val postBody =Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest("cdhiraj40"))
+        val postBody = Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest("cdhiraj40"))
         val requestBody: RequestBody =
-            RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), postBody)
+            postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
             .add("Content-Type", "application/json")
             .build()
@@ -54,7 +99,7 @@ class MyProfileFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG, call.toString(),e)
+                Log.d(Constant.TAG, call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -63,21 +108,25 @@ class MyProfileFragment : Fragment() {
                     response.body!!.string(),
                     UserProfileModel::class.java
                 )
-                activity?.runOnUiThread {
+                val user = User(
+                    fromMatchedUserNode(discussItem.data?.matchedUser).toString(),
+                    fromContributionsNode(discussItem.data?.matchedUser?.contributions!!).toString(),
+                    fromProfileNode(discussItem.data?.matchedUser?.profile!!).toString(),
+                    fromSubmitStatsNode(discussItem.data?.matchedUser?.submitStats?.acSubmissionNum!!).toString(),
+                    fromSubmitStatsNode(discussItem.data?.matchedUser?.submitStats?.totalSubmissionNum!!).toString()
+                )
 
-                    myProfileBinding.username.text =
-                        discussItem.data!!.matchedUser?.profile?.realName
-                    Glide.with(requireContext())
-                        .load(
-                            discussItem.data!!.matchedUser?.profile?.userAvatar
-                        )
-                        .circleCrop()
-                        .placeholder(android.R.drawable.progress_indeterminate_horizontal)
-                        .into(myProfileBinding.userProfileAvatar)
+
+                UserDatabase.getInstance(requireContext()).userDao().insert(user)
+
+                lifecycleScope.launch {
+                    val userData = UserDatabase.getInstance(requireContext()).userDao().getUser(1)
+                    setupProfile(userData)
                 }
             }
         })
     }
+
     object Constant {
         const val TAG = "MyProfileFragment"
     }

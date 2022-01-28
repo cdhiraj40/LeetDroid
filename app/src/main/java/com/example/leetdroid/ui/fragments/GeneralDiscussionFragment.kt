@@ -22,6 +22,7 @@ import com.example.leetdroid.model.GeneralDiscussionModel
 
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -60,7 +61,6 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     loadGeneralDiscussionList(limit)
                 }
             })
-
         return rootView
     }
 

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leetdroid.R
@@ -23,16 +22,22 @@ import java.lang.String.*
 import androidx.core.widget.NestedScrollView
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.api.LeetCodeRequests
-import com.example.leetdroid.ui.fragments.question.QuestionFragment
+
+import com.example.leetdroid.data.entitiy.AllQuestions
+import com.example.leetdroid.ui.base.BaseFragment
+
+
 import com.google.gson.Gson
+
 import java.util.*
 
-
-class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
+class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
 
     private lateinit var fragmentAllQuestionsBinding: FragmentAllQuestionsBinding
     private lateinit var questionJson: AllQuestionsModel
-    private var allQuestionsAdapter: AllQuestionsAdapter? = null
+    private var allQuestionsAdapter = AllQuestionsAdapter()
+    var questionList = mutableListOf<AllQuestions>()
+    var arrJournals = ArrayList<AllQuestions>()
 
     private var limit = 10
 
@@ -46,7 +51,7 @@ class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
 
         loadQuestionList(limit)
 
-        // adding pagination
+        //  adding pagination
         fragmentAllQuestionsBinding.allQuestionsNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             // on scroll change we are checking when users scroll as bottom.
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
@@ -56,13 +61,15 @@ class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
                 loadQuestionList(limit)
             }
         })
+
         return rootView
     }
+
 
     private fun loadQuestionList(limit: Int) {
         val okHttpClient = OkHttpClient()
         val postBody: String =
-            Gson().toJson(LeetCodeRequests.Helper.getAllQuestionsRequest("",limit))
+            Gson().toJson(LeetCodeRequests.Helper.getAllQuestionsRequest("", limit))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
@@ -82,20 +89,18 @@ class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
             }
 
             override fun onResponse(call: Call, response: Response) {
-
                 questionJson = JsonUtils.generateObjectFromJson(
                     response.body!!.string(),
                     AllQuestionsModel::class.java
                 )
-
                 activity?.runOnUiThread {
-                    allQuestionsAdapter = AllQuestionsAdapter(questionJson)
+                    allQuestionsAdapter.setData(questionJson)
                     fragmentAllQuestionsBinding.allQuestionsRecyclerView.layoutManager =
                         LinearLayoutManager(context)
                     fragmentAllQuestionsBinding.allQuestionsRecyclerView.adapter =
                         allQuestionsAdapter
 
-                    allQuestionsAdapter!!.setOnClick(this@AllQuestionsFragment)
+                    allQuestionsAdapter.setOnClick(this@AllQuestionsFragment)
                     checkIfEmpty()
 
                 }
@@ -104,7 +109,7 @@ class AllQuestionsFragment : Fragment(), AllQuestionsAdapter.OnItemClicked {
     }
 
     private fun checkIfEmpty() {
-        if (allQuestionsAdapter!!.getDataItemCount() == 0) {
+        if (allQuestionsAdapter.getDataItemCount() == 0) {
             fragmentAllQuestionsBinding.questionListProgressBar.visibility = View.VISIBLE
         } else {
             fragmentAllQuestionsBinding.questionListProgressBar.visibility = View.GONE

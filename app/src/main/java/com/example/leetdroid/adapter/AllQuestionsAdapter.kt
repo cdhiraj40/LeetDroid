@@ -8,12 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.model.AllQuestionsModel
+import com.example.leetdroid.model.AllQuestionsModel.DataNode.ProblemSetQuestionListNode.Questions
 
-class AllQuestionsAdapter(
-    allQuestionsList: AllQuestionsModel
-) : RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>() {
+class AllQuestionsAdapter : RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>() {
 
-    private val questions =  allQuestionsList.data?.problemsetQuestionList?.questions
+    private var questionList = AllQuestionsModel()
+    private lateinit var questions: List<Questions>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(parent.context)
@@ -22,24 +22,34 @@ class AllQuestionsAdapter(
         return ViewHolder(view)
     }
 
+    fun setData(questionsList: AllQuestionsModel) {
+        questionList = questionsList
+        questions = questionList.data?.problemsetQuestionList?.questions!!
+    }
+
     private var onClick: OnItemClicked? = null
 
     interface OnItemClicked {
-        fun onItemClick(position: Int, questionTitleSlug: String?, questionHasSolution: Boolean?, questionID:String?)
+        fun onItemClick(
+            position: Int,
+            questionTitleSlug: String?,
+            questionHasSolution: Boolean?,
+            questionID: String?
+        )
     }
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val questionItem = questions?.get(position)
+        val questionItem = questions[position]
 
         // sets the title of a question to the textView from our itemHolder class
         holder.questionTitle.text =
-            questionItem?.title
+            questionItem.title
 
-        val questionTitleSlug = questionItem?.titleSlug
-        val questionHasSolution = questionItem?.hasSolution
-        val questionId = questionItem?.frontendQuestionId
+        val questionTitleSlug = questionItem.titleSlug
+        val questionHasSolution = questionItem.hasSolution
+        val questionId = questionItem.frontendQuestionId
         holder.itemView.setOnClickListener {
             onClick!!.onItemClick(
                 position,
@@ -53,12 +63,13 @@ class AllQuestionsAdapter(
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
-        return questions?.size!!
+        return questions.size
     }
 
     fun getDataItemCount(): Int {
-        return questions?.size ?: 0
+        return questions.size
     }
+
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val questionTitle: TextView = itemView.findViewById(R.id.all_questions_item_title)
     }

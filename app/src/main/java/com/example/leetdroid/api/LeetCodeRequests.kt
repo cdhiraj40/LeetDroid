@@ -34,12 +34,12 @@ data class LeetCodeRequests(
                     "{ icon iconGif iconGifBackground iconWearing __typename } __typename } __typename } upcomingBadges { name icon __typename } activeBadge { id __typename } __typename } } "
         )
 
-        val getAllQuestionsRequest = fun(categorySlug: String, limit: Int) = LeetCodeRequests(
+        val getAllQuestionsRequest = fun(categorySlug: String,limit:Int) = LeetCodeRequests(
             operationName = "problemsetQuestionList",
             variables = Variables(
                 skip = 0,
                 categorySlug = categorySlug,
-                first = limit,
+                limit = limit,
                 filters = Filters(tags = listOf())
             ),
             query = "query problemsetQuestionList(\$categorySlug: String, \$limit: Int, \$skip: Int, \$filters: QuestionListFilterInput) { problemsetQuestionList: questionList(    " +
@@ -111,7 +111,8 @@ data class LeetCodeRequests(
         val filters: Filters? = null,
         val questionId: String? = null,
         val topicId: Int? = null,
-        val tags: List<String>? = null
+        val tags: List<String>? = null,
+        val limit: Int? = null
     )
 
     data class Filters(
