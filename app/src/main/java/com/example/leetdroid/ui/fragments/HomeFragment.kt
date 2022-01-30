@@ -1,21 +1,21 @@
 package com.example.leetdroid.ui.fragments
 
+import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 
 import com.example.leetdroid.adapter.ContestPagerAdapter
-
 import com.example.leetdroid.api.ContestApi
-import com.example.leetdroid.data.db.ContestsDatabase
-import com.example.leetdroid.data.db.UserDatabase
 import com.example.leetdroid.data.entitiy.Contest
-import com.example.leetdroid.data.entitiy.User
-
+import com.example.leetdroid.data.viewModel.ContestViewModel
 import com.example.leetdroid.databinding.FragmentHomeBinding
 import com.example.leetdroid.model.ContestsModel
 import com.example.leetdroid.ui.fragments.HomeFragment.Constant.TAG
@@ -23,16 +23,10 @@ import com.example.leetdroid.utils.Converters
 import com.example.leetdroid.utils.Preferences
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.JsonArray
-
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
-import com.google.gson.reflect.TypeToken
-
-import com.google.gson.Gson
-import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 
 
 class HomeFragment : Fragment() {
@@ -40,21 +34,35 @@ class HomeFragment : Fragment() {
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
     private lateinit var contestContentJson: ContestsModel
     private lateinit var preferences: Preferences
+    private lateinit var contestViewModel: ContestViewModel
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         // Inflate the layout for this fragment
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         val rootView = fragmentHomeBinding.root
 
+        fragmentHomeBinding.contestProgressBar.visibility = View.VISIBLE
+        contestViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        )[ContestViewModel::class.java]
+
         preferences = Preferences(requireContext())
-        getContestList()
+
+        if (preferences.timerEnded || !preferences.contestsInserted) {
+            getContestList()
+        } else {
+            displayContests()
+        }
         return rootView
     }
 
+    // gets the contest list
     private fun getContestList() {
         val apiInterface = ContestApi.create().getContent()
 
@@ -62,94 +70,93 @@ class HomeFragment : Fragment() {
             override fun onResponse(Call: Call<JsonArray>?, response: Response<JsonArray>?) {
                 if (response?.body() != null) {
                     val body = response.body()!!
-                    val gson = Gson()
-                    val listType: Type = object : TypeToken<List<Contest>>() {}.type
-                    var contestList: ArrayList<Contest> = gson.fromJson(body, listType)
-                    Log.d(TAG, contestList.toString())
+                    Log.d(TAG, body.toString())
 
-                    val biWeeklyContest = Contest(
-                        "Asdasd",
-                        contestList[0].url,
-                        contestList[0].duration,
-                        contestList[0].start_time,
-                        contestList[0].end_time,
-                        contestList[0].in_24_hours,
-                        contestList[0].status,
-                    )
-                    val weeklyContest = Contest(
-                        contestList[1].name,
-                        contestList[1].url,
-                        contestList[1].duration,
-                        contestList[1].start_time,
-                        contestList[1].end_time,
-                        contestList[1].in_24_hours,
-                        contestList[1].status,
-                    )
-                    contestList = java.util.ArrayList<Contest>()
+                    saveContests(body)
 
-                    lifecycleScope.launch {
-                        val biWeeklyContest1 =
-                            ContestsDatabase.getInstance(requireContext()).contestDao()
-                                .getContest(1)
-                        if (!preferences.contestsInserted) {
-                            insertData(biWeeklyContest, weeklyContest)
-                        } else {
-                            ContestsDatabase.getInstance(requireContext()).contestDao()
-                                .update(biWeeklyContest1)
-                            ContestsDatabase.getInstance(requireContext()).contestDao()
-                                .update(weeklyContest)
-                        }
-//                        fillList(contestList)
-//                        displayContests(contestList)
-                    }
-
+                    displayContests()
                 }
             }
 
-            override fun onFailure(call: Call<JsonArray>?, t: Throwable) {
-                Log.d("MyTag", "requestFailed", t)
+            override fun onFailure(call: Call<JsonArray>?, throwable: Throwable) {
+                Log.d(TAG, "requestFailed", throwable)
             }
 
         })
-
     }
 
-    private suspend fun insertData(biWeeklyContest: Contest, weeklyContest: Contest) {
-        preferences.contestsInserted = true
-        ContestsDatabase.getInstance(requireContext()).contestDao()
-            .insert(biWeeklyContest)
-        ContestsDatabase.getInstance(requireContext()).contestDao()
-            .insert(weeklyContest)
-    }
+    // saves the list in local database
+    private fun saveContests(body: JsonArray) {
+        val contestList =
+            Converters.ContestConverter.fromStringContest(body.toString())!!
 
-    private fun fillList(contestList: ArrayList<Contest>) {
+        val weeklyContest = Contest(
+            contestList[0].name,
+            contestList[0].url,
+            contestList[0].duration,
+            contestList[0].start_time,
+            contestList[0].end_time,
+            contestList[0].in_24_hours,
+            contestList[0].status,
+        )
+        val biWeeklyContest = Contest(
+            contestList[1].name,
+            contestList[1].url,
+            contestList[1].duration,
+            contestList[1].start_time,
+            contestList[1].end_time,
+            contestList[1].in_24_hours,
+            contestList[1].status,
+        )
+
         lifecycleScope.launch {
-            val biWeeklyContest =
-                ContestsDatabase.getInstance(requireContext()).contestDao().getContest(1)
-            val weeklyContest =
-                ContestsDatabase.getInstance(requireContext()).contestDao().getContest(2)
-            contestList.addAll(listOf(biWeeklyContest))
-
-//            add(
-//                biWeeklyContest.name,
-//                biWeeklyContest.url,
-//                biWeeklyContest.duration,
-//                biWeeklyContest.start_time,
-//                biWeeklyContest.end_time,
-//                biWeeklyContest.in_24_hours,
-//                biWeeklyContest.status
-//            )
+            val preferences = Preferences(requireContext())
+            if (!preferences.contestsInserted && !preferences.timerEnded) {
+                insertContests(biWeeklyContest, weeklyContest)
+            } else {
+                updateContests(biWeeklyContest, weeklyContest)
+            }
         }
     }
 
-    private fun displayContests(listdata: ArrayList<Contest>) {
-        val contestPagerAdapter = ContestPagerAdapter(listdata, requireContext())
+    // updates the contests
+    private fun updateContests(biWeeklyContest: Contest, weeklyContest: Contest) {
+        Preferences(requireContext()).timerEnded = false
+        biWeeklyContest.id = 1
+        contestViewModel.updateContest(biWeeklyContest)
 
-        fragmentHomeBinding.viewPager.adapter = contestPagerAdapter
-        TabLayoutMediator(
-            fragmentHomeBinding.pageIndicator,
-            fragmentHomeBinding.viewPager
-        ) { _, _ -> }.attach()
+        weeklyContest.id = 2
+        contestViewModel.updateContest(weeklyContest)
+    }
+
+    // inserts the contests in database
+    private fun insertContests(biWeeklyContest: Contest, weeklyContest: Contest) {
+        val preferences = Preferences(requireContext())
+        preferences.contestsInserted = true
+        contestViewModel.addContest(biWeeklyContest)
+        contestViewModel.addContest(weeklyContest)
+    }
+
+    // displays the contests from database
+    private fun displayContests() {
+        val contestList = ArrayList<Contest>()
+        lifecycleScope.launch {
+            val biWeeklyContest = contestViewModel.getContest(1)
+            val weeklyContest = contestViewModel.getContest(2)
+
+            contestList.add(weeklyContest)
+            contestList.add(biWeeklyContest)
+
+            val contestPagerAdapter =
+                ContestPagerAdapter(contestList, requireContext(), requireActivity())
+
+            fragmentHomeBinding.viewPager.adapter = contestPagerAdapter
+            TabLayoutMediator(
+                fragmentHomeBinding.pageIndicator,
+                fragmentHomeBinding.viewPager
+            ) { _, _ -> }.attach()
+            fragmentHomeBinding.contestProgressBar.visibility = View.GONE
+        }
     }
 
     object Constant {
@@ -159,5 +166,15 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         fragmentHomeBinding.viewPager.adapter
+    }
+
+    fun refreshCurrentFragment() {
+        lifecycleScope.launchWhenResumed {
+//            findNavController().navigate(R.id.homeFragment)
+            Log.d(TAG, "Adas")
+            val id = findNavController().currentDestination?.id
+            findNavController().popBackStack(id!!, true)
+            findNavController().navigate(id)
+        }
     }
 }

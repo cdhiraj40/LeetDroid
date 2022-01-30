@@ -1,5 +1,6 @@
 package com.example.leetdroid.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
@@ -8,26 +9,36 @@ import android.view.View
 import android.view.ViewGroup
 
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.data.entitiy.Contest
-import com.example.leetdroid.model.ContestsModel
+import com.example.leetdroid.ui.fragments.HomeFragment
+
 import com.example.leetdroid.utils.DateUtils.getDate
 import com.example.leetdroid.utils.DateUtils.getHours
 import com.example.leetdroid.utils.DateUtils.getTime
 import com.example.leetdroid.utils.DateUtils.parseISO8601Date
+import com.example.leetdroid.utils.Preferences
 import com.google.android.material.button.MaterialButton
 import java.util.*
 import kotlin.collections.ArrayList
 
 class ContestPagerAdapter
-    (private val contests: ArrayList<Contest>, private val context: Context) :
+    (
+    private val contests: ArrayList<Contest>,
+    private val context: Context,
+    private val activity: Activity
+) :
     RecyclerView.Adapter<ContestPagerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.contest_pager_item, parent, false)
+
         return ViewHolder(view)
     }
 
@@ -43,7 +54,6 @@ class ContestPagerAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         val contest = contests[position]
 
         holder.contestTitle.text = contest.name
@@ -59,6 +69,7 @@ class ContestPagerAdapter
         // contest timer
         val currentTime = Calendar.getInstance().time
         val different = endingDate.time - currentTime.time
+
         val countDownTimer: CountDownTimer = object : CountDownTimer(different, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
@@ -84,7 +95,8 @@ class ContestPagerAdapter
             }
 
             override fun onFinish() {
-                holder.contestRunningText.text = "done!"
+                Preferences(context).timerEnded=true
+                refreshCurrentFragment()
             }
         }.start()
 
@@ -119,4 +131,12 @@ class ContestPagerAdapter
             itemView.findViewById(R.id.contest_calendar_button)
     }
 
+    private fun refreshCurrentFragment() {
+        val navController: NavController =
+            activity.findNavController(R.id.hostFragment)
+        navController.run {
+            popBackStack()
+            navigate(R.id.homeFragment)
+        }
+    }
 }

@@ -16,4 +16,12 @@ class Preferences(context: Context) {
     var contestsInserted: Boolean
         get() = preferences.getBoolean("contestsInserted", false)
         set(value) = preferences.edit().putBoolean("contestsInserted", value).apply()
+
+    var timerEnded: Boolean
+        get() = preferences.getBoolean("timerEnded", false)
+        set(value) = preferences.edit().putBoolean("timerEnded", value).apply()
+
+    var userDataLoaded: Boolean
+        get() = preferences.getBoolean("userDataLoaded", false)
+        set(value) = preferences.edit().putBoolean("userDataLoaded", value).apply()
 }

@@ -1,6 +1,7 @@
 package com.example.leetdroid.utils
 
 import androidx.room.TypeConverter
+import com.example.leetdroid.data.entitiy.Contest
 import com.example.leetdroid.model.UserProfileModel
 import com.google.gson.Gson
 
@@ -84,6 +85,20 @@ class Converters {
         fun fromSubmitStatsNode(submitStats: List<UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode.SubmitStatsNode.AcSubmissionNumNode>): String? {
             val gson = Gson()
             return gson.toJson(submitStats)
+        }
+    }
+
+    object ContestConverter {
+        @TypeConverter
+        fun fromStringContest(value: String): List<Contest>? {
+            val listType: Type = object : TypeToken<List<Contest>?>() {}.type
+            return Gson().fromJson(value,listType)
+        }
+
+        @TypeConverter
+        fun fromContest(contests: List<Contest>): String? {
+            val gson = Gson()
+            return gson.toJson(contests)
         }
     }
 }

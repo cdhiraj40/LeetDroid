@@ -19,7 +19,4 @@ interface UserDao {
 
     @Query("SELECT * FROM user_profile WHERE id=:id ")
     fun getUser(id:Int): LiveData<User>
-
-    @Query("SELECT * FROM user_profile ")
-    fun getALLUser(): LiveData<List<User>>
 }

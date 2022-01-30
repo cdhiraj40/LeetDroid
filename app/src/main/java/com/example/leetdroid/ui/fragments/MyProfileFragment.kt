@@ -65,9 +65,9 @@ class MyProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val preferences = Preferences(requireContext())
-        if (!preferences.questionsFetched) {
+        if (!preferences.userDataLoaded) {
             loadUser()
-            preferences.questionsFetched = true
+            preferences.userDataLoaded = true
         } else {
             userViewModel.getUser.observe(viewLifecycleOwner, { it ->
                 it?.let {
@@ -131,7 +131,7 @@ class MyProfileFragment : BaseFragment() {
 
                 lifecycleScope.launch {
                     userViewModel.addUser(user)
-                    user.id=1
+                    user.id = 1
                     userViewModel.updateUser(user)
                     userViewModel.getUser.observe(viewLifecycleOwner, { it ->
                         it?.let {
