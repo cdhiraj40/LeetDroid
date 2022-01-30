@@ -1,7 +1,5 @@
 package com.example.leetdroid.ui.fragments
 
-import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,7 +15,7 @@ import com.example.leetdroid.api.ContestApi
 import com.example.leetdroid.data.entitiy.Contest
 import com.example.leetdroid.data.viewModel.ContestViewModel
 import com.example.leetdroid.databinding.FragmentHomeBinding
-import com.example.leetdroid.model.ContestsModel
+
 import com.example.leetdroid.ui.fragments.HomeFragment.Constant.TAG
 import com.example.leetdroid.utils.Converters
 import com.example.leetdroid.utils.Preferences
@@ -32,7 +30,6 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
-    private lateinit var contestContentJson: ContestsModel
     private lateinit var preferences: Preferences
     private lateinit var contestViewModel: ContestViewModel
 
@@ -166,15 +163,5 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         fragmentHomeBinding.viewPager.adapter
-    }
-
-    fun refreshCurrentFragment() {
-        lifecycleScope.launchWhenResumed {
-//            findNavController().navigate(R.id.homeFragment)
-            Log.d(TAG, "Adas")
-            val id = findNavController().currentDestination?.id
-            findNavController().popBackStack(id!!, true)
-            findNavController().navigate(id)
-        }
     }
 }

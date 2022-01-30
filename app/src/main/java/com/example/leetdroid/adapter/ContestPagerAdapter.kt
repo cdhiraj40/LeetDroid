@@ -64,7 +64,7 @@ class ContestPagerAdapter
         holder.contestDuration.text = getHours(contest.duration).plus(" Hrs")
         holder.contestStartTime.text = getTime(startingDate)
         holder.contestEndTime.text = getTime(endingDate)
-        holder.contestRunningText.text = contest.in_24_hours
+//        holder.contestRunningText.text = contest.in_24_hours
 
         // contest timer
         val currentTime = Calendar.getInstance().time

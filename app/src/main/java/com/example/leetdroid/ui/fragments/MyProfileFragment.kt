@@ -77,6 +77,7 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
+    // setup profile from room database
     private fun setupProfile(user: User) {
         val matchedUser = fromStringMatchedUser(user.matchedUser)
         val contributions = fromStringContributions(user.contributions)
@@ -95,7 +96,36 @@ class MyProfileFragment : BaseFragment() {
             .into(myProfileBinding.userProfileAvatar)
     }
 
+    // load user from online
     private fun loadUser() {
+
+        val call: Call = createApiCall()
+        call.enqueue(object : Callback {
+
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d(Constant.TAG, call.toString(), e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+
+                val userData: UserProfileModel = JsonUtils.generateObjectFromJson(
+                    response.body!!.string(),
+                    UserProfileModel::class.java
+                )
+                val user = User(
+                    fromMatchedUserNode(userData.data?.matchedUser).toString(),
+                    fromContributionsNode(userData.data?.matchedUser?.contributions!!).toString(),
+                    fromProfileNode(userData.data?.matchedUser?.profile!!).toString(),
+                    fromSubmitStatsNode(userData.data?.matchedUser?.submitStats?.acSubmissionNum!!).toString(),
+                    fromSubmitStatsNode(userData.data?.matchedUser?.submitStats?.totalSubmissionNum!!).toString()
+                )
+                addUpdateUser(user)
+            }
+        })
+    }
+
+    // creates an okHttpClient call for user data
+    private fun createApiCall(): Call {
         val okHttpClient = OkHttpClient()
         val postBody = Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest("cdhiraj40"))
         val requestBody: RequestBody =
@@ -108,39 +138,25 @@ class MyProfileFragment : BaseFragment() {
             .post(requestBody)
             .url(URL.graphql)
             .build()
-        val call: Call = okHttpClient.newCall(request)
-        call.enqueue(object : Callback {
+        return okHttpClient.newCall(request)
+    }
 
-            override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG, call.toString(), e)
+    // add or update data
+    private fun addUpdateUser(user: User) {
+        val preferences = Preferences(requireContext())
+        lifecycleScope.launch {
+            if (!preferences.userAdded) {
+                userViewModel.addUser(user)
+            } else {
+                user.id = 1
+                userViewModel.updateUser(user)
             }
-
-            override fun onResponse(call: Call, response: Response) {
-
-                val discussItem: UserProfileModel = JsonUtils.generateObjectFromJson(
-                    response.body!!.string(),
-                    UserProfileModel::class.java
-                )
-                val user = User(
-                    fromMatchedUserNode(discussItem.data?.matchedUser).toString(),
-                    fromContributionsNode(discussItem.data?.matchedUser?.contributions!!).toString(),
-                    fromProfileNode(discussItem.data?.matchedUser?.profile!!).toString(),
-                    fromSubmitStatsNode(discussItem.data?.matchedUser?.submitStats?.acSubmissionNum!!).toString(),
-                    fromSubmitStatsNode(discussItem.data?.matchedUser?.submitStats?.totalSubmissionNum!!).toString()
-                )
-
-                lifecycleScope.launch {
-                    userViewModel.addUser(user)
-                    user.id = 1
-                    userViewModel.updateUser(user)
-                    userViewModel.getUser.observe(viewLifecycleOwner, { it ->
-                        it?.let {
-                            setupProfile(it)
-                        }
-                    })
+            userViewModel.getUser.observe(viewLifecycleOwner, { it ->
+                it?.let {
+                    setupProfile(it)
                 }
-            }
-        })
+            })
+        }
     }
 
     object Constant {

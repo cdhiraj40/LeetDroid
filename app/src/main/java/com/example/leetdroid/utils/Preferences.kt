@@ -24,4 +24,8 @@ class Preferences(context: Context) {
     var userDataLoaded: Boolean
         get() = preferences.getBoolean("userDataLoaded", false)
         set(value) = preferences.edit().putBoolean("userDataLoaded", value).apply()
+
+    var userAdded: Boolean
+        get() = preferences.getBoolean("userAdded", false)
+        set(value) = preferences.edit().putBoolean("userAdded", value).apply()
 }
