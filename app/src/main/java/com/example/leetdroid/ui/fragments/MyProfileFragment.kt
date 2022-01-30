@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 
 import com.bumptech.glide.Glide
@@ -12,8 +14,8 @@ import com.bumptech.glide.Glide
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 
-import com.example.leetdroid.data.db.UserDatabase
 import com.example.leetdroid.data.entitiy.User
+import com.example.leetdroid.data.viewModel.UserViewModel
 
 import com.example.leetdroid.databinding.FragmentMyProfileBinding
 import com.example.leetdroid.model.UserProfileModel
@@ -42,6 +44,7 @@ import java.io.IOException
 class MyProfileFragment : BaseFragment() {
 
     private lateinit var myProfileBinding: FragmentMyProfileBinding
+    private lateinit var userViewModel: UserViewModel
     private var user: User? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,17 +54,27 @@ class MyProfileFragment : BaseFragment() {
         myProfileBinding = FragmentMyProfileBinding.inflate(layoutInflater)
         val rootView = myProfileBinding.root
 
+        userViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        )[UserViewModel::class.java]
+        Preferences(requireContext()).questionsFetched = false
+        return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val preferences = Preferences(requireContext())
         if (!preferences.questionsFetched) {
             loadUser()
             preferences.questionsFetched = true
         } else {
-            lifecycleScope.launch {
-                user = UserDatabase.getInstance(requireContext()).userDao().getUser(1)
-                setupProfile(user!!)
-            }
+            userViewModel.getUser.observe(viewLifecycleOwner, { it ->
+                it?.let {
+                    setupProfile(it)
+                }
+            })
         }
-        return rootView
     }
 
     private fun setupProfile(user: User) {
@@ -116,12 +129,15 @@ class MyProfileFragment : BaseFragment() {
                     fromSubmitStatsNode(discussItem.data?.matchedUser?.submitStats?.totalSubmissionNum!!).toString()
                 )
 
-
-                UserDatabase.getInstance(requireContext()).userDao().insert(user)
-
                 lifecycleScope.launch {
-                    val userData = UserDatabase.getInstance(requireContext()).userDao().getUser(1)
-                    setupProfile(userData)
+                    userViewModel.addUser(user)
+                    user.id=1
+                    userViewModel.updateUser(user)
+                    userViewModel.getUser.observe(viewLifecycleOwner, { it ->
+                        it?.let {
+                            setupProfile(it)
+                        }
+                    })
                 }
             }
         })

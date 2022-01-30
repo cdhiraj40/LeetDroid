@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         bottomNav = findViewById(R.id.bottom_navigation)
 
-
         navController = findNavController(R.id.hostFragment)
         setupBottomNavigation()
 

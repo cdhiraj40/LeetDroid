@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
+import com.example.leetdroid.data.entitiy.Contest
 import com.example.leetdroid.model.ContestsModel
 import com.example.leetdroid.utils.DateUtils.getDate
 import com.example.leetdroid.utils.DateUtils.getHours
@@ -21,7 +22,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ContestPagerAdapter
-    (private val contests: ArrayList<ContestsModel>, private val context: Context) :
+    (private val contests: ArrayList<Contest>, private val context: Context) :
     RecyclerView.Adapter<ContestPagerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
