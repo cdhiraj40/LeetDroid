@@ -146,6 +146,7 @@ class MyProfileFragment : BaseFragment() {
         val preferences = Preferences(requireContext())
         lifecycleScope.launch {
             if (!preferences.userAdded) {
+                preferences.userAdded = true
                 userViewModel.addUser(user)
             } else {
                 user.id = 1

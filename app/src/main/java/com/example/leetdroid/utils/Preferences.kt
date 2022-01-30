@@ -2,6 +2,8 @@ package com.example.leetdroid.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Preferences(context: Context) {
@@ -28,4 +30,26 @@ class Preferences(context: Context) {
     var userAdded: Boolean
         get() = preferences.getBoolean("userAdded", false)
         set(value) = preferences.edit().putBoolean("userAdded", value).apply()
+
+    var dailyQuestionLoaded: Boolean
+        get() = preferences.getBoolean("dailyQuestionLoaded", false)
+        set(value) = preferences.edit().putBoolean("dailyQuestionLoaded", value).apply()
+
+    var dailyQuestionAdded: Boolean
+        get() = preferences.getBoolean("dailyQuestionAdded", false)
+        set(value) = preferences.edit().putBoolean("dailyQuestionAdded", value).apply()
+
+    var lastVisitedDateTime: Int
+        get() = preferences.getInt("lastVisitedDateTime", getPreviousDate())
+        set(value) = preferences.edit().putInt("lastVisitedDateTime", value).apply()
+
+
+    // gets the previous date
+    private fun getPreviousDate():Int{
+        val cal = Calendar.getInstance()
+        var currentDate: Int =  cal.get(Calendar.DATE)
+        cal.add(Calendar.DATE,-1)
+        val dayFormat = SimpleDateFormat("dd",Locale.getDefault())
+        return dayFormat.format(cal.time).toString().toInt()
+    }
 }

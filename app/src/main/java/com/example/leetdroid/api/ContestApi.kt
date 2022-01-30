@@ -14,7 +14,7 @@ interface ContestApi {
         fun create(): ContestApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(URL.leetcodeContest)
+                .baseUrl(URL.leetcodeUpcomingContest)
                 .build()
             return retrofit.create(ContestApi::class.java)
         }

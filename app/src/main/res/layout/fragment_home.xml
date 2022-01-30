@@ -16,18 +16,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/pageIndicator">
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
-            android:layout_marginStart="0dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
-        <ProgressBar
-            android:id="@+id/contest_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp" />
+
+            <ProgressBar
+                android:id="@+id/contest_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/pageIndicator"
@@ -45,11 +46,90 @@
     </RelativeLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/allQuestionsRecyclerView"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/daily_question_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/weekly_contest_layout"
-        tools:listitem="@layout/all_questions_item" />
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="3dp"
+        app:cardMaxElevation="3dp"
+        app:cardPreventCornerOverlap="true"
+        android:layout_marginBottom="100dp"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/daily_question_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp">
+
+            <TextView
+                android:id="@+id/daily_question_title"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_toStartOf="@id/daily_question_date"
+                android:maxLines="2"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/daily_question_date"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/daily_question_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toStartOf="@id/daily_question_share"
+                android:contentDescription="open link"
+                android:src="@drawable/ic_baseline_open_in_new_24"
+                app:backgroundTint="@color/alice_blue" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/daily_question_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="share link"
+                android:src="@drawable/ic_baseline_share_24"
+                app:backgroundTint="@color/alice_blue" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/daily_question_difficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:contentDescription="difficulty"
+                android:drawableStart="@drawable/ic_baseline_share_24"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/alice_blue" />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>

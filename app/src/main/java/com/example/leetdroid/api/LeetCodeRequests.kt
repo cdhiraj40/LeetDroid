@@ -7,7 +7,8 @@ data class LeetCodeRequests(
 ) {
 
     object Helper {
-        //    private val limit = 10
+
+        // request for all general discussions
         val generalDiscussionRequest = fun(limit: Int) = LeetCodeRequests(
             operationName = "categoryTopicList",
             variables = Variables(
@@ -22,6 +23,17 @@ data class LeetCodeRequests(
                     "{ totalNum  edges {  node {  id title commentCount  viewCount  tags { name slug } post { id voteCount creationDate author { username profile { userAvatar } } } } } }"
         )
 
+
+        val generalDiscussionItemRequest = fun(topicId: Int?) = LeetCodeRequests(
+            operationName = "DiscussTopic",
+            variables = Variables(
+                topicId = topicId,
+            ),
+            query = "query DiscussTopic(\$topicId: Int!) { topic(id: \$topicId) { id viewCount topLevelCommentCount title pinned tags post { ...DiscussPost } } }" +
+                    "fragment DiscussPost on PostNode { id voteCount content updationDate creationDate author { username profile { userAvatar reputation } } } "
+        )
+
+        // request for user data
         val getUserProfileRequest = fun(userName: String) = LeetCodeRequests(
             operationName = "getUserProfile",
             variables = Variables(
@@ -34,7 +46,8 @@ data class LeetCodeRequests(
                     "{ icon iconGif iconGifBackground iconWearing __typename } __typename } __typename } upcomingBadges { name icon __typename } activeBadge { id __typename } __typename } } "
         )
 
-        val getAllQuestionsRequest = fun(categorySlug: String,limit:Int) = LeetCodeRequests(
+        // request for all question list
+        val getAllQuestionsRequest = fun(categorySlug: String, limit: Int) = LeetCodeRequests(
             operationName = "problemsetQuestionList",
             variables = Variables(
                 skip = 0,
@@ -47,6 +60,7 @@ data class LeetCodeRequests(
                     "paidOnly: isPaidOnly     title titleSlug topicTags { name id     slug }hasSolution } } }"
         )
 
+        // request for question item data
         val getQuestionContent = fun(titleSlug: String?) = LeetCodeRequests(
             operationName = "questionData",
             variables = Variables(
@@ -56,6 +70,7 @@ data class LeetCodeRequests(
                     "topicTags { name slug translatedName } stats hints } }  "
         )
 
+        // request for question item all discussion list
         val getQuestionDiscussions = fun(questionId: String, orderBy: String?, limit: Int) =
             LeetCodeRequests(
                 operationName = "questionTopicsList",
@@ -72,6 +87,7 @@ data class LeetCodeRequests(
                         "viewCount tags { name slug } post { id voteCount creationDate author { username isActive nameColor activeBadge { displayName icon } profile { userAvatar } } status } } } }  "
             )
 
+        // request for question item's  discussion item
         val getQuestionDiscussionItem = fun(questionId: Int?) = LeetCodeRequests(
             operationName = "DiscussTopic",
             variables = Variables(
@@ -82,6 +98,7 @@ data class LeetCodeRequests(
                     "fragment DiscussPost on PostNode { id voteCount content updationDate creationDate author { username profile { userAvatar reputation } } }"
         )
 
+        // request for upcoming contests, not being used
         val upcomingContestRequest = LeetCodeRequests(
             operationName = "getUserProfile",
             variables = Variables(
@@ -89,13 +106,12 @@ data class LeetCodeRequests(
             query = "query upcomingContests { upcomingContests { title titleSlug startTime duration } } "
         )
 
-        val generalDiscussionItemRequest = fun(topicId: Int?) = LeetCodeRequests(
-            operationName = "DiscussTopic",
-            variables = Variables(
-                topicId = topicId,
-            ),
-            query = "query DiscussTopic(\$topicId: Int!) { topic(id: \$topicId) { id viewCount topLevelCommentCount title pinned tags post { ...DiscussPost } } }" +
-                    "fragment DiscussPost on PostNode { id voteCount content updationDate creationDate author { username profile { userAvatar reputation } } } "
+        val getDailyQuestion = LeetCodeRequests(
+            operationName = "",
+            variables = Variables(),
+            query = "query questionOfToday { activeDailyCodingChallengeQuestion { date userStatus link question { acRate difficulty freqBar frontendQuestionId: " +
+                    "questionFrontendId isFavor paidOnly: isPaidOnly status title titleSlug hasVideoSolution hasSolution topicTags { name id slug } } } } "
+
         )
     }
 

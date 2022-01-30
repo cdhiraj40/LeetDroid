@@ -19,4 +19,9 @@
     <color name="alice_blue">#E6EFFF</color>
     <color name="azure_blue">#007FFF</color>
     <color name="astros_navy_blue">#002D62</color>
+
+    <!-- color for question's difficulty-->
+    <color name="easy_difficulty">#4cbb17</color>
+    <color name="medium_difficulty">#ffdf00</color>
+    <color name="hard_difficulty">#ce2029</color>
 </resources>

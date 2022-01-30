@@ -8,5 +8,6 @@
     <string name="all_question_list">All Question List</string>
     <string name="question_description">Question Description</string>
     <string name="question_solution">Solution</string>
+    <string name="question_share_link">Share Link?</string>
 
 </resources>

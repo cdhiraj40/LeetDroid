@@ -5,6 +5,6 @@ object URL {
 
     const val graphql = "https://leetcode.com/graphql"
 
-    const val leetcodeContest = "https://kontests.net/api/v1/"
+    const val leetcodeUpcomingContest = "https://kontests.net/api/v1/"
 
 }

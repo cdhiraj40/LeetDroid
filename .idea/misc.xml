@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/btn_blue_normal.xml" value="0.21944444444444444" />
         <entry key="app/src/main/res/drawable/btn_blue_pressed.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/btn_blue_selector.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/circle_background.xml" value="0.2625" />
         <entry key="app/src/main/res/drawable/contest_selected_dot_blue.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/contest_selected_dot_white.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/contest_unselected_dot_orange.xml" value="0.3807291666666667" />

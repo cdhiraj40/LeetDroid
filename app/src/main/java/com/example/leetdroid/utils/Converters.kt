@@ -2,6 +2,7 @@ package com.example.leetdroid.utils
 
 import androidx.room.TypeConverter
 import com.example.leetdroid.data.entitiy.Contest
+import com.example.leetdroid.model.DailyQuestionModel
 import com.example.leetdroid.model.UserProfileModel
 import com.google.gson.Gson
 
@@ -99,6 +100,48 @@ class Converters {
         fun fromContest(contests: List<Contest>): String? {
             val gson = Gson()
             return gson.toJson(contests)
+        }
+    }
+
+    object DailyQuestionDailyConverter {
+        @TypeConverter
+        fun fromStringDailyQuestionDaily(value: String): DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode? {
+            val listType: Type = object : TypeToken<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode?>() {}.type
+            return Gson().fromJson(value,listType)
+        }
+
+        @TypeConverter
+        fun fromDailyQuestionDaily(activeDailyChallenge: DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode): String? {
+            val gson = Gson()
+            return gson.toJson(activeDailyChallenge)
+        }
+    }
+
+    object DailyQuestionConverter {
+        @TypeConverter
+        fun fromStringDailyQuestion(value: String): DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode? {
+            val listType: Type = object : TypeToken<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode?>() {}.type
+            return Gson().fromJson(value,listType)
+        }
+
+        @TypeConverter
+        fun fromDailyQuestion(question: DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode): String? {
+            val gson = Gson()
+            return gson.toJson(question)
+        }
+    }
+
+    object DailyQuestionTagsConverter {
+        @TypeConverter
+        fun fromStringDailyQuestionTags(value: String): List<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode.TopicTagsNode>? {
+            val listType: Type = object : TypeToken<List<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode.TopicTagsNode>?>() {}.type
+            return Gson().fromJson(value,listType)
+        }
+
+        @TypeConverter
+        fun fromDailyQuestionTags(tags: List<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode.TopicTagsNode>): String? {
+            val gson = Gson()
+            return gson.toJson(tags)
         }
     }
 }

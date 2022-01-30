@@ -9,7 +9,24 @@
         android:id="@+id/homeFragment"
         android:name="com.example.leetdroid.ui.fragments.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_questionFragment"
+            app:destination="@id/questionFragment">
+            <argument
+                android:name="titleSlug"
+                android:defaultValue="0"
+                app:argType="string" />
+            <argument
+                android:name="hasSolution"
+                android:defaultValue="true"
+                app:argType="boolean" />
+            <argument
+                android:name="questionID"
+                android:defaultValue="0"
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/myProfileFragment"
