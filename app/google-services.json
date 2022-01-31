@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "139870240557",
+    "project_id": "leetdroid-48b1b",
+    "storage_bucket": "leetdroid-48b1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139870240557:android:619ae5f8c0c8cf15011da4",
+        "android_client_info": {
+          "package_name": "com.example.leetdroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139870240557-uq28sfqa4ac3bfnnoupe9knqrud2109m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxHPL9ea_RLS_3sSyGNcfxkthyDaF6T48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139870240557-uq28sfqa4ac3bfnnoupe9knqrud2109m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

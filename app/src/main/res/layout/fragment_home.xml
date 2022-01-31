@@ -125,8 +125,8 @@
                 android:contentDescription="difficulty"
                 android:drawableStart="@drawable/ic_baseline_share_24"
                 android:textAlignment="center"
-                android:textStyle="bold"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:backgroundTint="@color/alice_blue" />
         </RelativeLayout>
 
