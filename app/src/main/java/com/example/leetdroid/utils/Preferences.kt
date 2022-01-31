@@ -38,18 +38,4 @@ class Preferences(context: Context) {
     var dailyQuestionAdded: Boolean
         get() = preferences.getBoolean("dailyQuestionAdded", false)
         set(value) = preferences.edit().putBoolean("dailyQuestionAdded", value).apply()
-
-    var lastVisitedDateTime: Int
-        get() = preferences.getInt("lastVisitedDateTime", getPreviousDate())
-        set(value) = preferences.edit().putInt("lastVisitedDateTime", value).apply()
-
-
-    // gets the previous date
-    private fun getPreviousDate():Int{
-        val cal = Calendar.getInstance()
-        var currentDate: Int =  cal.get(Calendar.DATE)
-        cal.add(Calendar.DATE,-1)
-        val dayFormat = SimpleDateFormat("dd",Locale.getDefault())
-        return dayFormat.format(cal.time).toString().toInt()
-    }
 }

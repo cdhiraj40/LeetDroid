@@ -1,5 +1,8 @@
 package com.example.leetdroid.ui.fragments
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -55,6 +58,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+import android.app.NotificationManager
+
+import android.app.NotificationChannel
+import android.content.Context.ALARM_SERVICE
+
+import android.os.Build
+import com.example.leetdroid.notification.DailyQuestionAlarmReceiver
+
 
 class HomeFragment : Fragment() {
 
@@ -65,6 +76,9 @@ class HomeFragment : Fragment() {
 
     private val calendar = Calendar.getInstance()
     private var currentDate: Int = calendar.get(Calendar.DATE)
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var pendingIntent: PendingIntent
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,6 +88,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         val rootView = fragmentHomeBinding.root
+
+        createNotificationChannel()
+        setAlarm(requireContext())
 
         fragmentHomeBinding.contestProgressBar.visibility = View.VISIBLE
         contestViewModel = ViewModelProvider(
@@ -88,17 +105,16 @@ class HomeFragment : Fragment() {
 
         preferences = Preferences(requireContext())
 
+        // check if contest timer has been ended or app is newly installed
         if (preferences.timerEnded || !preferences.contestsInserted) {
             getContestList()
         } else {
             displayContests()
         }
 
-        // check if today is new day, if yes then only load new question
-        if (!preferences.dailyQuestionLoaded && currentDate != preferences.lastVisitedDateTime) {
-            preferences.lastVisitedDateTime = currentDate
+        // check if questions has been loaded, if yes then only load new question
+        if (!preferences.dailyQuestionLoaded) {
             loadDailyQuestion()
-            preferences.dailyQuestionLoaded = true
         } else {
             setupDailyQuestion()
         }
@@ -331,6 +347,34 @@ class HomeFragment : Fragment() {
         })
     }
 
+    // update daily question
+    private fun dailyUpdateQuestion() {
+        val call: okhttp3.Call = createApiCall()
+        call.enqueue(object : okhttp3.Callback {
+
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                Log.d(MyProfileFragment.Constant.TAG, call.toString(), e)
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+
+                val questionData: DailyQuestionModel = JsonUtils.generateObjectFromJson(
+                    response.body!!.string(),
+                    DailyQuestionModel::class.java
+                )
+                Log.d(TAG, questionData.toString())
+
+                val todaysQuestion = DailyQuestion(
+                    activeDailyCodingChallengeQuestion = fromDailyQuestionDaily(questionData.data?.activeDailyCodingChallengeQuestion!!).toString(),
+                    question = fromDailyQuestion(questionData.data?.activeDailyCodingChallengeQuestion?.question!!).toString(),
+                    topicTags = fromDailyQuestionTags(questionData.data?.activeDailyCodingChallengeQuestion?.question?.topicTags!!)
+                        .toString()
+                )
+                updateQuestion(todaysQuestion)
+            }
+        })
+    }
+
     // saving/updating the question in local database
     private fun saveQuestion(questionData: DailyQuestionModel) {
         val todaysQuestion = DailyQuestion(
@@ -348,7 +392,6 @@ class HomeFragment : Fragment() {
                 updateQuestion(todaysQuestion)
             }
         }
-
     }
 
     // updates the question
@@ -411,6 +454,48 @@ class HomeFragment : Fragment() {
                 Uri.parse(link)
             )
         )
+    }
+
+    private fun setAlarm(context: Context) {
+        val cal = Calendar.getInstance()
+
+        /**
+         * leetcode daily challenges gets updated 00:00 UTC everyday
+         * that is 5.30 am in IST
+         * we are gonna send notification about it every day 5 am of device's time
+         */
+        cal.set(Calendar.HOUR_OF_DAY, 5)
+        cal.set(Calendar.MINUTE, 0)
+
+        // send notification every day for a new daily question
+        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, DailyQuestionAlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+
+        if (Calendar.getInstance().after(cal)) {
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
+        dailyUpdateQuestion()
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name: CharSequence = "foxandroidReminderChannel"
+            val description = "Channel For Alarm Manager"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel("foxandroid", name, importance)
+            channel.description = description
+            val notificationManager: NotificationManager = context?.getSystemService(
+                NotificationManager::class.java
+            )!!
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     object Constant {
