@@ -115,6 +115,7 @@ class HomeFragment : Fragment() {
         // check if questions has been loaded, if yes then only load new question
         if (!preferences.dailyQuestionLoaded) {
             loadDailyQuestion()
+            setupDailyQuestion()
         } else {
             setupDailyQuestion()
         }

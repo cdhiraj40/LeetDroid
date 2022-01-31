@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome_old_user_text">Welcome Back! \n Sign in to continue!</string>
+    <string name="welcome_new_user_text">Welcome to LeetDroid! \n Sign up to continue!</string>
+    <string name="forgot_password_user_text">Welcome to LeetDroid! \n Sign up to continue!</string>
+
+    <string name="prompt_password">Password</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_forgot_password">Forgot Password?</string>
+
+    <string name="send_email_button_text">Send Email</string>
+    <string name="sent_email_button_text">Sent Email</string>
+    <string name="open_email_button_text">Open Gmail</string>
+    <string name="no_email_prompt">Didn\'t get any email? Do Check your spam folder or try again with a registered email.</string>
+    <string name="forgot_password_valid_user_text">Email will be only sent to registered users</string>
+    <string name="forgot_password_user_prompt">Forgot Password? \n No worries</string>
+    <string name="forgot_password_mail_sent_text">We’ve sent you an email with instructions to reset your password*</string>
+
+</resources>

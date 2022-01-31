@@ -18,6 +18,8 @@ import com.example.leetdroid.data.entitiy.User
 import com.example.leetdroid.data.viewModel.UserViewModel
 
 import com.example.leetdroid.databinding.FragmentMyProfileBinding
+import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.model.UserProfileErrorModel
 import com.example.leetdroid.model.UserProfileModel
 import com.example.leetdroid.ui.base.BaseFragment
 
@@ -58,7 +60,7 @@ class MyProfileFragment : BaseFragment() {
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[UserViewModel::class.java]
-        Preferences(requireContext()).questionsFetched = false
+
         return rootView
     }
 
@@ -108,10 +110,27 @@ class MyProfileFragment : BaseFragment() {
 
             override fun onResponse(call: Call, response: Response) {
 
+                val body = response.body!!.string()
                 val userData: UserProfileModel = JsonUtils.generateObjectFromJson(
-                    response.body!!.string(),
+                    body,
                     UserProfileModel::class.java
                 )
+                if (userData.data?.matchedUser == null) {
+                    val errorData: UserProfileErrorModel = JsonUtils.generateObjectFromJson(
+                        body,
+                        UserProfileErrorModel::class.java
+                    )
+                    if (errorData.errors?.get(0)?.message.toString() == "That user does not exist.") {
+                        showSnackBar(requireActivity(), "user does not exist")
+                        return
+                    } else {
+                        showSnackBar(
+                            requireActivity(),
+                            "Something went wrong, please try again later"
+                        )
+                        return
+                    }
+                }
                 val user = User(
                     fromMatchedUserNode(userData.data?.matchedUser).toString(),
                     fromContributionsNode(userData.data?.matchedUser?.contributions!!).toString(),
@@ -127,7 +146,8 @@ class MyProfileFragment : BaseFragment() {
     // creates an okHttpClient call for user data
     private fun createApiCall(): Call {
         val okHttpClient = OkHttpClient()
-        val postBody = Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest("cdhiraj40"))
+        val postBody =
+            Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest("dtausdvascudgtasvjdasyckgdj"))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()

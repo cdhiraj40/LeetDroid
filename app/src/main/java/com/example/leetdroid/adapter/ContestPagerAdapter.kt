@@ -11,12 +11,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.data.entitiy.Contest
-import com.example.leetdroid.ui.fragments.HomeFragment
 
 import com.example.leetdroid.utils.DateUtils.getDate
 import com.example.leetdroid.utils.DateUtils.getHours

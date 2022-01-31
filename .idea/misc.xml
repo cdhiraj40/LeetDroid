@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg.xml" value="0.25729166666666664" />
         <entry key="app/src/main/res/drawable/btn_blue_normal.xml" value="0.21944444444444444" />
         <entry key="app/src/main/res/drawable/btn_blue_pressed.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/btn_blue_selector.xml" value="0.3807291666666667" />
@@ -15,9 +16,13 @@
         <entry key="app/src/main/res/drawable/ic_baseline_discuss_24.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/drawable/ic_round_person_24.xml" value="0.22135416666666666" />
+        <entry key="app/src/main/res/drawable/login_layout_background.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/drawable/onboarding_unselected_dot_blue.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/round_background.xml" value="0.3074074074074074" />
+        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.26856884057971014" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_questions_item.xml" value="0.2046875" />
         <entry key="app/src/main/res/layout/contest_pager_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/contest_view_pager_item.xml" value="0.2595419847328244" />
@@ -43,6 +48,7 @@
         <entry key="app/src/main/res/menu/navigation_drawer_menu.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/menu/navigation_question.xml" value="0.33" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.253125" />
       </map>
     </option>
   </component>
