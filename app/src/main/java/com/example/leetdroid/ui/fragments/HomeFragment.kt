@@ -1,10 +1,14 @@
 package com.example.leetdroid.ui.fragments
 
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,6 +33,7 @@ import com.example.leetdroid.databinding.FragmentHomeBinding
 import com.example.leetdroid.extensions.copyToClipboard
 import com.example.leetdroid.extensions.showSnackBarWithAction
 import com.example.leetdroid.model.DailyQuestionModel
+import com.example.leetdroid.notification.DailyQuestionAlarmReceiver
 import com.example.leetdroid.ui.fragments.HomeFragment.Constant.TAG
 import com.example.leetdroid.utils.Converters
 import com.example.leetdroid.utils.Converters.DailyQuestionConverter.fromDailyQuestion
@@ -57,14 +62,6 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
-import android.app.NotificationManager
-
-import android.app.NotificationChannel
-import android.content.Context.ALARM_SERVICE
-
-import android.os.Build
-import com.example.leetdroid.notification.DailyQuestionAlarmReceiver
 
 
 class HomeFragment : Fragment() {
@@ -502,5 +499,4 @@ class HomeFragment : Fragment() {
     object Constant {
         val TAG = HomeFragment::class.qualifiedName
     }
-
 }

@@ -8,20 +8,26 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
+import com.example.leetdroid.data.entitiy.FirebaseUserProfile
+import com.example.leetdroid.data.viewModel.FirebaseUserViewModel
 import com.example.leetdroid.databinding.ActivitySignUpBinding
-import com.example.leetdroid.extensions.openActivity
 import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.model.FirebaseUserModel
 import com.example.leetdroid.model.UserProfileErrorModel
 import com.example.leetdroid.model.UserProfileModel
 import com.example.leetdroid.ui.base.MainActivity
-import com.example.leetdroid.ui.fragments.MyProfileFragment
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.example.leetdroid.utils.StringExtensions.isEmailValid
 import com.example.leetdroid.utils.hideSoftKeyboard
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -35,6 +41,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private lateinit var signUpBinding: ActivitySignUpBinding
+    private lateinit var firebaseUserViewModel: FirebaseUserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +52,13 @@ class SignUpActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar
         supportActionBar?.hide()
 
+        firebaseUserViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        )[FirebaseUserViewModel::class.java]
+
         signUpBinding.loginButton.setOnClickListener {
-            openActivity(LoginActivity::class.java)
+            onBackPressed()
             finish()
         }
 
@@ -162,8 +174,8 @@ class SignUpActivity : AppCompatActivity() {
                 signUpBinding.usernameLayoutSignup.error = "Please enter a username"
                 return@setOnClickListener
             }
-            val email: String = signUpBinding.emailEditText.toString().trim { it <= ' ' }
-            val password: String = signUpBinding.passwordEditText.toString().trim { it <= ' ' }
+            val email: String = signUpBinding.emailEditText.text.toString().trim { it <= ' ' }
+            val password: String = signUpBinding.passwordEditText.text.toString().trim { it <= ' ' }
 
             // check if user exist
             loadUser(username, object : ApiResponseListener {
@@ -173,7 +185,7 @@ class SignUpActivity : AppCompatActivity() {
                             signUpBinding.emailLayoutSignup.error = null
                             signUpBinding.passwordLayoutSignup.error = null
 
-                            registerUser(email, password)
+                            registerUser(email, password, username)
                             signUpBinding.signupProgressBar.visibility = View.GONE
                         }
                     } else {
@@ -189,23 +201,30 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerUser(email: String, password: String) {
+    private fun registerUser(email: String, password: String, username: String) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // user registered
                     val firebaseUser = task.result!!.user
+                    val uid = firebaseUser!!.uid
+                    val firestoreDB = FirebaseFirestore.getInstance()
 
+                    val firebaseUserModel = FirebaseUserModel(uid, email, username)
+
+                    firestoreDB.collection("users").document(uid).set(firebaseUserModel)
                     showSnackBar(this, "You are registered!")
 
+                    addUserInDB(FirebaseUserProfile(uid, email, username))
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-                    // TODO save in local database
-                    intent.putExtra("user_id", firebaseUser?.uid)
-                    intent.putExtra("email", firebaseUser?.email)
+                    startActivity(intent)
                 } else {
                     // registration failed
+                    Log.d(
+                        Constant.TAG("SignUpActivity").toString(),
+                        task.exception!!.message.toString()
+                    )
                     showSnackBar(this, task.exception!!.message.toString())
                 }
             }
@@ -238,7 +257,7 @@ class SignUpActivity : AppCompatActivity() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(MyProfileFragment.Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("SignUpActivity").toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -265,5 +284,11 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun addUserInDB(firebaseUserProfile: FirebaseUserProfile) {
+        lifecycleScope.launch {
+            firebaseUserViewModel.addUser(firebaseUserProfile)
+        }
     }
 }
