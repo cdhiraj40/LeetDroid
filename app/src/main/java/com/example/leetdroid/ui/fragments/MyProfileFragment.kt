@@ -15,6 +15,7 @@ import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 
 import com.example.leetdroid.data.entitiy.User
+import com.example.leetdroid.data.viewModel.FirebaseUserViewModel
 import com.example.leetdroid.data.viewModel.UserViewModel
 
 import com.example.leetdroid.databinding.FragmentMyProfileBinding
@@ -47,7 +48,11 @@ class MyProfileFragment : BaseFragment() {
 
     private lateinit var myProfileBinding: FragmentMyProfileBinding
     private lateinit var userViewModel: UserViewModel
+    private lateinit var firebaseUserViewModel: FirebaseUserViewModel
+    private lateinit var email: String
+    private lateinit var username: String
     private var user: User? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,6 +66,21 @@ class MyProfileFragment : BaseFragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[UserViewModel::class.java]
 
+        firebaseUserViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        )[FirebaseUserViewModel::class.java]
+
+//        lifecycleScope.launch {
+//            firebaseUserViewModel.getFirebaseUser.observe(viewLifecycleOwner, { it ->
+//                it?.let {
+//                    val username = it.username
+//                    email = it.email
+//                }
+//            })
+//        }
+
+        requireActivity().invalidateOptionsMenu()
         return rootView
     }
 
@@ -68,8 +88,16 @@ class MyProfileFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         val preferences = Preferences(requireContext())
         if (!preferences.userDataLoaded) {
-            loadUser()
-            preferences.userDataLoaded = true
+
+            // get username and email from room database
+            firebaseUserViewModel.getFirebaseUser.observe(viewLifecycleOwner, { it ->
+                it?.let {
+                    username = it.username
+                    email = it.email
+                }
+                loadUser()
+                preferences.userDataLoaded = true
+            })
         } else {
             userViewModel.getUser.observe(viewLifecycleOwner, { it ->
                 it?.let {
@@ -100,7 +128,6 @@ class MyProfileFragment : BaseFragment() {
 
     // load user from online
     private fun loadUser() {
-
         val call: Call = createApiCall()
         call.enqueue(object : Callback {
 
@@ -147,7 +174,7 @@ class MyProfileFragment : BaseFragment() {
     private fun createApiCall(): Call {
         val okHttpClient = OkHttpClient()
         val postBody =
-            Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest("dtausdvascudgtasvjdasyckgdj"))
+            Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest(username))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()

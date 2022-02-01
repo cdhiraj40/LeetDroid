@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.leetdroid.data.entitiy.FirebaseUserProfile
@@ -32,7 +31,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(loginBinding.root)
 
         // hide the action bar
-        val actionBar: ActionBar? = supportActionBar
         supportActionBar?.hide()
 
         // check if user is signed in
