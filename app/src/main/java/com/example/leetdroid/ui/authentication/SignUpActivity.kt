@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.leetdroid.api.ApiResponseListener
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.data.entitiy.FirebaseUserProfile
@@ -36,10 +37,6 @@ import java.util.*
 
 class SignUpActivity : AppCompatActivity() {
 
-    interface ApiResponseListener {
-        fun onSuccess(success: Boolean)
-    }
-
     private lateinit var signUpBinding: ActivitySignUpBinding
     private lateinit var firebaseUserViewModel: FirebaseUserViewModel
 
@@ -49,7 +46,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(signUpBinding.root)
 
         // hide the action bar
-        val actionBar: ActionBar? = supportActionBar
+//        val actionBar: ActionBar? = supportActionBar
         supportActionBar?.hide()
 
         firebaseUserViewModel = ViewModelProvider(

@@ -34,7 +34,7 @@ import com.example.leetdroid.extensions.copyToClipboard
 import com.example.leetdroid.extensions.showSnackBarWithAction
 import com.example.leetdroid.model.DailyQuestionModel
 import com.example.leetdroid.notification.DailyQuestionAlarmReceiver
-import com.example.leetdroid.ui.fragments.HomeFragment.Constant.TAG
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.Converters
 import com.example.leetdroid.utils.Converters.DailyQuestionConverter.fromDailyQuestion
 import com.example.leetdroid.utils.Converters.DailyQuestionConverter.fromStringDailyQuestion
@@ -70,12 +70,6 @@ class HomeFragment : Fragment() {
     private lateinit var preferences: Preferences
     private lateinit var contestViewModel: ContestViewModel
     private lateinit var dailyViewModel: DailyQuestionViewModel
-
-    private val calendar = Calendar.getInstance()
-    private var currentDate: Int = calendar.get(Calendar.DATE)
-    private lateinit var alarmManager: AlarmManager
-    private lateinit var pendingIntent: PendingIntent
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -142,7 +136,7 @@ class HomeFragment : Fragment() {
             formattedDate = SimpleDateFormat("d MMM, yyyy", Locale.getDefault()).format(parsedDate)
             fragmentHomeBinding.dailyQuestionDate.text = formattedDate
         } catch (exception: ParseException) {
-            Log.d(TAG, "$exception occurred!")
+            Log.d(Constant.TAG("HomeFragment").toString(), "$exception occurred!")
             fragmentHomeBinding.dailyQuestionDate.text =
                 SimpleDateFormat("d MMM, yyyy", Locale.getDefault()).format(
                     Date()
@@ -234,7 +228,7 @@ class HomeFragment : Fragment() {
             override fun onResponse(Call: Call<JsonArray>?, response: Response<JsonArray>?) {
                 if (response?.body() != null) {
                     val body = response.body()!!
-                    Log.d(TAG, body.toString())
+                    Log.d(Constant.TAG("HomeFragment").toString(), body.toString())
 
                     saveContests(body)
 
@@ -243,7 +237,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<JsonArray>?, throwable: Throwable) {
-                Log.d(TAG, "requestFailed", throwable)
+                Log.d(Constant.TAG("HomeFragment").toString(), "requestFailed", throwable)
             }
         })
     }
@@ -338,7 +332,7 @@ class HomeFragment : Fragment() {
                     response.body!!.string(),
                     DailyQuestionModel::class.java
                 )
-                Log.d(TAG, questionData.toString())
+                Log.d(Constant.TAG("HomeFragment").toString(), questionData.toString())
 
                 saveQuestion(questionData)
             }
@@ -360,7 +354,7 @@ class HomeFragment : Fragment() {
                     response.body!!.string(),
                     DailyQuestionModel::class.java
                 )
-                Log.d(TAG, questionData.toString())
+                Log.d(Constant.TAG("HomeFragment").toString(), questionData.toString())
 
                 val todaysQuestion = DailyQuestion(
                     activeDailyCodingChallengeQuestion = fromDailyQuestionDaily(questionData.data?.activeDailyCodingChallengeQuestion!!).toString(),
@@ -467,18 +461,19 @@ class HomeFragment : Fragment() {
 
         // send notification every day for a new daily question
         val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, DailyQuestionAlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+        val alarmIntent = Intent(context, DailyQuestionAlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0)
 
         if (Calendar.getInstance().after(cal)) {
-            cal.add(Calendar.DAY_OF_MONTH, 1);
+            cal.add(Calendar.DATE, 1)
         }
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
+            cal.timeInMillis,
             AlarmManager.INTERVAL_DAY,
             pendingIntent
         )
+        Log.d(Constant.TAG("HomeFragment").toString(), "alarm has been sent")
         dailyUpdateQuestion()
     }
 
@@ -496,7 +491,4 @@ class HomeFragment : Fragment() {
         }
     }
 
-    object Constant {
-        val TAG = HomeFragment::class.qualifiedName
-    }
 }
