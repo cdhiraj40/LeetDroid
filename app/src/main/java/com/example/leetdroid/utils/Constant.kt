@@ -6,4 +6,10 @@ class Constant {
         Medium("Medium"),
         Hard("Hard")
     }
+
+    companion object {
+        val TAG = fun(className: String) {
+            className::class.qualifiedName
+        }
+    }
 }

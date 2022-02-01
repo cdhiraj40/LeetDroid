@@ -30,9 +30,7 @@
         </activity>
         <activity
             android:name=".ui.base.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"/>
 
         <receiver
             android:name=".notification.DailyQuestionAlarmReceiver"
