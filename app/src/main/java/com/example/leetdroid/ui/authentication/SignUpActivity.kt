@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +15,7 @@ import com.example.leetdroid.api.URL
 import com.example.leetdroid.data.entitiy.FirebaseUserProfile
 import com.example.leetdroid.data.viewModel.FirebaseUserViewModel
 import com.example.leetdroid.databinding.ActivitySignUpBinding
+import com.example.leetdroid.extensions.openActivity
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.model.FirebaseUserModel
 import com.example.leetdroid.model.UserProfileErrorModel
@@ -46,7 +46,6 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(signUpBinding.root)
 
         // hide the action bar
-//        val actionBar: ActionBar? = supportActionBar
         supportActionBar?.hide()
 
         firebaseUserViewModel = ViewModelProvider(
@@ -55,7 +54,7 @@ class SignUpActivity : AppCompatActivity() {
         )[FirebaseUserViewModel::class.java]
 
         signUpBinding.loginButton.setOnClickListener {
-            onBackPressed()
+            openActivity(LoginActivity::class.java)
             finish()
         }
 

@@ -2,27 +2,22 @@ package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leetdroid.R
-
 import com.example.leetdroid.adapter.GeneralDiscussionAdapter
 import com.example.leetdroid.api.*
 import com.example.leetdroid.databinding.FragmentGeneralDiscussionBinding
-import com.example.leetdroid.ui.fragments.GeneralDiscussionFragment.Constant.TAG
-
 import com.example.leetdroid.model.GeneralDiscussionModel
-
+import com.example.leetdroid.ui.fragments.GeneralDiscussionFragment.Constant.TAG
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
-import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -34,7 +29,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
 
     private lateinit var fragmentGeneralDiscussionBinding: FragmentGeneralDiscussionBinding
     private lateinit var generalDiscussionsJson: GeneralDiscussionModel
-//    private lateinit var leetCodeRequest: LeetCodeRequest = LeetCodeRequest()
+
+    //    private lateinit var leetCodeRequest: LeetCodeRequest = LeetCodeRequest()
     private var generalDiscussionAdapter: GeneralDiscussionAdapter? = null
     private var limit = 10
 
@@ -122,7 +118,10 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
             "discussionId" to discussionId,
         )
         fragmentGeneralDiscussionBinding.root.findNavController()
-            .navigate(R.id.action_generalDiscussionFragment_to_generalDiscussionItemFragment, bundle)
+            .navigate(
+                R.id.action_generalDiscussionFragment_to_generalDiscussionItemFragment,
+                bundle
+            )
     }
 
     object Constant {
