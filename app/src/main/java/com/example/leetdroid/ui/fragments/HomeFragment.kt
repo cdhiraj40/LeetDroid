@@ -33,6 +33,7 @@ import com.example.leetdroid.databinding.FragmentHomeBinding
 import com.example.leetdroid.extensions.copyToClipboard
 import com.example.leetdroid.extensions.showSnackBarWithAction
 import com.example.leetdroid.model.DailyQuestionModel
+import com.example.leetdroid.model.RandomQuestionModel
 import com.example.leetdroid.notification.DailyQuestionAlarmReceiver
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.Converters
@@ -110,6 +111,10 @@ class HomeFragment : Fragment() {
             sharedPreferences.dailyQuestionLoaded = true
         } else {
             setupDailyQuestion()
+        }
+
+        fragmentHomeBinding.randomQuestionLayout.setOnClickListener {
+            loadRandomQuestion()
         }
         return rootView
     }
@@ -269,7 +274,6 @@ class HomeFragment : Fragment() {
         val preferences = SharedPreferences(requireContext())
         preferences.contestsInserted = false
         lifecycleScope.launch {
-            val preferences = SharedPreferences(requireContext())
             if (!preferences.contestsInserted && !preferences.timerEnded) {
                 insertContests(biWeeklyContest, weeklyContest)
             } else {
@@ -493,4 +497,53 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // get random question's title slug
+    private fun loadRandomQuestion() {
+        val call: okhttp3.Call = randomQuestionApiCall()
+        call.enqueue(object : okhttp3.Callback {
+
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                Log.d(Constant.TAG("HomeFragment").toString(), call.toString(), e)
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+
+                val randomQuestionData: RandomQuestionModel = JsonUtils.generateObjectFromJson(
+                    response.body!!.string(),
+                    RandomQuestionModel::class.java
+                )
+                Log.d(Constant.TAG("HomeFragment").toString(), randomQuestionData.toString())
+
+                openRandomQuestion(randomQuestionData.data?.randomQuestion?.titleSlug.toString())
+            }
+        })
+    }
+
+    private fun randomQuestionApiCall(): okhttp3.Call {
+        val okHttpClient = OkHttpClient()
+        val postBody = Gson().toJson(LeetCodeRequests.Helper.getRandomQuestion)
+        val requestBody: RequestBody =
+            postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        val headers: Headers = Headers.Builder()
+            .add("Content-Type", "application/json")
+            .build()
+        val request: Request = Request.Builder()
+            .headers(headers)
+            .post(requestBody)
+            .url(URL.graphql)
+            .build()
+        return okHttpClient.newCall(request)
+    }
+
+    private fun openRandomQuestion(titleSlug: String) {
+        val bundle = bundleOf(
+            "questionTitleSlug" to titleSlug,
+            "questionHasSolution" to false,
+            "questionID" to null
+        )
+        activity?.runOnUiThread {
+            fragmentHomeBinding.root.findNavController()
+                .navigate(R.id.action_homeFragment_to_questionFragment, bundle)
+        }
+    }
 }

@@ -31,7 +31,7 @@ class QuestionSolutionFragment : Fragment() {
 //            Gson().toJson(LeetCodeRequests.Helper.getQuestionContent(questionTitleSlug))
         val solutionView = fragmentSolutionBinding.solutionView
         questionSharedViewModel =
-            ViewModelProvider(requireActivity()).get(QuestionSharedViewModel::class.java)
+            ViewModelProvider(requireActivity())[QuestionSharedViewModel::class.java]
 
         questionSharedViewModel.questionTitleSlug.observe(viewLifecycleOwner, {
             // updating data in Title-Text

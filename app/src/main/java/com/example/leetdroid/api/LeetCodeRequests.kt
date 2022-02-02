@@ -66,8 +66,8 @@ data class LeetCodeRequests(
             variables = Variables(
                 titleSlug = titleSlug,
             ),
-            query = "query questionData(\$titleSlug: String!) { question(titleSlug: \$titleSlug) { questionId questionFrontendId title titleSlug content difficulty likes dislikes exampleTestcases categoryTitle " +
-                    "topicTags { name slug translatedName } stats hints } }  "
+            query = "query questionData(\$titleSlug: String!) { question(titleSlug: \$titleSlug) { questionId questionFrontendId title titleSlug content isPaidOnly difficulty likes dislikes exampleTestcases categoryTitle " +
+                    "topicTags { name slug translatedName } stats hints solution { id canSeeDetail paidOnly hasVideoSolution paidOnlyVideo } } }  "
         )
 
         // request for question item all discussion list
@@ -98,7 +98,7 @@ data class LeetCodeRequests(
                     "fragment DiscussPost on PostNode { id voteCount content updationDate creationDate author { username profile { userAvatar reputation } } }"
         )
 
-        // request for upcoming contests, not being used
+        // request for upcoming contests not being used
         val upcomingContestRequest = LeetCodeRequests(
             operationName = "getUserProfile",
             variables = Variables(
@@ -112,6 +112,15 @@ data class LeetCodeRequests(
             query = "query questionOfToday { activeDailyCodingChallengeQuestion { date userStatus link question { acRate difficulty freqBar frontendQuestionId: " +
                     "questionFrontendId isFavor paidOnly: isPaidOnly status title titleSlug hasVideoSolution hasSolution topicTags { name id slug } } } } "
 
+        )
+
+        val getRandomQuestion = LeetCodeRequests(
+            operationName = "randomQuestion",
+            variables = Variables(
+                categorySlug = "",
+                filters = Filters(orderBy = "FRONTEND_ID"),
+            ),
+            query = "query randomQuestion(\$categorySlug: String, \$filters: QuestionListFilterInput) {  randomQuestion(categorySlug: \$categorySlug, filters: \$filters) {    titleSlug  }}"
         )
     }
 
@@ -132,6 +141,7 @@ data class LeetCodeRequests(
     )
 
     data class Filters(
-        val tags: List<String>
+        val tags: List<String>? = null,
+        val orderBy: String? = null
     )
 }

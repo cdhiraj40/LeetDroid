@@ -31,6 +31,15 @@ sealed class AppDialogs(
         icon = R.drawable.ic_baseline_sync_24
     )
 
+    object UsernameWarning : AppDialogs(
+        title = R.string.username_warning_title,
+        message = R.string.username_warning_message,
+        positiveMessage = R.string.username_warning_positive_message,
+        negativeMessage = R.string.username_warning_negative_message,
+        cancelable = true,
+        icon = R.drawable.ic_baseline_warning_24
+    )
+
     interface HasBodyFormatArgs {
         val args: List<Any>
     }
