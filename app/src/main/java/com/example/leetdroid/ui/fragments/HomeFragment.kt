@@ -42,7 +42,7 @@ import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromDa
 import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromStringDailyQuestionDaily
 import com.example.leetdroid.utils.Converters.DailyQuestionTagsConverter.fromDailyQuestionTags
 import com.example.leetdroid.utils.JsonUtils
-import com.example.leetdroid.utils.Preferences
+import com.example.leetdroid.utils.SharedPreferences
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.JsonArray
@@ -67,7 +67,7 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment() {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
-    private lateinit var preferences: Preferences
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var contestViewModel: ContestViewModel
     private lateinit var dailyViewModel: DailyQuestionViewModel
 
@@ -94,19 +94,20 @@ class HomeFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[DailyQuestionViewModel::class.java]
 
-        preferences = Preferences(requireContext())
+        sharedPreferences = SharedPreferences(requireContext())
 
         // check if contest timer has been ended or app is newly installed
-        if (preferences.timerEnded || !preferences.contestsInserted) {
+        if (sharedPreferences.timerEnded || !sharedPreferences.contestsInserted) {
             getContestList()
         } else {
             displayContests()
         }
 
         // check if questions has been loaded, if yes then only load new question
-        if (!preferences.dailyQuestionLoaded) {
+        if (!sharedPreferences.dailyQuestionLoaded) {
             loadDailyQuestion()
             setupDailyQuestion()
+            sharedPreferences.dailyQuestionLoaded = true
         } else {
             setupDailyQuestion()
         }
@@ -265,9 +266,10 @@ class HomeFragment : Fragment() {
             contestList[1].in_24_hours,
             contestList[1].status,
         )
-
+        val preferences = SharedPreferences(requireContext())
+        preferences.contestsInserted = false
         lifecycleScope.launch {
-            val preferences = Preferences(requireContext())
+            val preferences = SharedPreferences(requireContext())
             if (!preferences.contestsInserted && !preferences.timerEnded) {
                 insertContests(biWeeklyContest, weeklyContest)
             } else {
@@ -278,7 +280,7 @@ class HomeFragment : Fragment() {
 
     // updates the contests
     private fun updateContests(biWeeklyContest: Contest, weeklyContest: Contest) {
-        Preferences(requireContext()).timerEnded = false
+        SharedPreferences(requireContext()).timerEnded = false
         biWeeklyContest.id = 1
         contestViewModel.updateContest(biWeeklyContest)
 
@@ -288,7 +290,7 @@ class HomeFragment : Fragment() {
 
     // inserts the contests in database
     private fun insertContests(biWeeklyContest: Contest, weeklyContest: Contest) {
-        val preferences = Preferences(requireContext())
+        val preferences = SharedPreferences(requireContext())
         preferences.contestsInserted = true
         contestViewModel.addContest(biWeeklyContest)
         contestViewModel.addContest(weeklyContest)
@@ -323,7 +325,7 @@ class HomeFragment : Fragment() {
         call.enqueue(object : okhttp3.Callback {
 
             override fun onFailure(call: okhttp3.Call, e: IOException) {
-                Log.d(MyProfileFragment.Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("HomeFragment").toString(), call.toString(), e)
             }
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
@@ -345,7 +347,7 @@ class HomeFragment : Fragment() {
         call.enqueue(object : okhttp3.Callback {
 
             override fun onFailure(call: okhttp3.Call, e: IOException) {
-                Log.d(MyProfileFragment.Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("HomeFragment").toString(), call.toString(), e)
             }
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
@@ -377,7 +379,7 @@ class HomeFragment : Fragment() {
         )
 
         lifecycleScope.launch {
-            val preferences = Preferences(requireContext())
+            val preferences = SharedPreferences(requireContext())
             if (!preferences.dailyQuestionAdded) {
                 addQuestion(todaysQuestion)
             } else {
@@ -394,7 +396,7 @@ class HomeFragment : Fragment() {
 
     // adding the question in local database
     private fun addQuestion(dailyQuestion: DailyQuestion) {
-        val preferences = Preferences(requireContext())
+        val preferences = SharedPreferences(requireContext())
         preferences.dailyQuestionAdded = true
         dailyViewModel.addQuestion(dailyQuestion)
     }

@@ -2,47 +2,42 @@ package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
+import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-
 import com.bumptech.glide.Glide
-
+import com.example.leetdroid.R
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
-
 import com.example.leetdroid.data.entitiy.User
 import com.example.leetdroid.data.viewModel.FirebaseUserViewModel
 import com.example.leetdroid.data.viewModel.UserViewModel
-
 import com.example.leetdroid.databinding.FragmentMyProfileBinding
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.model.UserProfileErrorModel
 import com.example.leetdroid.model.UserProfileModel
 import com.example.leetdroid.ui.base.BaseFragment
-
+import com.example.leetdroid.utils.CommonFunctions.Logout.showLogOutDialog
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.Converters.ContributionsNodeConverters.fromContributionsNode
 import com.example.leetdroid.utils.Converters.ContributionsNodeConverters.fromStringContributions
 import com.example.leetdroid.utils.Converters.MatchedUserNodeConverters.fromMatchedUserNode
 import com.example.leetdroid.utils.Converters.MatchedUserNodeConverters.fromStringMatchedUser
-
 import com.example.leetdroid.utils.Converters.ProfileNodeConverters.fromProfileNode
 import com.example.leetdroid.utils.Converters.ProfileNodeConverters.fromStringProfileNode
 import com.example.leetdroid.utils.Converters.SubmitStatsNodeConverters.fromStringSubmitStats
-
 import com.example.leetdroid.utils.Converters.SubmitStatsNodeConverters.fromSubmitStatsNode
 import com.example.leetdroid.utils.JsonUtils
-import com.example.leetdroid.utils.Preferences
+import com.example.leetdroid.utils.SharedPreferences
+import com.example.leetdroid.utils.dialog.AlertDialogShower
+import com.example.leetdroid.utils.dialog.AppDialogs
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+
 
 class MyProfileFragment : BaseFragment() {
 
@@ -51,7 +46,7 @@ class MyProfileFragment : BaseFragment() {
     private lateinit var firebaseUserViewModel: FirebaseUserViewModel
     private lateinit var email: String
     private lateinit var username: String
-    private var user: User? = null
+    private lateinit var alertDialogShower: AlertDialogShower
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,22 +66,18 @@ class MyProfileFragment : BaseFragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[FirebaseUserViewModel::class.java]
 
-//        lifecycleScope.launch {
-//            firebaseUserViewModel.getFirebaseUser.observe(viewLifecycleOwner, { it ->
-//                it?.let {
-//                    val username = it.username
-//                    email = it.email
-//                }
-//            })
-//        }
-
-        requireActivity().invalidateOptionsMenu()
+        alertDialogShower = AlertDialogShower(requireActivity())
         return rootView
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val preferences = Preferences(requireContext())
+        val preferences = SharedPreferences(requireContext())
         if (!preferences.userDataLoaded) {
 
             // get username and email from room database
@@ -95,7 +86,7 @@ class MyProfileFragment : BaseFragment() {
                     username = it.username
                     email = it.email
                 }
-                loadUser()
+                loadUser(username)
                 preferences.userDataLoaded = true
             })
         } else {
@@ -127,12 +118,12 @@ class MyProfileFragment : BaseFragment() {
     }
 
     // load user from online
-    private fun loadUser() {
-        val call: Call = createApiCall()
+    private fun loadUser(username: String) {
+        val call: Call = createApiCall(username)
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("MyProfileFragment").toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -148,7 +139,10 @@ class MyProfileFragment : BaseFragment() {
                         UserProfileErrorModel::class.java
                     )
                     if (errorData.errors?.get(0)?.message.toString() == "That user does not exist.") {
-                        showSnackBar(requireActivity(), "user does not exist")
+                        showSnackBar(
+                            requireActivity(),
+                            "Something went wrong, please try again later"
+                        )
                         return
                     } else {
                         showSnackBar(
@@ -171,10 +165,10 @@ class MyProfileFragment : BaseFragment() {
     }
 
     // creates an okHttpClient call for user data
-    private fun createApiCall(): Call {
+    private fun createApiCall(username: String): Call {
         val okHttpClient = OkHttpClient()
         val postBody =
-            Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest(username))
+            Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest(this.username))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
@@ -190,7 +184,7 @@ class MyProfileFragment : BaseFragment() {
 
     // add or update data
     private fun addUpdateUser(user: User) {
-        val preferences = Preferences(requireContext())
+        val preferences = SharedPreferences(requireContext())
         lifecycleScope.launch {
             if (!preferences.userAdded) {
                 preferences.userAdded = true
@@ -207,7 +201,37 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
-    object Constant {
-        const val TAG = "MyProfileFragment"
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // clear the Main Activity's menu
+        menu.clear()
+        inflater.inflate(R.menu.my_profile_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.logout -> {
+                showLogOutDialog(requireActivity())
+                true
+            }
+            R.id.sync -> {
+                showSyncDataDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showSyncDataDialog() {
+        alertDialogShower.show(AppDialogs.SyncData, {
+            // get username and email from room database
+            firebaseUserViewModel.getFirebaseUser.observe(viewLifecycleOwner, { it ->
+                it?.let {
+                    username = it.username
+                    email = it.email
+                }
+                loadUser(username)
+            })
+        }, {})
     }
 }

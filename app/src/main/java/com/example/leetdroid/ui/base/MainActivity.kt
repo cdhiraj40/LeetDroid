@@ -1,20 +1,21 @@
 package com.example.leetdroid.ui.base
 
 import android.os.Bundle
-
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.example.leetdroid.utils.hideSoftKeyboard
 import com.example.leetdroid.R
-
+import com.example.leetdroid.utils.CommonFunctions.Logout.showLogOutDialog
+import com.example.leetdroid.utils.hideSoftKeyboard
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView as NavigationView
+import com.google.android.material.navigation.NavigationView
+
 
 // TODO: hide keyboard when clicked on bottom navigation items,
 //  add endless recycler views at all places
@@ -40,7 +41,24 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
 
         NavigationUI.setupWithNavController(navigationView, navController)
+    }
 
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_activity_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.logout -> {
+                // log out from app
+                showLogOutDialog(this)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupBottomNavigation() {

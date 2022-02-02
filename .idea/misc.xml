@@ -44,7 +44,9 @@
         <entry key="app/src/main/res/layout/questions_item.xml" value="0.67" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.2171875" />
         <entry key="app/src/main/res/menu/home_menu.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/menu/main_activity_menu.xml" value="0.221875" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/menu/my_profile_menu.xml" value="0.3463541666666667" />
         <entry key="app/src/main/res/menu/navigation_drawer_menu.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/menu/navigation_question.xml" value="0.33" />

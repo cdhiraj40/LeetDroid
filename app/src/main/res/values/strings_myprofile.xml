@@ -3,4 +3,8 @@
 
     <string name="user_profile">user profile</string>
     <string name="username">username</string>
+    <string name="logout_menu_title">Log Out</string>
+    <string name="sync_data">Sync Data</string>
+    <string name="sync_data_dialog_message">Do you want to sync the data? \nThis may take around 10–20 seconds depending on your internet speed. </string>
+
 </resources>

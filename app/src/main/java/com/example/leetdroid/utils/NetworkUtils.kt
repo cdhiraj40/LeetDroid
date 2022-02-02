@@ -1,4 +1,4 @@
-package com.example.gdsc_hackathon.utils
+package com.example.leetdroid.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
