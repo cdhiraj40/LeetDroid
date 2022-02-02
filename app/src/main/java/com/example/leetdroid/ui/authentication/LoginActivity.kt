@@ -14,6 +14,7 @@ import com.example.leetdroid.extensions.openActivity
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.ui.base.MainActivity
 import com.example.leetdroid.utils.Constant
+import com.example.leetdroid.utils.SharedPreferences
 import com.example.leetdroid.utils.StringExtensions.isEmailValid
 import com.example.leetdroid.utils.hideSoftKeyboard
 import com.google.firebase.auth.FirebaseAuth
@@ -157,7 +158,7 @@ class LoginActivity : AppCompatActivity() {
 
                     if (task.isSuccessful) {
 
-                        val user = FirebaseAuth.getInstance().currentUser
+                        val firebaseUser = FirebaseAuth.getInstance().currentUser
                         showSnackBar(this, "Login Successful!")
 
                         // fetch data from firebase and put it in local database
@@ -201,14 +202,18 @@ class LoginActivity : AppCompatActivity() {
                         doc.getString("email").toString(),
                         doc.getString("username").toString(),
                     )
-                    firebaseUserViewModel.addUser(firebaseUserProfile)
+                    // check if app is newly installed then add user else only update
+                    if (!SharedPreferences(this).firebaseUserAdded) {
+                        firebaseUserViewModel.addUser(firebaseUserProfile)
+                        SharedPreferences(this).firebaseUserAdded = true
+                    } else {
+                        firebaseUserProfile.id = 1
+                        firebaseUserViewModel.updateUser(firebaseUserProfile)
+                    }
                 }
             }.addOnFailureListener {
                 Log.d(Constant.TAG("LoginActivity").toString(), it.message.toString())
                 showSnackBar(this, it.message)
             }
-
     }
-
-
 }

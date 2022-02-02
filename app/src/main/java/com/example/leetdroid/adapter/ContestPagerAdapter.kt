@@ -20,7 +20,7 @@ import com.example.leetdroid.utils.DateUtils.getDate
 import com.example.leetdroid.utils.DateUtils.getHours
 import com.example.leetdroid.utils.DateUtils.getTime
 import com.example.leetdroid.utils.DateUtils.parseISO8601Date
-import com.example.leetdroid.utils.Preferences
+import com.example.leetdroid.utils.SharedPreferences
 import com.google.android.material.button.MaterialButton
 import java.util.*
 import kotlin.collections.ArrayList
@@ -93,7 +93,7 @@ class ContestPagerAdapter
             }
 
             override fun onFinish() {
-                Preferences(context).timerEnded=true
+                SharedPreferences(context).timerEnded=true
                 refreshCurrentFragment()
             }
         }.start()

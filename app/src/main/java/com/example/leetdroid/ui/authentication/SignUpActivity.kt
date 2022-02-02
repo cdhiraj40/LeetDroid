@@ -23,6 +23,7 @@ import com.example.leetdroid.model.UserProfileModel
 import com.example.leetdroid.ui.base.MainActivity
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
+import com.example.leetdroid.utils.SharedPreferences
 import com.example.leetdroid.utils.StringExtensions.isEmailValid
 import com.example.leetdroid.utils.hideSoftKeyboard
 import com.google.firebase.auth.FirebaseAuth
@@ -284,7 +285,14 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun addUserInDB(firebaseUserProfile: FirebaseUserProfile) {
         lifecycleScope.launch {
-            firebaseUserViewModel.addUser(firebaseUserProfile)
+            // check if app is newly installed then add user else only update
+            if (!SharedPreferences(this@SignUpActivity).firebaseUserRegistered) {
+                firebaseUserViewModel.addUser(firebaseUserProfile)
+                SharedPreferences(this@SignUpActivity).firebaseUserRegistered = true
+            } else {
+                firebaseUserProfile.id = 1
+                firebaseUserViewModel.updateUser(firebaseUserProfile)
+            }
         }
     }
 }
