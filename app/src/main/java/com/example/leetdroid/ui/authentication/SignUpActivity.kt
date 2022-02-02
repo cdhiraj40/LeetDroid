@@ -25,6 +25,8 @@ import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.example.leetdroid.utils.SharedPreferences
 import com.example.leetdroid.utils.StringExtensions.isEmailValid
+import com.example.leetdroid.utils.dialog.AlertDialogShower
+import com.example.leetdroid.utils.dialog.AppDialogs
 import com.example.leetdroid.utils.hideSoftKeyboard
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -182,7 +184,7 @@ class SignUpActivity : AppCompatActivity() {
                             signUpBinding.emailLayoutSignup.error = null
                             signUpBinding.passwordLayoutSignup.error = null
 
-                            registerUser(email, password, username)
+                            showUsernameWarning(email, password, username)
                             signUpBinding.signupProgressBar.visibility = View.GONE
                         }
                     } else {
@@ -294,5 +296,15 @@ class SignUpActivity : AppCompatActivity() {
                 firebaseUserViewModel.updateUser(firebaseUserProfile)
             }
         }
+    }
+
+    private fun showUsernameWarning(email: String, password: String, username: String) {
+        AlertDialogShower(this).show(
+            AppDialogs.UsernameWarning, {
+                registerUser(email, password, username)
+            }, {
+
+            }
+        )
     }
 }

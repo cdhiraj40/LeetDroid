@@ -3,7 +3,7 @@ package com.example.leetdroid.sharedViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class QuestionSharedViewModel: ViewModel() {
+class QuestionSharedViewModel : ViewModel() {
 
     val questionTitleSlug = MutableLiveData<String>()
     val questionHasSolution = MutableLiveData<Boolean>()
@@ -12,15 +12,16 @@ class QuestionSharedViewModel: ViewModel() {
 
     // function to get title slug
     fun getQuestionTitleSlug(titleSlug: String) {
-        questionTitleSlug.value = titleSlug
+        questionTitleSlug.postValue(titleSlug)
     }
+
     // function to get title slug
-    fun getQuestionHasSolution(hasSolution: Boolean?) {
-        questionHasSolution.value = hasSolution
+    fun getQuestionHasSolution(hasSolution: Boolean) {
+        questionHasSolution.postValue(hasSolution)
     }
 
     // function to get question ID
-    fun getQuestionId(questionId: String){
-        questionID.value = questionId
+    fun getQuestionId(questionId: String) {
+        questionID.postValue(questionId)
     }
 }

@@ -2,25 +2,23 @@ package com.example.leetdroid.ui.fragments.question
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leetdroid.R
 import com.example.leetdroid.adapter.QuestionDiscussionAdapter
-
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionDiscussionBinding
-import com.example.leetdroid.ui.fragments.AllQuestionsFragment
-
 import com.example.leetdroid.model.QuestionDiscussionsModel
+import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
+import com.example.leetdroid.ui.fragments.AllQuestionsFragment
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
 import okhttp3.*
@@ -49,7 +47,7 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
         val rootView = fragmentQuestionDiscussionBinding.root
 
         questionSharedViewModel =
-            ViewModelProvider(requireActivity()).get(QuestionSharedViewModel::class.java)
+            ViewModelProvider(requireActivity())[QuestionSharedViewModel::class.java]
         questionSharedViewModel.questionID.observe(viewLifecycleOwner, {
             // sending questionID to load discussion list
             questionId = it

@@ -45,18 +45,106 @@
             app:tabIndicatorHeight="0dp" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/home_features_layout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@id/weekly_contest_layout">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/all_questions_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/alice_blue"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:cardMaxElevation="3dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/all_questions_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/problem_set"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/all_questions_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/all_questions_title"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_background"
+                    android:backgroundTint="@color/light_blue"
+                    android:contentDescription="All questions icon"
+                    android:src="@drawable/ic_baseline_view_list_24"
+                    app:tint="@color/white" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/random_question_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/alice_blue"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:cardMaxElevation="3dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/random_question_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/random_question"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/random_question_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/random_question_title"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_background"
+                    android:backgroundTint="@color/light_blue"
+                    android:src="@drawable/ic_baseline_shuffle_24"
+                    app:tint="@color/white" />
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/daily_question_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/weekly_contest_layout"
+        android:layout_below="@id/home_features_layout"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="3dp"
         app:cardMaxElevation="3dp"
         app:cardPreventCornerOverlap="true"
-        android:layout_marginBottom="100dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -66,28 +154,42 @@
             android:layout_margin="16dp">
 
             <TextView
+                android:id="@+id/daily_question_heading"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/daily_question_title"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/daily_question_heading"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
                 android:layout_toStartOf="@id/daily_question_date"
                 android:maxLines="2"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/daily_question_date"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/daily_question_heading"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="10dp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -45,7 +45,7 @@ class QuestionFragment : Fragment() {
         val rootView = fragmentQuestionBinding.root
 
         questionSharedViewModel =
-            ViewModelProvider(requireActivity()).get(QuestionSharedViewModel::class.java)
+            ViewModelProvider(requireActivity())[QuestionSharedViewModel::class.java]
 
         // get the data = questionTitleSlug from all questions list
         val bundle = arguments
@@ -55,7 +55,7 @@ class QuestionFragment : Fragment() {
 
         // add title slug and hasSolution in sharedViewModel
         questionSharedViewModel.getQuestionTitleSlug(questionTitleSlug)
-        questionSharedViewModel.getQuestionHasSolution(questionHasSolution)
+        questionSharedViewModel.getQuestionHasSolution(questionHasSolution!!)
         questionSharedViewModel.getQuestionId(questionID)
 
         loadQuestion()
@@ -83,7 +83,7 @@ class QuestionFragment : Fragment() {
     private fun loadQuestion() {
         val okHttpClient = OkHttpClient()
         val postBody: String =
-            Gson().toJson(LeetCodeRequests.Helper.getQuestionContent(questionTitleSlug))
+            Gson().toJson(LeetCodeRequests.Helper.getQuestionContent("two-sum"))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
@@ -108,7 +108,12 @@ class QuestionFragment : Fragment() {
                     QuestionContentModel::class.java
                 )
 
-
+                if(questionContentJson.data?.question?.solution == null)
+                    questionSharedViewModel.getQuestionHasSolution(false)
+                else {
+                    questionSharedViewModel.getQuestionHasSolution(questionContentJson.data?.question?.solution?.canSeeDetail!!)
+                }
+                questionSharedViewModel.getQuestionId(questionContentJson.data?.question?.questionFrontendId.toString())
                 activity?.runOnUiThread {
                     val questionContentHtml = context?.getString(
                         R.string.question_content,
@@ -137,13 +142,12 @@ class QuestionFragment : Fragment() {
 
                     fragmentQuestionBinding.questionExamplesText.visibility = View.VISIBLE
                     fragmentQuestionBinding.questionExamplesText.setHtml(
-                        exampleStrings.substring(0, exampleStrings.length - 25)
+                        exampleStrings.substring(0, exampleStrings.length)
                     )
 
                     fragmentQuestionBinding.questionConstraintsText.setHtml(
                         constraintStrings.trim()
                     )
-
                 }
             }
         })
@@ -166,9 +170,6 @@ class QuestionFragment : Fragment() {
         stringToBeInserted: String,
         index: Int
     ): String {
-
-        // Create a new string
-
         // return the modified String
         return (originalString.substring(0, index + 1)
                 + stringToBeInserted
