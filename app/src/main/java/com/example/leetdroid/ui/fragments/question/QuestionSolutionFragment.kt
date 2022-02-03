@@ -1,15 +1,26 @@
 package com.example.leetdroid.ui.fragments.question
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.leetdroid.R
+import com.example.leetdroid.api.LeetCodeRequests
+import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionSolutionBinding
+import com.example.leetdroid.model.QuestionSolutionModel
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
-import android.webkit.WebViewClient
+import com.example.leetdroid.utils.Constant
+import com.example.leetdroid.utils.JsonUtils
+import com.google.gson.Gson
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import ru.noties.markwon.Markwon
+import java.io.IOException
 
 
 class QuestionSolutionFragment : Fragment() {
@@ -18,6 +29,9 @@ class QuestionSolutionFragment : Fragment() {
     private lateinit var questionTitleSlug: String
     private var questionHasSolution: Boolean = false
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
+    private lateinit var questionSolutionJson: QuestionSolutionModel
+
+    private var markwon: Markwon? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,9 +41,7 @@ class QuestionSolutionFragment : Fragment() {
         fragmentSolutionBinding = FragmentQuestionSolutionBinding.inflate(layoutInflater)
         val rootView = fragmentSolutionBinding.root
 
-//        val postBody: String =
-//            Gson().toJson(LeetCodeRequests.Helper.getQuestionContent(questionTitleSlug))
-        val solutionView = fragmentSolutionBinding.solutionView
+        val viewNoSolution: View = rootView.findViewById(R.id.view_no_solution)
         questionSharedViewModel =
             ViewModelProvider(requireActivity())[QuestionSharedViewModel::class.java]
 
@@ -37,29 +49,66 @@ class QuestionSolutionFragment : Fragment() {
             // updating data in Title-Text
             questionTitleSlug = it
 
-            solutionView.loadUrl("https://leetcode.com/problems/$questionTitleSlug/solution/")
-
-            val solutionViewSettings = solutionView.settings
-            solutionViewSettings.javaScriptEnabled = true
-            solutionViewSettings.domStorageEnabled = true
-            solutionViewSettings.databaseEnabled = true
-
-            solutionViewSettings.cacheMode = WebSettings.LOAD_DEFAULT
-            solutionView.webViewClient = WebViewClient()
             fragmentSolutionBinding.questionTitleText.text = questionTitleSlug
         })
 
         questionSharedViewModel.questionHasSolution.observe(viewLifecycleOwner, {
             // updating data in Title-Text
             questionHasSolution = it
+            if (questionHasSolution) {
+                loadQuestion()
+            } else {
+                viewNoSolution.visibility = View.VISIBLE
+                fragmentSolutionBinding.questionSolution.visibility = View.GONE
+            }
         })
-
-        if (!questionHasSolution) {
-            fragmentSolutionBinding.questionTitleText.text = "No Solution for this question"
-        }
-
+        markwon = Markwon.create(requireContext())
 
         return rootView
     }
 
+    private fun loadQuestion() {
+        val okHttpClient = OkHttpClient()
+        val postBody: String =
+            Gson().toJson(LeetCodeRequests.Helper.getQuestionSolution(questionTitleSlug))
+        val requestBody: RequestBody =
+            postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        val headers: Headers = Headers.Builder()
+            .add("Content-Type", "application/json")
+            .build()
+        val request: Request = Request.Builder()
+            .headers(headers)
+            .post(requestBody)
+            .url(URL.graphql)
+            .build()
+        val call: Call = okHttpClient.newCall(request)
+        call.enqueue(object : Callback {
+
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d(Constant.TAG("QuestionSolutionFragment").toString(), call.toString(), e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+
+                questionSolutionJson = JsonUtils.generateObjectFromJson(
+                    response.body!!.string(),
+                    QuestionSolutionModel::class.java
+                )
+
+                activity?.runOnUiThread {
+                    var discussionContent: String =
+                        questionSolutionJson.data?.question?.solution?.content.toString()
+
+                    discussionContent = discussionContent.replace("\\n", "\n")
+                    discussionContent = discussionContent.replace("\\t", "\t")
+                    discussionContent = discussionContent.replace("$$", "")
+
+                    markwon!!.setMarkdown(
+                        fragmentSolutionBinding.questionSolution,
+                        discussionContent
+                    )
+                }
+            }
+        })
+    }
 }

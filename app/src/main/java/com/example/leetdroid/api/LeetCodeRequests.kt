@@ -70,6 +70,16 @@ data class LeetCodeRequests(
                     "topicTags { name slug translatedName } stats hints solution { id canSeeDetail paidOnly hasVideoSolution paidOnlyVideo } } }  "
         )
 
+        // request for question item solution
+        val getQuestionSolution = fun(titleSlug: String) = LeetCodeRequests(
+            operationName = "QuestionNote",
+            variables = Variables(
+                titleSlug = titleSlug
+            ),
+            query = "query QuestionNote(\$titleSlug: String!) { question(titleSlug: \$titleSlug) { questionId article solution { id content contentTypeId canSeeDetail paidOnly hasVideoSolution " +
+                    "paidOnlyVideo rating { id count average userRating { score } } } } } "
+        )
+
         // request for question item all discussion list
         val getQuestionDiscussions = fun(questionId: String, orderBy: String?, limit: Int) =
             LeetCodeRequests(
@@ -114,6 +124,7 @@ data class LeetCodeRequests(
 
         )
 
+        // request for random question
         val getRandomQuestion = LeetCodeRequests(
             operationName = "randomQuestion",
             variables = Variables(

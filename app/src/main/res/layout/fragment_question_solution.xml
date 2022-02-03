@@ -1,40 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.question.QuestionSolutionFragment">
 
     <TextView
-        android:id="@+id/questionTitleText"
+        android:id="@+id/question_title_text"
         style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/hello_blank_fragment" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/solution_swipe_layout"
+    <org.sufficientlysecure.htmltextview.HtmlTextView
+        android:id="@+id/question_solution"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/questionTitleText">
-        <ScrollView
-            android:id="@+id/solutionLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <WebView
-            android:id="@+id/solutionView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never" />
-        </ScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <ViewStub
-        android:id="@+id/stub_no_solution"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout="@layout/layout_no_solution" />
+        android:layout_below="@id/question_title_text"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="16dp"
+        android:textColor="@color/black" />
+
+    <include
+        android:id="@+id/view_no_solution"
+        layout="@layout/layout_no_solution"
+        android:visibility="gone"/>
 </RelativeLayout>
