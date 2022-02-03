@@ -35,7 +35,7 @@ class AllQuestionsModel : Serializable {
                 var title: String? = null
                 var titleSlug: String? = null
                 var difficulty: String? = null
-                var acRate: Float? = null
+                var acRate: Double? = null
                 var paidOnly: Boolean? = null
                 var frontendQuestionId: String? = null
                 var topicTags: List<TopicTagsNode>? = null

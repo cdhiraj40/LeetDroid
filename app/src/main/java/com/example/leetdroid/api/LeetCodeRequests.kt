@@ -47,18 +47,19 @@ data class LeetCodeRequests(
         )
 
         // request for all question list
-        val getAllQuestionsRequest = fun(categorySlug: String, limit: Int) = LeetCodeRequests(
-            operationName = "problemsetQuestionList",
-            variables = Variables(
-                skip = 0,
-                categorySlug = categorySlug,
-                limit = limit,
-                filters = Filters(tags = listOf())
-            ),
-            query = "query problemsetQuestionList(\$categorySlug: String, \$limit: Int, \$skip: Int, \$filters: QuestionListFilterInput) { problemsetQuestionList: questionList(    " +
-                    "categorySlug: \$categorySlug limit: \$limit skip: \$skip filters: \$filters) {total: totalNum questions: data {acRate difficulty     frontendQuestionId: questionFrontendId  " +
-                    "paidOnly: isPaidOnly     title titleSlug topicTags { name id     slug }hasSolution } } }"
-        )
+        val getAllQuestionsRequest =
+            fun(categorySlug: String, limit: Int, filters: Filters) = LeetCodeRequests(
+                operationName = "problemsetQuestionList",
+                variables = Variables(
+                    skip = 0,
+                    categorySlug = categorySlug,
+                    limit = limit,
+                    filters = filters
+                ),
+                query = "query problemsetQuestionList(\$categorySlug: String, \$limit: Int, \$skip: Int, \$filters: QuestionListFilterInput) { problemsetQuestionList: questionList(    " +
+                        "categorySlug: \$categorySlug limit: \$limit skip: \$skip filters: \$filters) {total: totalNum questions: data {acRate difficulty     frontendQuestionId: questionFrontendId  " +
+                        "paidOnly: isPaidOnly     title titleSlug topicTags { name id     slug }hasSolution } } }"
+            )
 
         // request for question item data
         val getQuestionContent = fun(titleSlug: String?) = LeetCodeRequests(
@@ -153,6 +154,7 @@ data class LeetCodeRequests(
 
     data class Filters(
         val tags: List<String>? = null,
-        val orderBy: String? = null
+        val orderBy: String? = null,
+        val searchKeywords: String? = null
     )
 }

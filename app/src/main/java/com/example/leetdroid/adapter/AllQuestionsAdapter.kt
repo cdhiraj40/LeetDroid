@@ -1,16 +1,26 @@
 package com.example.leetdroid.adapter
 
+import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RelativeLayout
 
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
+import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.model.AllQuestionsModel
 import com.example.leetdroid.model.AllQuestionsModel.DataNode.ProblemSetQuestionListNode.Questions
+import com.example.leetdroid.utils.CommonFunctions
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
-class AllQuestionsAdapter : RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>() {
+class AllQuestionsAdapter(val context: Context, val activity: Activity) :
+    RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>() {
 
     private var questionList = AllQuestionsModel()
     private lateinit var questions: List<Questions>
@@ -47,19 +57,82 @@ class AllQuestionsAdapter : RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>
         holder.questionTitle.text =
             questionItem.title
 
+        holder.questionAcceptanceRate.text = HtmlCompat.fromHtml(
+            context.getString(
+                R.string.acceptance_rate,
+                "<b>${CommonFunctions.Round.roundDouble(questionItem.acRate!!, 2)}</b"
+            ), HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
+
+        when (questionItem.hasSolution) {
+            true -> holder.questionSolution.visibility = View.VISIBLE
+            else -> {
+                holder.questionSolution.visibility = View.GONE
+            }
+        }
+
+        when (questionItem.paidOnly) {
+            true -> {
+                holder.questionLayout.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.paid_question
+                    )
+                )
+                holder.questionPaidStatus.text = context.getString(R.string.question_paid_status)
+            }
+            else -> {
+            }
+        }
+
+        // setting the text and color of difficulty button
+        when (questionItem.difficulty) {
+            "Easy" -> {
+                holder.questionDifficulty.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.easy_difficulty
+                    )
+                )
+                holder.questionDifficulty.text = questionItem.difficulty
+            }
+            "Medium" -> {
+                holder.questionDifficulty.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.medium_difficulty
+                    )
+                )
+                holder.questionDifficulty.text = questionItem.difficulty
+            }
+            "Hard" -> {
+                holder.questionDifficulty.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.hard_difficulty
+                    )
+                )
+                holder.questionDifficulty.text = questionItem.difficulty
+            }
+        }
+
         val questionTitleSlug = questionItem.titleSlug
         val questionHasSolution = questionItem.hasSolution
         val questionId = questionItem.frontendQuestionId
         holder.itemView.setOnClickListener {
-            onClick!!.onItemClick(
-                position,
-                questionTitleSlug,
-                questionHasSolution,
-                questionId
-            )
+            if (!questionItem.paidOnly!!) {
+                onClick!!.onItemClick(
+                    position,
+                    questionTitleSlug,
+                    questionHasSolution,
+                    questionId
+                )
+            } else {
+                showSnackBar(activity, "It's a Paid Question")
+            }
         }
-
     }
+
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
@@ -71,12 +144,17 @@ class AllQuestionsAdapter : RecyclerView.Adapter<AllQuestionsAdapter.ViewHolder>
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val questionTitle: TextView = itemView.findViewById(R.id.all_questions_item_title)
+        val questionLayout: RelativeLayout = itemView.findViewById(R.id.question_item_layout)
+        val questionTitle: TextView = itemView.findViewById(R.id.question_title)
+        val questionAcceptanceRate: TextView = itemView.findViewById(R.id.question_acceptance_rate)
+        val questionPaidStatus: TextView = itemView.findViewById(R.id.question_paid_status)
+        val questionSolution: ImageView = itemView.findViewById(R.id.question_solution)
+        val questionDifficulty: ExtendedFloatingActionButton =
+            itemView.findViewById(R.id.question_difficulty)
     }
 
     fun setOnClick(onClick: OnItemClicked?) {
         this.onClick = onClick
     }
-
 }
 
