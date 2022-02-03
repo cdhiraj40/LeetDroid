@@ -27,4 +27,7 @@
 
     <color name="yellow_chartreuse">#dfff00</color>
 
+    <!-- paid question color -->
+    <color name="paid_question">#ffff00</color>
+
 </resources>
