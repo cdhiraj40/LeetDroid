@@ -29,7 +29,7 @@
             android:layout_margin="16dp"
             android:alpha="0.54"
             android:gravity="center"
-            android:text="@string/no_solution_found"
+            android:text="@string/no_questions_found"
             android:textColor="@color/blue" />
 
     </LinearLayout>

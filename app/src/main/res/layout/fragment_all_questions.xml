@@ -30,6 +30,13 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <ProgressBar
+        android:id="@+id/search_progress_bar"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content" />
+
     <include
         android:id="@+id/view_no_questions"
         layout="@layout/layout_no_questions_search"

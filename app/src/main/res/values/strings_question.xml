@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="question_content">%1$s </string>
-
-    <string name="paid_question">Sorry this is a paid question.</string>
-
+    <string name="paid_question">Sorry we can\'t open a paid question.</string>
 </resources>

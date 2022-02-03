@@ -35,6 +35,8 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
     private lateinit var allQuestionsAdapter: AllQuestionsAdapter
     private lateinit var noQuestionsView: View
     private lateinit var generalErrorView: View
+    private lateinit var searchKeywords: String
+    private var searched: Boolean = false
     private var limit = 10
 
     override fun onCreateView(
@@ -57,7 +59,11 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 // fetch more 10 questions when reached end
                 limit += 10
                 fragmentAllQuestionsBinding.questionListProgressBar.visibility = View.VISIBLE
-                loadQuestionList(limit)
+                if (!searched) {
+                    loadQuestionList(limit)
+                } else {
+                    searchQuestions(limit, searchKeywords)
+                }
             }
         })
 
@@ -81,10 +87,18 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
             object : SearchView.OnQueryTextListener {
 
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    val searchKeywords: String = query
+                    if (query.isEmpty()) {
+                        showSnackBar(requireActivity(), "Please enter a keyword")
+                    }
+                    searchKeywords = query
+                    searched = true
+                    if (noQuestionsView.visibility == View.VISIBLE) {
+                        noQuestionsView.visibility = View.GONE
+                    }
+
                     fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
-                    searchQuestions(searchKeywords)
-                    fragmentAllQuestionsBinding.questionListProgressBar.visibility = View.VISIBLE
+                    searchQuestions(limit, searchKeywords)
+                    fragmentAllQuestionsBinding.searchProgressBar.visibility = View.VISIBLE
                     closeKeyboard()
                     return true
                 }
@@ -132,6 +146,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                         AllQuestionsModel::class.java
                     )
                     activity?.runOnUiThread {
+                        fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.VISIBLE
                         allQuestionsAdapter.setData(questionJson)
                         fragmentAllQuestionsBinding.allQuestionsRecyclerView.layoutManager =
                             LinearLayoutManager(context)
@@ -155,7 +170,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         })
     }
 
-    private fun searchQuestions(query: String) {
+    private fun searchQuestions(limit: Int, query: String) {
         val call: Call =
             questionListApiCall(limit, LeetCodeRequests.Filters(searchKeywords = query))
         call.enqueue(object : Callback {
@@ -168,6 +183,9 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
 
                 if (questionJson.data?.problemsetQuestionList != null) {
                     activity?.runOnUiThread {
+                        fragmentAllQuestionsBinding.searchProgressBar.visibility = View.GONE
+                        fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.VISIBLE
+                        noQuestionsView.visibility = View.GONE
                         allQuestionsAdapter.setData(questionJson)
                         fragmentAllQuestionsBinding.allQuestionsRecyclerView.layoutManager =
                             LinearLayoutManager(context)
@@ -179,7 +197,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                     }
                 } else {
                     activity?.runOnUiThread {
-                        fragmentAllQuestionsBinding.questionListProgressBar.visibility = View.GONE
+                        fragmentAllQuestionsBinding.searchProgressBar.visibility = View.GONE
                         noQuestionsView.visibility = View.VISIBLE
                     }
                 }
