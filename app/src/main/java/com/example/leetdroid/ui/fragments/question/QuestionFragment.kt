@@ -35,6 +35,7 @@ class QuestionFragment : Fragment() {
     private lateinit var questionID: String
     private var questionHasSolution: Boolean? = false
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
+    private lateinit var paidQuestionView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +59,7 @@ class QuestionFragment : Fragment() {
         questionSharedViewModel.getQuestionHasSolution(questionHasSolution!!)
         questionSharedViewModel.getQuestionId(questionID)
 
+        paidQuestionView = rootView.findViewById(R.id.view_paid_question)
         loadQuestion()
         return rootView
     }
@@ -108,46 +110,61 @@ class QuestionFragment : Fragment() {
                     QuestionContentModel::class.java
                 )
 
-                if (questionContentJson.data?.question?.solution == null)
+                if (questionContentJson.data?.question?.solution == null) {
                     questionSharedViewModel.getQuestionHasSolution(false)
-                else {
+                } else {
                     questionSharedViewModel.getQuestionHasSolution(questionContentJson.data?.question?.solution?.canSeeDetail!!)
                 }
+                if (questionContentJson.data?.question?.isPaidOnly!!) {
+                    questionSharedViewModel.isQuestionPaid(true)
+                } else {
+                    questionSharedViewModel.isQuestionPaid(false)
+                }
+
                 questionSharedViewModel.getQuestionId(questionContentJson.data?.question?.questionFrontendId.toString())
                 activity?.runOnUiThread {
-                    val questionContentHtml = context?.getString(
-                        R.string.question_content,
-                        questionContentJson.data?.question?.content
-                    )
+                    if (questionContentJson.data?.question?.isPaidOnly!!)
+                        paidQuestionView.visibility = View.VISIBLE
+                    else {
+                        val questionContentHtml = context?.getString(
+                            R.string.question_content,
+                            questionContentJson.data?.question?.content
+                        )
 
-                    val example1 =
-                        findSubstringIndex(questionContentHtml.toString(), "Example 1", 0)
-                    val constraints =
-                        findSubstringIndex(questionContentHtml.toString(), "Constraints", example1)
+                        val example1 =
+                            findSubstringIndex(questionContentHtml.toString(), "Example 1", 0)
+                        val constraints =
+                            findSubstringIndex(
+                                questionContentHtml.toString(),
+                                "Constraints",
+                                example1
+                            )
 
-                    val questionDescription = questionContentHtml!!.substring(0, example1).trim()
-                    val exampleStrings = questionContentHtml.substring(example1, constraints)
-                    val constraintStrings = questionContentHtml.substring(constraints).trim()
+                        val questionDescription =
+                            questionContentHtml!!.substring(0, example1).trim()
+                        val exampleStrings = questionContentHtml.substring(example1, constraints)
+                        val constraintStrings = questionContentHtml.substring(constraints).trim()
 
-                    val explanationCount = countMatches(exampleStrings, "Explanation")
-                    var index = 0
-                    for (i in 0..explanationCount) {
-                        index = findSubstringIndex(exampleStrings, "Explanation", index)
-                        insertString(exampleStrings, "\n ", index - 1)
+                        val explanationCount = countMatches(exampleStrings, "Explanation")
+                        var index = 0
+                        for (i in 0..explanationCount) {
+                            index = findSubstringIndex(exampleStrings, "Explanation", index)
+                            insertString(exampleStrings, "\n ", index - 1)
+                        }
+
+                        fragmentQuestionBinding.questionDescriptionText.setHtml(
+                            questionDescription.trim()
+                        )
+
+                        fragmentQuestionBinding.questionExamplesText.visibility = View.VISIBLE
+                        fragmentQuestionBinding.questionExamplesText.setHtml(
+                            exampleStrings.substring(0, exampleStrings.length)
+                        )
+
+                        fragmentQuestionBinding.questionConstraintsText.setHtml(
+                            constraintStrings.trim()
+                        )
                     }
-
-                    fragmentQuestionBinding.questionDescriptionText.setHtml(
-                        questionDescription.trim()
-                    )
-
-                    fragmentQuestionBinding.questionExamplesText.visibility = View.VISIBLE
-                    fragmentQuestionBinding.questionExamplesText.setHtml(
-                        exampleStrings.substring(0, exampleStrings.length)
-                    )
-
-                    fragmentQuestionBinding.questionConstraintsText.setHtml(
-                        constraintStrings.trim()
-                    )
                 }
             }
         })

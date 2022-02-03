@@ -18,7 +18,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/no_result"
+            app:lottie_rawRes="@raw/paid"
             app:lottie_speed="1" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_margin="16dp"
             android:alpha="0.54"
             android:gravity="center"
-            android:text="@string/no_solution_found"
+            android:text="@string/paid_question"
             android:textColor="@color/blue" />
 
     </LinearLayout>
