@@ -128,7 +128,7 @@ class AllQuestionsAdapter(val context: Context, val activity: Activity) :
                     questionId
                 )
             } else {
-                showSnackBar(activity, "It's a Paid Question")
+                showSnackBar(activity, context.getString(R.string.paid_question))
             }
         }
     }
