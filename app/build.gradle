@@ -105,5 +105,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.0'
+
+    // lottie
+    implementation 'com.airbnb.android:lottie:4.2.1'
 }
 apply plugin: 'com.google.gms.google-services'

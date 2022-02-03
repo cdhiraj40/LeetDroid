@@ -83,7 +83,7 @@ class QuestionFragment : Fragment() {
     private fun loadQuestion() {
         val okHttpClient = OkHttpClient()
         val postBody: String =
-            Gson().toJson(LeetCodeRequests.Helper.getQuestionContent("two-sum"))
+            Gson().toJson(LeetCodeRequests.Helper.getQuestionContent(questionTitleSlug))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
@@ -108,7 +108,7 @@ class QuestionFragment : Fragment() {
                     QuestionContentModel::class.java
                 )
 
-                if(questionContentJson.data?.question?.solution == null)
+                if (questionContentJson.data?.question?.solution == null)
                     questionSharedViewModel.getQuestionHasSolution(false)
                 else {
                     questionSharedViewModel.getQuestionHasSolution(questionContentJson.data?.question?.solution?.canSeeDetail!!)
