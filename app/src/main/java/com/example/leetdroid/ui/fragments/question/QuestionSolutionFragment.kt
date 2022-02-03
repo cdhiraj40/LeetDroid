@@ -28,6 +28,7 @@ class QuestionSolutionFragment : Fragment() {
     private lateinit var fragmentSolutionBinding: FragmentQuestionSolutionBinding
     private lateinit var questionTitleSlug: String
     private var questionHasSolution: Boolean = false
+    private var isQuestionPaid: Boolean = false
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
     private lateinit var questionSolutionJson: QuestionSolutionModel
 
@@ -55,7 +56,10 @@ class QuestionSolutionFragment : Fragment() {
         questionSharedViewModel.questionHasSolution.observe(viewLifecycleOwner, {
             // updating data in Title-Text
             questionHasSolution = it
-            if (questionHasSolution) {
+            questionSharedViewModel.questionPaid.observe(viewLifecycleOwner, { paid ->
+                isQuestionPaid = paid
+            })
+            if (questionHasSolution && !isQuestionPaid) {
                 loadQuestion()
             } else {
                 viewNoSolution.visibility = View.VISIBLE

@@ -8,6 +8,7 @@ class QuestionSharedViewModel : ViewModel() {
     val questionTitleSlug = MutableLiveData<String>()
     val questionHasSolution = MutableLiveData<Boolean>()
     val questionID = MutableLiveData<String>()
+    val questionPaid = MutableLiveData<Boolean>()
 
 
     // function to get title slug
@@ -23,5 +24,10 @@ class QuestionSharedViewModel : ViewModel() {
     // function to get question ID
     fun getQuestionId(questionId: String) {
         questionID.postValue(questionId)
+    }
+
+    // function to get question's status -> paid/free
+    fun isQuestionPaid(status: Boolean) {
+        questionPaid.postValue(status)
     }
 }
