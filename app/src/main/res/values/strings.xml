@@ -33,4 +33,6 @@
     <string name="user_location_text">location</string>
     <string name="user_education_text">Education</string>
     <string name="recent_submission_list_title">Recent Submissions</string>
+    <string name="kotlin">Kotlin</string>
+    <string name="python_ml">Python ML</string>
 </resources>

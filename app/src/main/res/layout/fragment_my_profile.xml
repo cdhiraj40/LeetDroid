@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.fragments.MyProfileFragment">
+        tools:context=".ui.fragments.user.MyProfileFragment">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/user_profile_layout"
@@ -380,7 +380,7 @@
         <LinearLayout
             android:id="@+id/extra_user_details_layout"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="150dp"
             android:layout_below="@id/user_problems_details_layout">
 
             <com.google.android.material.card.MaterialCardView
@@ -454,8 +454,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/recent_submission_list_title"
                         android:layout_centerHorizontal="true"
-                        android:backgroundTint="@color/light_blue"
                         android:background="@drawable/question_icon"
+                        android:backgroundTint="@color/light_blue"
                         android:contentDescription="random question icon"
                         app:tint="@color/white" />
 

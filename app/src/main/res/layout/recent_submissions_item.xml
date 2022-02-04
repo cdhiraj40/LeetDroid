@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="3dp"
+    app:cardMaxElevation="3dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/submission_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/submission_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@id/submission_date"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="3"
+            android:layout_alignParentStart="true"
+            android:scrollHorizontally="true"
+            android:text="Find the Kth Largest Integer in the Array Find the Kth Largest Integer in the Array"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/submission_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="start"
+            android:maxLines="2"
+            android:text="22 Dec 2022"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/submission_language"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/submission_title"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/alice_blue"
+            android:enabled="false"
+            android:text="JavaScript"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/submission_status"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/submission_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/alice_blue"
+            android:enabled="false"
+            android:text="Time Limit Exceeded"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

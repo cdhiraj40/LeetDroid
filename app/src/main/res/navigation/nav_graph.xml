@@ -30,10 +30,26 @@
 
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.example.leetdroid.ui.fragments.MyProfileFragment"
+        android:name="com.example.leetdroid.ui.fragments.user.MyProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_my_profile" />
+        tools:layout="@layout/fragment_my_profile">
+        <action
+            android:id="@+id/action_myProfileFragment_to_recentSubmissions"
+            app:destination="@id/recentSubmissionFragment">
+            <argument
+                android:name="username"
+                app:argType="string" />
+        </action>
 
+        <action
+            android:id="@+id/action_myProfileFragment_to_contest_details"
+            app:destination="@id/contestDetailsFragment">
+            <argument
+                android:name="username"
+                app:argType="string" />
+        </action>
+
+    </fragment>
     <fragment
         android:id="@+id/generalDiscussionFragment"
         android:name="com.example.leetdroid.ui.fragments.GeneralDiscussionFragment"
@@ -113,7 +129,19 @@
     <fragment
         android:id="@+id/discussionItemFragment"
         android:name="com.example.leetdroid.ui.fragments.question.DiscussionItemFragment"
-        android:label="%s"
+        android:label="Discussion Fragment"
         tools:layout="@layout/fragment_discussion_item" />
+
+    <fragment
+        android:id="@+id/recentSubmissionFragment"
+        android:name="com.example.leetdroid.ui.fragments.user.RecentSubmissionFragment"
+        android:label="Recent Submission Fragment"
+        tools:layout="@layout/fragment_recent_submission" />
+
+    <fragment
+        android:id="@+id/contestDetailsFragment"
+        android:name="com.example.leetdroid.ui.fragments.user.ContestDetailsFragment"
+        android:label="Contest Details Fragment"
+        tools:layout="@layout/fragment_contest_details" />
 
 </navigation>

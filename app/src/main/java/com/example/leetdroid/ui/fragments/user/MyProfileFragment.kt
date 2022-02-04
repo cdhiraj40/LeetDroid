@@ -1,12 +1,14 @@
-package com.example.leetdroid.ui.fragments
+package com.example.leetdroid.ui.fragments.user
 
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.core.text.bold
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -77,6 +79,7 @@ class MyProfileFragment : BaseFragment() {
         )[FirebaseUserViewModel::class.java]
 
         alertDialogShower = AlertDialogShower(requireActivity())
+
         return rootView
     }
 
@@ -166,6 +169,22 @@ class MyProfileFragment : BaseFragment() {
             problemsAcceptanceRate.toString().plus("% \nAcceptance")
 
         myProfileBinding.userProblemsSolvedCount.text = acSubmissionNum[0].count.toString()
+
+        myProfileBinding.recentSubmissionListLayout.setOnClickListener {
+            val bundle = bundleOf(
+                "username" to matchedUser?.username ,
+            )
+            myProfileBinding.root.findNavController()
+                .navigate(R.id.action_myProfileFragment_to_recentSubmissions, bundle)
+        }
+
+        myProfileBinding.userContestRankingsLayout.setOnClickListener {
+            val bundle = bundleOf(
+                "username" to matchedUser?.username,
+            )
+            myProfileBinding.root.findNavController()
+                .navigate(R.id.action_myProfileFragment_to_contest_details, bundle)
+        }
     }
 
     // load user from online

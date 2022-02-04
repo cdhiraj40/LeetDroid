@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="java">Java</string>
+    <string name="python">Python</string>
+    <string name="python3">python3</string>
+    <string name="mysql">MySQL</string>
+    <string name="ms_sql_server">MS SQL Server</string>
+    <string name="elixir">Elixir</string>
+    <string name="erlang">Erlang</string>
+    <string name="rocket">Racket</string>
+    <string name="typscript">TypeScript</string>
+    <string name="php">PHP</string>
+    <string name="rust">Rust</string>
+    <string name="html">html</string>
+    <string name="scala">Scala</string>
+    <string name="go">Go</string>
+    <string name="swift">Swift</string>
+    <string name="bash">Bash</string>
+    <string name="ruby">Ruby</string>
+    <string name="javascript">JavaScript</string>
+    <string name="oracle">Oracle</string>
+</resources>

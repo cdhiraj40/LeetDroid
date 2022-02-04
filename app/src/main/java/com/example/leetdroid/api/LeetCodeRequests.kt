@@ -134,6 +134,16 @@ data class LeetCodeRequests(
             ),
             query = "query randomQuestion(\$categorySlug: String, \$filters: QuestionListFilterInput) {  randomQuestion(categorySlug: \$categorySlug, filters: \$filters) {    titleSlug  }}"
         )
+
+        val getRecentSubmissions = fun(username: String, limit: Int) = LeetCodeRequests(
+            operationName = "getRecentSubmissionList",
+            variables = Variables(
+                username = username,
+                limit = limit
+            ),
+            query = "query getRecentSubmissionList(\$username: String!, \$limit: Int) { recentSubmissionList(username: \$username, limit: \$limit) " +
+                    "{ title titleSlug timestamp statusDisplay lang } languageList { id name verboseName } } "
+        )
     }
 
     data class Variables(
