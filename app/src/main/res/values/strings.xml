@@ -29,4 +29,7 @@
     <string name="search">search</string>
 
     <string name="general_error">Something went wrong, \nplease try again later</string>
+    <string name="user_testcases_text">Testcases</string>
+    <string name="user_location_text">location</string>
+    <string name="user_education_text">Education</string>
 </resources>

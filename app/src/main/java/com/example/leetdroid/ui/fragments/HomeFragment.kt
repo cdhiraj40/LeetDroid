@@ -470,6 +470,7 @@ class HomeFragment : Fragment() {
         val alarmIntent = Intent(context, DailyQuestionAlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0)
 
+        // TODO change time of compared calendar as checking and showing notification around only 5.00 AM is useless
         if (Calendar.getInstance().after(cal)) {
             cal.add(Calendar.DATE, 1)
         }

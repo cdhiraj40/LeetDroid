@@ -10,9 +10,12 @@ import com.example.leetdroid.utils.Converters
     Converters.MatchedUserNodeConverters::class,
     Converters.SubmitStatsNodeConverters::class,
     Converters.ContributionsNodeConverters::class,
-    Converters.ProfileNodeConverters::class
+    Converters.ProfileNodeConverters::class,
+    Converters.AllQuestionsCountConverters::class
 )
 data class User(
+    @ColumnInfo(name = "allQuestionsCount")
+    val allQuestionsCount: String,
     @ColumnInfo(name = "matchedUser")
     val matchedUser: String,
     @ColumnInfo(name = "contributions")

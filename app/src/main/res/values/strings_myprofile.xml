@@ -3,8 +3,21 @@
 
     <string name="user_profile">user profile</string>
     <string name="username">username</string>
+    <string name="user_full_name">Full Name</string>
+    <string name="user_bio">CSE TCET\'24 | ANDROID DEVELOPER | NIRMAAN HYPERLOOP |3⭐ @codechef</string>
     <string name="logout_menu_title">Log Out</string>
     <string name="sync_data">Sync Data</string>
     <string name="sync_data_dialog_message">Do you want to sync the data? \nThis may take around 10–20 seconds depending on your internet speed. </string>
+    <string name="user_website_text">Website</string>
+    <string name="points">Points</string>
+    <string name="problems">Problems</string>
+    <string name="user_problems_solved">Problems Solved</string>
+    <string name="easy_difficulty_text">Easy</string>
+    <string name="medium_difficulty_text">Medium</string>
+    <string name="hard_difficulty_text">Hard</string>
+
+    <string name="difficulty_count">%1$s %2$s </string>
+<!--    <string name="medium_difficulty_count">%1$s/%2$s</string>-->
+<!--    <string name="hard_difficulty_count">%1$s/%2$s</string>-->
 
 </resources>

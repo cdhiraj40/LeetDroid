@@ -20,6 +20,16 @@ class UserProfileModel : Serializable {
     class DataNode : Serializable {
 
         /**
+         *  "allQuestionsCount": [ { "difficulty": "All", "count": 2158 }, { "difficulty": "Easy", "count": 543 }, { "difficulty": "Medium", "count": 1152 }, { "difficulty": "Hard", "count": 463 } ],
+         */
+        var allQuestionsCount: List<AllQuestionsCountNode>? = null
+
+        class AllQuestionsCountNode : Serializable {
+            var count: Int? = null
+            var difficulty: String? = null
+        }
+
+        /**
          *  matchedUser: { "username": "cdhiraj40","socialAccounts": null, "githubUrl": "https://github.com/cdhiraj40","contributions": { "points": 367, "questionCount": 0, "testcaseCount": 0 }, "profile": { "realName": "Dhiraj Chauhan",
          * "websites": [ "https://linktr.ee/cdhiraj40" ],"countryName": "India", "skillTags": [], "company": null, "school": "Thakur College of Engineering", "starRating": 2, "aboutMe": "CSE TCET'24 | ANDROID DEVELOPER | NIRMAAN HYPERLOOP |3⭐ @codechef",
          * "userAvatar": "https://assets.leetcode.com/users/cdhiraj40/avatar_1630407333.png", "reputation": 0, "ranking": 100001 }, "submitStats": { "acSubmissionNum": [ { "difficulty": "All", "count": 95, "submissions": 109 },
@@ -96,13 +106,13 @@ class UserProfileModel : Serializable {
                     var ranking: Long? = null
 
                     class SubmitStatsNode : Serializable {
-                        val acSubmissionNum: List<AcSubmissionNumNode>? = null
-                        val totalSubmissionNum: List<AcSubmissionNumNode>? = null
+                        var acSubmissionNum: List<AcSubmissionNumNode>? = null
+                        var totalSubmissionNum: List<AcSubmissionNumNode>? = null
 
                         class AcSubmissionNumNode : Serializable {
-                            val count: Int? = null
-                            val difficulty: String? = null
-                            val submissions: Int? = null
+                            var count: Int? = null
+                            var difficulty: String? = null
+                            var submissions: Int? = null
                         }
                     }
                 }

@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/btn_blue_normal.xml" value="0.21944444444444444" />
         <entry key="app/src/main/res/drawable/btn_blue_pressed.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/btn_blue_selector.xml" value="0.3807291666666667" />
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.31197916666666664" />
         <entry key="app/src/main/res/drawable/circle_background.xml" value="0.2625" />
         <entry key="app/src/main/res/drawable/contest_selected_dot_blue.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/contest_selected_dot_white.xml" value="0.3807291666666667" />
@@ -15,6 +16,8 @@
         <entry key="app/src/main/res/drawable/contest_viewpager_selector_white.xml" value="0.3807291666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_discuss_24.xml" value="0.21979166666666666" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.21979166666666666" />
+        <entry key="app/src/main/res/drawable/ic_baseline_link_24.xml" value="0.31197916666666664" />
+        <entry key="app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.31197916666666664" />
         <entry key="app/src/main/res/drawable/ic_question_solution.xml" value="0.23072916666666668" />
         <entry key="app/src/main/res/drawable/ic_round_person_24.xml" value="0.22135416666666666" />
         <entry key="app/src/main/res/drawable/layout_border.xml" value="0.2625" />
@@ -35,7 +38,7 @@
         <entry key="app/src/main/res/layout/fragment_general_discussion.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/fragment_general_discussion_item.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.3338541666666667" />
+        <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_question_discussion.xml" value="0.30950510604870385" />
         <entry key="app/src/main/res/layout/fragment_question_search.xml" value="0.24635416666666668" />

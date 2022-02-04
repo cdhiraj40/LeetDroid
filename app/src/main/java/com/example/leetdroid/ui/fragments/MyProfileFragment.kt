@@ -1,11 +1,16 @@
 package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.*
+import androidx.core.text.bold
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.leetdroid.R
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
@@ -18,7 +23,10 @@ import com.example.leetdroid.model.UserProfileErrorModel
 import com.example.leetdroid.model.UserProfileModel
 import com.example.leetdroid.ui.base.BaseFragment
 import com.example.leetdroid.utils.CommonFunctions.Logout.showLogOutDialog
+import com.example.leetdroid.utils.CommonFunctions.Round.roundDouble
 import com.example.leetdroid.utils.Constant
+import com.example.leetdroid.utils.Converters.AllQuestionsCountConverters.fromAllQuestionsCountNode
+import com.example.leetdroid.utils.Converters.AllQuestionsCountConverters.fromStringAllQuestionsCount
 import com.example.leetdroid.utils.Converters.ContributionsNodeConverters.fromContributionsNode
 import com.example.leetdroid.utils.Converters.ContributionsNodeConverters.fromStringContributions
 import com.example.leetdroid.utils.Converters.MatchedUserNodeConverters.fromMatchedUserNode
@@ -37,8 +45,10 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
+import kotlin.math.roundToInt
 
 
+//TODO do tell someone if they have a username more than 15 characters -> "we have your full username, we are just showing here only first 15 characters!"
 class MyProfileFragment : BaseFragment() {
 
     private lateinit var myProfileBinding: FragmentMyProfileBinding
@@ -100,21 +110,62 @@ class MyProfileFragment : BaseFragment() {
 
     // setup profile from room database
     private fun setupProfile(user: User) {
+        val allQuestionsCount = fromStringAllQuestionsCount(user.allQuestionsCount)
         val matchedUser = fromStringMatchedUser(user.matchedUser)
         val contributions = fromStringContributions(user.contributions)
         val profile = fromStringProfileNode(user.profile)
         val acSubmissionNum = fromStringSubmitStats(user.acSubmissionNum)
         val totalSubmissionNum = fromStringSubmitStats(user.totalSubmissionNum)
 
-        myProfileBinding.username.text =
+        myProfileBinding.userFullName.text =
             profile?.realName
+
+        myProfileBinding.username.text = matchedUser?.username
+        myProfileBinding.userBio.text = profile?.aboutMe
+        myProfileBinding.userWebsite.text =
+            if (profile?.websites!!.isNotEmpty()) profile.websites!![0] else "Website not added"
+
+        myProfileBinding.userRating.rating = profile.starRating!!.toFloat()
+        myProfileBinding.userEducation.text =
+            if (profile.school!!.isNotEmpty()) profile.school else "Education not added"
+
+        myProfileBinding.userLocation.text =
+            if (profile.countryName!!.isNotEmpty()) profile.countryName else "Location not added"
+
         Glide.with(requireContext())
-            .load(
-                profile?.userAvatar
-            )
-            .circleCrop()
+            .load(profile.userAvatar)
+            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
             .placeholder(android.R.drawable.progress_indeterminate_horizontal)
             .into(myProfileBinding.userProfileAvatar)
+
+        /**
+         * all -> acSubmissionNum[0] / totalSubmissionNum[0] / allQuestionsCount[0]
+         * easy-> acSubmissionNum[1] / totalSubmissionNum[1] / allQuestionsCount[1]
+         * medium-> acSubmissionNum[2] / totalSubmissionNum[2] / allQuestionsCount[2]
+         * hard-> acSubmissionNum[3] / totalSubmissionNum[3] / allQuestionsCount[3]
+         */
+        myProfileBinding.easyDifficultyCount.text = SpannableStringBuilder()
+            .bold { append(acSubmissionNum!![1].count.toString()) }
+            .append("/ ${allQuestionsCount!![1].count.toString()}")
+
+        myProfileBinding.mediumDifficultyCount.text = SpannableStringBuilder()
+            .bold { append(acSubmissionNum!![2].count.toString()) }
+            .append("/ ${allQuestionsCount[2].count.toString()}")
+
+        myProfileBinding.hardDifficultyCount.text = SpannableStringBuilder()
+            .bold { append(acSubmissionNum!![3].count.toString()) }
+            .append("/ ${allQuestionsCount[3].count.toString()}")
+
+        var problemsAcceptanceRate =
+            acSubmissionNum!![0].submissions?.toDouble()
+                ?.div(totalSubmissionNum!![0].submissions!!)!! * 100
+
+        problemsAcceptanceRate = roundDouble(problemsAcceptanceRate, 1)
+        myProfileBinding.questionProgressBar.progress = problemsAcceptanceRate.roundToInt()
+        myProfileBinding.problemsAcceptanceRate.text =
+            problemsAcceptanceRate.toString().plus("% \nAcceptance")
+
+        myProfileBinding.userProblemsSolvedCount.text = acSubmissionNum[0].count.toString()
     }
 
     // load user from online
@@ -153,6 +204,7 @@ class MyProfileFragment : BaseFragment() {
                     }
                 }
                 val user = User(
+                    fromAllQuestionsCountNode(userData.data?.allQuestionsCount).toString(),
                     fromMatchedUserNode(userData.data?.matchedUser).toString(),
                     fromContributionsNode(userData.data?.matchedUser?.contributions!!).toString(),
                     fromProfileNode(userData.data?.matchedUser?.profile!!).toString(),

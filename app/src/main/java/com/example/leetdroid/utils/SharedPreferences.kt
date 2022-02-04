@@ -44,4 +44,12 @@ class SharedPreferences(context: Context) {
     var firebaseUserRegistered: Boolean
         get() = sharedPreferences.getBoolean("firebaseUserRegistered", false)
         set(value) = sharedPreferences.edit().putBoolean("firebaseUserRegistered", value).apply()
+
+    var dayNotificationPushed: Boolean
+        get() = sharedPreferences.getBoolean("dayNotificationPushed", false)
+        set(value) = sharedPreferences.edit().putBoolean("dayNotificationPushed", value).apply()
+
+    var minsNotificationPushed: Boolean
+        get() = sharedPreferences.getBoolean("minsNotificationPushed", false)
+        set(value) = sharedPreferences.edit().putBoolean("minsNotificationPushed", value).apply()
 }
