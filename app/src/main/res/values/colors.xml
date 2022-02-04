@@ -31,4 +31,7 @@
     <color name="paid_question">#FFD700</color>
 
     <color name="light_grey">#D3D3D3</color>
+
+    <color name="accepted_submission">#4cbb17</color>
+    <color name="wrong_submission">#ce2029</color>
 </resources>
