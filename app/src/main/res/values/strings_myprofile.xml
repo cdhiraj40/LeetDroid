@@ -17,7 +17,8 @@
     <string name="hard_difficulty_text">Hard</string>
 
     <string name="difficulty_count">%1$s %2$s </string>
-<!--    <string name="medium_difficulty_count">%1$s/%2$s</string>-->
+    <string name="contest_details" >Contest Details</string>
+    <!--    <string name="medium_difficulty_count">%1$s/%2$s</string>-->
 <!--    <string name="hard_difficulty_count">%1$s/%2$s</string>-->
 
 </resources>

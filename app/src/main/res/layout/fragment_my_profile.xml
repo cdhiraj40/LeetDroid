@@ -106,6 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_profile_layout"
+            android:visibility="gone"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
@@ -236,7 +237,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
+                    android:layout_toStartOf="@id/question_progress_bar_layout"
+                    android:gravity="start"
                     android:text="@string/user_problems_solved"
                     android:textColor="@color/black" />
 
@@ -249,8 +251,9 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="30dp"
-                    android:gravity="center"
-                    android:text="115"
+                    android:layout_toStartOf="@id/question_progress_bar_layout"
+                    android:gravity="start"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="30sp"
                     android:textStyle="bold" />
@@ -275,7 +278,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:gravity="center"
-                        android:text="100.0% \nAcceptance"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -374,6 +377,92 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <LinearLayout
+            android:id="@+id/extra_user_details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_below="@id/user_problems_details_layout">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/user_contest_rankings_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/user_rankings_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/contest_details"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/user_rankings_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/user_rankings_title"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/ic_baseline_computer_24"
+                        android:backgroundTint="@color/light_blue"
+                        android:contentDescription="User Rankings Icon"
+                        app:tint="@color/white" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/recent_submission_list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/recent_submission_list_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/recent_submission_list_title"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/random_question_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/recent_submission_list_title"
+                        android:layout_centerHorizontal="true"
+                        android:backgroundTint="@color/light_blue"
+                        android:background="@drawable/question_icon"
+                        android:contentDescription="random question icon"
+                        app:tint="@color/white" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 
     </RelativeLayout>
 </ScrollView>
