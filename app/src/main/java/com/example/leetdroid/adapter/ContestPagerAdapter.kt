@@ -7,23 +7,20 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.data.entitiy.Contest
-
 import com.example.leetdroid.utils.DateUtils.getDate
 import com.example.leetdroid.utils.DateUtils.getHours
 import com.example.leetdroid.utils.DateUtils.getTime
 import com.example.leetdroid.utils.DateUtils.parseISO8601Date
 import com.example.leetdroid.utils.SharedPreferences
+import com.example.leetdroid.utils.dialog.Notification
 import com.google.android.material.button.MaterialButton
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ContestPagerAdapter
     (
@@ -68,10 +65,39 @@ class ContestPagerAdapter
         val currentTime = Calendar.getInstance().time
         val different = endingDate.time - currentTime.time
 
-        val countDownTimer: CountDownTimer = object : CountDownTimer(different, 1000) {
+        object : CountDownTimer(different, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 var diff = millisUntilFinished
+
+                // sending notification a day before contest
+                if (!SharedPreferences(context).dayNotificationPushed &&
+                    (diff <= 86400000L || (diff in 10800000L downTo 1799999))
+                ) {
+                    SharedPreferences(context).dayNotificationPushed = true
+                    Notification.showNotification(
+                        context,
+                        contest.name,
+                        "There is only a day remaining to ${contest.name}\n register now!",
+                        "contest_reminder_day",
+                        "contest_reminder_day_channel",
+                        101
+                    )
+                }
+
+                // sending notification 30 mins before
+                else if (!SharedPreferences(context).minsNotificationPushed && (diff <= 1800000L || diff >= 0)) {
+                    SharedPreferences(context).minsNotificationPushed = true
+                    Notification.showNotification(
+                        context,
+                        contest.name,
+                        "There is only 30 mins remaining to ${contest.name}\n register now!",
+                        "contest_reminder_30Mins",
+                        "contest_reminder_30Mins_channel",
+                        102
+                    )
+                }
+
                 val secondsInMilli: Long = 1000
                 val minutesInMilli = secondsInMilli * 60
                 val hoursInMilli = minutesInMilli * 60
@@ -93,7 +119,9 @@ class ContestPagerAdapter
             }
 
             override fun onFinish() {
-                SharedPreferences(context).timerEnded=true
+                SharedPreferences(context).timerEnded = true
+                SharedPreferences(context).dayNotificationPushed = false
+                SharedPreferences(context).minsNotificationPushed = false
                 refreshCurrentFragment()
             }
         }.start()

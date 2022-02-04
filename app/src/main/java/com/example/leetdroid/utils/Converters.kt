@@ -35,11 +35,27 @@ class Converters {
         }
     }
 
+    object AllQuestionsCountConverters {
+        @TypeConverter
+        fun fromStringAllQuestionsCount(value: String): List<UserProfileModel.DataNode.AllQuestionsCountNode>? {
+            val listType: Type =
+                object : TypeToken<List<UserProfileModel.DataNode.AllQuestionsCountNode>?>() {}.type
+            return Gson().fromJson(value, listType)
+        }
+
+        @TypeConverter
+        fun fromAllQuestionsCountNode(jsonObject: List<UserProfileModel.DataNode.AllQuestionsCountNode>?): String? {
+            val gson = Gson()
+            return gson.toJson(jsonObject)
+        }
+    }
+
     object MatchedUserNodeConverters {
         @TypeConverter
         fun fromStringMatchedUser(value: String): UserProfileModel.DataNode.MatchedUserNode? {
-            val listType: Type = object : TypeToken<UserProfileModel.DataNode.MatchedUserNode?>() {}.type
-            return Gson().fromJson(value,listType)
+            val listType: Type =
+                object : TypeToken<UserProfileModel.DataNode.MatchedUserNode?>() {}.type
+            return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
@@ -48,11 +64,13 @@ class Converters {
             return gson.toJson(jsonObject)
         }
     }
+
     object ContributionsNodeConverters {
         @TypeConverter
         fun fromStringContributions(value: String): UserProfileModel.DataNode.MatchedUserNode.ContributionsNode {
-            val listType: Type = object : TypeToken<UserProfileModel.DataNode.MatchedUserNode.ContributionsNode>() {}.type
-            return Gson().fromJson(value,listType)
+            val listType: Type = object :
+                TypeToken<UserProfileModel.DataNode.MatchedUserNode.ContributionsNode>() {}.type
+            return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
@@ -61,11 +79,13 @@ class Converters {
             return gson.toJson(jsonObject)
         }
     }
+
     object ProfileNodeConverters {
         @TypeConverter
         fun fromStringProfileNode(value: String): UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode? {
-            val listType: Type = object : TypeToken<UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode>() {}.type
-            return Gson().fromJson(value,listType)
+            val listType: Type = object :
+                TypeToken<UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode>() {}.type
+            return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
@@ -78,8 +98,9 @@ class Converters {
     object SubmitStatsNodeConverters {
         @TypeConverter
         fun fromStringSubmitStats(value: String): List<UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode.SubmitStatsNode.AcSubmissionNumNode>? {
-            val listType: Type = object : TypeToken<List<UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode.SubmitStatsNode.AcSubmissionNumNode>?>() {}.type
-            return Gson().fromJson(value,listType)
+            val listType: Type = object :
+                TypeToken<List<UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode.SubmitStatsNode.AcSubmissionNumNode>?>() {}.type
+            return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
@@ -93,7 +114,7 @@ class Converters {
         @TypeConverter
         fun fromStringContest(value: String): List<Contest>? {
             val listType: Type = object : TypeToken<List<Contest>?>() {}.type
-            return Gson().fromJson(value,listType)
+            return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
@@ -106,8 +127,9 @@ class Converters {
     object DailyQuestionDailyConverter {
         @TypeConverter
         fun fromStringDailyQuestionDaily(value: String): DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode? {
-            val listType: Type = object : TypeToken<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode?>() {}.type
-            return Gson().fromJson(value,listType)
+            val listType: Type = object :
+                TypeToken<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode?>() {}.type
+            return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
@@ -120,8 +142,9 @@ class Converters {
     object DailyQuestionConverter {
         @TypeConverter
         fun fromStringDailyQuestion(value: String): DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode? {
-            val listType: Type = object : TypeToken<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode?>() {}.type
-            return Gson().fromJson(value,listType)
+            val listType: Type = object :
+                TypeToken<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode?>() {}.type
+            return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
@@ -134,8 +157,9 @@ class Converters {
     object DailyQuestionTagsConverter {
         @TypeConverter
         fun fromStringDailyQuestionTags(value: String): List<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode.TopicTagsNode>? {
-            val listType: Type = object : TypeToken<List<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode.TopicTagsNode>?>() {}.type
-            return Gson().fromJson(value,listType)
+            val listType: Type = object :
+                TypeToken<List<DailyQuestionModel.DataNode.ActiveDailyCodingChallengeQuestionNode.QuestionNode.TopicTagsNode>?>() {}.type
+            return Gson().fromJson(value, listType)
         }
 
         @TypeConverter

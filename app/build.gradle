@@ -108,5 +108,8 @@ dependencies {
 
     // lottie
     implementation 'com.airbnb.android:lottie:4.2.1'
+
+    // rating bar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

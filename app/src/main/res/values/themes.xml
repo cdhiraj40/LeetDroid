@@ -15,10 +15,18 @@
 
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.LeetDroid.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="Theme.LeetDroid.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="Theme.LeetDroid.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CircularDeterminateProgressBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/circle</item>
+    </style>
 </resources>
