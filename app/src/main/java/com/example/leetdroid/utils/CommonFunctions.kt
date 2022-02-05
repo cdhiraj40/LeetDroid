@@ -1,10 +1,9 @@
 package com.example.leetdroid.utils
 
-import android.R
 import android.app.Activity
+import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
 import com.example.leetdroid.extensions.openActivity
 import com.example.leetdroid.ui.authentication.LoginActivity
 import com.example.leetdroid.utils.dialog.AlertDialogShower
@@ -16,14 +15,16 @@ import kotlin.math.roundToInt
 
 class CommonFunctions {
     object Logout {
-        fun showLogOutDialog(activity: Activity) {
+        fun showLogOutDialog(activity: Activity, context: Context): Boolean {
             AlertDialogShower(activity).show(AppDialogs.LogOut, {
                 FirebaseAuth.getInstance().signOut()
                 activity.openActivity(LoginActivity::class.java)
                 activity.finish()
+                return@show
             }, {
 
             })
+            return false
         }
     }
 

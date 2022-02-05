@@ -59,7 +59,20 @@ class ContestPagerAdapter
         holder.contestDuration.text = getHours(contest.duration).plus(" Hrs")
         holder.contestStartTime.text = getTime(startingDate)
         holder.contestEndTime.text = getTime(endingDate)
-//        holder.contestRunningText.text = contest.in_24_hours
+
+        if (contest.in_24_hours == "Yes" && !SharedPreferences(context).dayNotificationPushed) {
+            // sending notification a day before contest
+            SharedPreferences(context).dayNotificationPushed = true
+            Notification.showNotification(
+                context,
+                contest.name,
+                "There is only a day remaining to ${contest.name}\n register now!",
+                "contest_reminder_day",
+                "contest_reminder_day_channel",
+                101
+            )
+        }
+
 
         // contest timer
         val currentTime = Calendar.getInstance().time
@@ -70,23 +83,9 @@ class ContestPagerAdapter
             override fun onTick(millisUntilFinished: Long) {
                 var diff = millisUntilFinished
 
-                // sending notification a day before contest
-                if (!SharedPreferences(context).dayNotificationPushed &&
-                    (diff <= 86400000L || (diff in 10800000L downTo 1799999))
-                ) {
-                    SharedPreferences(context).dayNotificationPushed = true
-                    Notification.showNotification(
-                        context,
-                        contest.name,
-                        "There is only a day remaining to ${contest.name}\n register now!",
-                        "contest_reminder_day",
-                        "contest_reminder_day_channel",
-                        101
-                    )
-                }
-
+                // TODO some bug makes this notification push even if remaining time is more than 30 mins
                 // sending notification 30 mins before
-                else if (!SharedPreferences(context).minsNotificationPushed && (diff <= 1800000L || diff >= 0)) {
+                if (!SharedPreferences(context).minsNotificationPushed && (diff <= 1800000L || diff >= 0)) {
                     SharedPreferences(context).minsNotificationPushed = true
                     Notification.showNotification(
                         context,
@@ -126,7 +125,8 @@ class ContestPagerAdapter
             }
         }.start()
 
-        holder.contestCalendarButton.setOnClickListener {
+        holder.contestCalendarButton.setOnClickListener()
+        {
             val intent = Intent(Intent.ACTION_EDIT)
             intent.type = "vnd.android.cursor.item/event"
             intent.putExtra("beginTime", startingDate.time)

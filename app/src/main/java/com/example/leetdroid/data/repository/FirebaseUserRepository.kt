@@ -14,6 +14,6 @@ class FirebaseUserRepository(private val firebaseUserDao: FirebaseUserDao) {
     suspend fun updateUser(firebaseUser: FirebaseUserProfile) =
         firebaseUserDao.updateUser(firebaseUser)
 
-    suspend fun deleteUser(firebaseUser: FirebaseUserProfile) =
-        firebaseUserDao.deleteUser(firebaseUser)
+    suspend fun deleteUser(id: Int) =
+        firebaseUserDao.deleteUser(id)
 }

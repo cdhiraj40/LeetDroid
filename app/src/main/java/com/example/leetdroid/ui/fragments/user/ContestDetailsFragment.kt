@@ -14,7 +14,6 @@ import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentContestDetailsBinding
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.model.ContestRankingModel
-import com.example.leetdroid.ui.fragments.AllQuestionsFragment
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
@@ -115,6 +114,6 @@ class ContestDetailsFragment : Fragment(), ContestHistoryAdapter.OnItemClicked {
     }
 
     override fun onItemClick(position: Int) {
-        showSnackBar(requireActivity(), "More Analysis coming on contest coming soon!")
+        showSnackBar(requireActivity(), "More Analysis on contests coming soon!")
     }
 }

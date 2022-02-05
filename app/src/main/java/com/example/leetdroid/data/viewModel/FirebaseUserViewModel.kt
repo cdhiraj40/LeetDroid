@@ -33,9 +33,9 @@ class FirebaseUserViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    fun deleteAllUserDate(firebaseUser: FirebaseUserProfile) {
+    fun deleteUser(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            firebaseUserRepository.deleteUser(firebaseUser)
+            firebaseUserRepository.deleteUser(id)
         }
     }
 }

@@ -10,14 +10,14 @@ class ContestRepository(private val contestDao: ContestDao) {
     val allContest: LiveData<List<Contest>> = contestDao.getAllContest()
 
 
-    suspend fun insertContest(contest: Contest) =
+    suspend fun insertContest(contest: Contest):Long =
         contestDao.insertContest(contest)
 
     suspend fun updateContest(contest: Contest) =
         contestDao.updateContest(contest)
 
-    suspend fun deleteContest(contest: Contest) =
-        contestDao.deleteContest(contest)
+    suspend fun deleteContest(id: Int) =
+        contestDao.deleteContest(id)
 
     suspend fun getContest(id: Int):Contest =
         contestDao.getContest(id)

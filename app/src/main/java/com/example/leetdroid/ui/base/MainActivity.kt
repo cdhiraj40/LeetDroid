@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -54,7 +55,8 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.logout -> {
                 // log out from app
-                showLogOutDialog(this)
+                showLogOutDialog(activity = this, context = this)
+                // TODO delete all databases and shared preferences after logging out to avoid any problems with a new user or old
                 true
             }
             else -> super.onOptionsItemSelected(item)

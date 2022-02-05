@@ -14,8 +14,8 @@ interface DailyQuestionDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateQuestion(user: DailyQuestion?)
 
-    @Delete
-    suspend fun deleteQuestion(user: DailyQuestion?)
+    @Query("DELETE FROM daily_question WHERE id=:id")
+    suspend fun deleteQuestion(id: Int)
 
     @Query("SELECT * FROM daily_question WHERE id=:id ")
     fun getQuestion(id:Int): LiveData<DailyQuestion>
