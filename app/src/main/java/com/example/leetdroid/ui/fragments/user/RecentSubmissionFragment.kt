@@ -17,6 +17,7 @@ import com.example.leetdroid.databinding.FragmentRecentSubmissionBinding
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.model.RecentSubmissionsModel
 import com.example.leetdroid.ui.fragments.AllQuestionsFragment
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
 import okhttp3.*
@@ -119,7 +120,7 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
-                Log.d(AllQuestionsFragment.Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("RecentSubmissionFragment").toString(), call.toString(), e)
             }
 
         })

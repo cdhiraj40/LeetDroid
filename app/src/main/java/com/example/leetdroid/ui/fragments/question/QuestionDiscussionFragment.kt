@@ -18,7 +18,7 @@ import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionDiscussionBinding
 import com.example.leetdroid.model.QuestionDiscussionsModel
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
-import com.example.leetdroid.ui.fragments.AllQuestionsFragment
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
 import okhttp3.*
@@ -98,7 +98,7 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(AllQuestionsFragment.Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("QuestionDiscussionFragment").toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {

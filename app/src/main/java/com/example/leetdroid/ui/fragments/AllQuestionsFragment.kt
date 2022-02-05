@@ -18,6 +18,7 @@ import com.example.leetdroid.extensions.closeKeyboard
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.model.AllQuestionsModel
 import com.example.leetdroid.ui.base.BaseFragment
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
 import okhttp3.*
@@ -164,7 +165,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
-                Log.d(Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("AllQuestionsFragment").toString(), call.toString(), e)
             }
 
         })
@@ -205,7 +206,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
-                Log.d(Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("AllQuestionsFragment").toString(), call.toString(), e)
             }
         })
     }
@@ -232,9 +233,5 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         )
         fragmentAllQuestionsBinding.root.findNavController()
             .navigate(R.id.action_allQuestionsFragment_to_questionFragment, bundle)
-    }
-
-    object Constant {
-        val TAG = AllQuestionsFragment::class.qualifiedName
     }
 }

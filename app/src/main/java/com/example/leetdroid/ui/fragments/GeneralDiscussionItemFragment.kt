@@ -2,15 +2,15 @@ package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentGeneralDiscussionItemBinding
 import com.example.leetdroid.model.DiscussionItemModel
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
 import okhttp3.*
@@ -65,7 +65,7 @@ class GeneralDiscussionItemFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(AllQuestionsFragment.Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("GeneralDiscussionItemFragment").toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {

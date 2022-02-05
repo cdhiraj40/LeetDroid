@@ -1,17 +1,14 @@
 package com.example.leetdroid.utils
 
 import android.content.Context
-
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.lang.StringBuilder
 
 object JsonUtils {
-    private const val TAG = "JsonUtils"
     fun getJson(context: Context, fileName: String?): String {
         val stringBuilder = StringBuilder()
         val assetManager = context.assets
@@ -34,22 +31,19 @@ object JsonUtils {
     }
 
     fun <T> generateObjectFromJson(json: String?, type: Class<T>?): T {
-        val gson = Gson()
-        Log.d(TAG, gson.toString())
-        return gson.fromJson(json, type)
+        Log.d(Constant.TAG("JsonUtils").toString(), Gson().toString())
+        return Gson().fromJson(json, type)
     }
 
     fun <T> generateFromJsonArray(json: JsonArray?, type: Class<T>?): T {
-        val gson = Gson()
-        Log.d(TAG, gson.toString())
-        return gson.fromJson(json, type)
+        Log.d(Constant.TAG("JsonUtils").toString(), Gson().toString())
+        return Gson().fromJson(json, type)
     }
 
     fun <T> generateObjectFromJsonArray(json: String?, clazz: Class<Array<T>?>?): List<T> {
-        Log.d(TAG, "generateObjectFromJsonArray:Before")
-        val gson = Gson()
-        val array: Array<T> = gson.fromJson(json, clazz)!!
-        Log.d(TAG, "generateObjectFromJsonArray: After")
+        Log.d(Constant.TAG("JsonUtils").toString(), "generateObjectFromJsonArray:Before")
+        val array: Array<T> = Gson().fromJson(json, clazz)!!
+        Log.d(Constant.TAG("JsonUtils").toString(), "generateObjectFromJsonArray: After")
         return mutableListOf(*array)
     }
 }

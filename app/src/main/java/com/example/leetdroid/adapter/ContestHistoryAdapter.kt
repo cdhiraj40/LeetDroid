@@ -28,6 +28,7 @@ class ContestHistoryAdapter(val context: Context) :
     fun setData(contestsList: ContestRankingModel) {
         contestList = contestsList
         contests =
+                // to get the latest contest
             contestsList.data?.userContestRankingHistory!!.sortedByDescending { it.contest?.startTime }
     }
 
@@ -49,7 +50,7 @@ class ContestHistoryAdapter(val context: Context) :
             contestItem.contest?.title
 
         if (contestItem.ranking!! <= 0L) {
-            holder.contestRanking.text = "Did not attend the Contest!"
+            holder.contestRanking.text = context.getString(R.string.user_absent_contest)
         } else {
             holder.contestRanking.text = contestItem.ranking.toString()
         }
