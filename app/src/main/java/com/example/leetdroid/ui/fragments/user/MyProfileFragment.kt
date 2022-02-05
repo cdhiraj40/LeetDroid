@@ -49,7 +49,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 import kotlin.math.roundToInt
 
-
 //TODO do tell someone if they have a username more than 15 characters -> "we have your full username, we are just showing here only first 15 characters!"
 class MyProfileFragment : BaseFragment() {
 
@@ -126,14 +125,14 @@ class MyProfileFragment : BaseFragment() {
         myProfileBinding.username.text = matchedUser?.username
         myProfileBinding.userBio.text = profile?.aboutMe
         myProfileBinding.userWebsite.text =
-            if (profile?.websites!!.isNotEmpty()) profile.websites!![0] else "Website not added"
+            if (profile?.websites == null) profile?.websites!![0] else "Website not added"
 
         myProfileBinding.userRating.rating = profile.starRating!!.toFloat()
         myProfileBinding.userEducation.text =
-            if (profile.school!!.isNotEmpty()) profile.school else "Education not added"
+            if (profile.school == null) profile.school else "Education not added"
 
         myProfileBinding.userLocation.text =
-            if (profile.countryName!!.isNotEmpty()) profile.countryName else "Location not added"
+            if (profile.countryName == null) profile.countryName else "Location not added"
 
         Glide.with(requireContext())
             .load(profile.userAvatar)
@@ -170,9 +169,11 @@ class MyProfileFragment : BaseFragment() {
 
         myProfileBinding.userProblemsSolvedCount.text = acSubmissionNum[0].count.toString()
 
+        // ranking
+        myProfileBinding.userRanking.text = "~".plus(matchedUser?.profile?.ranking.toString())
         myProfileBinding.recentSubmissionListLayout.setOnClickListener {
             val bundle = bundleOf(
-                "username" to matchedUser?.username ,
+                "username" to matchedUser?.username,
             )
             myProfileBinding.root.findNavController()
                 .navigate(R.id.action_myProfileFragment_to_recentSubmissions, bundle)

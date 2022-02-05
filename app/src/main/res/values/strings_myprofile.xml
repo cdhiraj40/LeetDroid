@@ -17,8 +17,14 @@
     <string name="hard_difficulty_text">Hard</string>
 
     <string name="difficulty_count">%1$s %2$s </string>
-    <string name="contest_details" >Contest Details</string>
-    <!--    <string name="medium_difficulty_count">%1$s/%2$s</string>-->
-<!--    <string name="hard_difficulty_count">%1$s/%2$s</string>-->
+    <string name="contest_details">Contest Details</string>
+    <string name="ranking_text">Ranking:</string>
+    <string name="no_contest_attended_text">No of Contest Attended: </string>
+    <string name="contest_rating_text">Rating:</string>
+    <string name="global_ranking_text">Global Ranking:</string>
+    <string name="rating_after_contest_text">Rating after contest:</string>
+    <string name="contest_ranking_text">Contest ranking: </string>
+    <string name="recent_contests_heading">Recent Contests</string>
+
 
 </resources>

@@ -4,13 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.model.RecentSubmissionsModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecentSubmissionsAdapter(val context: Context) :
     RecyclerView.Adapter<RecentSubmissionsAdapter.ViewHolder>() {
@@ -69,6 +71,17 @@ class RecentSubmissionsAdapter(val context: Context) :
                 )
                 holder.submissionStatus.text = submissionItem.statusDisplay
             }
+        }
+
+        // setting thw date
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val time = format.format(submissionItem.timestamp!!.toLong().times(1000L))
+        var date: Date? = null
+        try {
+            date = format.parse(time)
+            holder.submissionDate.text = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date!!)
+        } catch (e: ParseException) {
+            e.printStackTrace()
         }
 
         // setting the color of language layout

@@ -3,27 +3,23 @@ package com.example.leetdroid.ui.fragments.question
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.leetdroid.R
-
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionBinding
 import com.example.leetdroid.model.QuestionContentModel
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
-
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
-
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import ru.noties.markwon.Markwon
 import java.io.IOException
 
 
@@ -36,6 +32,7 @@ class QuestionFragment : Fragment() {
     private var questionHasSolution: Boolean? = false
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
     private lateinit var paidQuestionView: View
+    private var markwon: Markwon? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +57,10 @@ class QuestionFragment : Fragment() {
         questionSharedViewModel.getQuestionId(questionID)
 
         paidQuestionView = rootView.findViewById(R.id.view_paid_question)
+
+        markwon = Markwon.create(requireContext())
         loadQuestion()
+
         return rootView
     }
 
@@ -126,43 +126,89 @@ class QuestionFragment : Fragment() {
                     if (questionContentJson.data?.question?.isPaidOnly!!)
                         paidQuestionView.visibility = View.VISIBLE
                     else {
-                        val questionContentHtml = context?.getString(
+                        var questionContentHtml = context?.getString(
                             R.string.question_content,
                             questionContentJson.data?.question?.content
                         )
+                        questionContentHtml =
+                            questionContentHtml!!.replace("<p>", "").replace("</p>", "")
+                                .replace("</pre>", "")
+                                .replace("<pre>", "")
+
+                        val firstExample =
+                            findSubstringIndex(questionContentHtml, "Example 1", 0)
+
+                        val constraintsBlock =
+                            findSubstringIndex(
+                                questionContentHtml,
+                                "Constraints",
+                                firstExample
+                            )
+                        val check = questionContentHtml.substring(constraintsBlock).trim()
+
+                        var string: String = markwon?.toMarkdown(
+                            questionContentHtml
+                        ).toString()
 
                         val example1 =
-                            findSubstringIndex(questionContentHtml.toString(), "Example 1", 0)
+                            findSubstringIndex(string, "Example 1", 0)
+
                         val constraints =
                             findSubstringIndex(
-                                questionContentHtml.toString(),
+                                string,
                                 "Constraints",
                                 example1
                             )
 
-                        val questionDescription =
-                            questionContentHtml!!.substring(0, example1).trim()
-                        val exampleStrings = questionContentHtml.substring(example1, constraints)
-                        val constraintStrings = questionContentHtml.substring(constraints).trim()
+                        var questionDescription =
+                            string.substring(0, example1)
 
-                        val explanationCount = countMatches(exampleStrings, "Explanation")
-                        var index = 0
-                        for (i in 0..explanationCount) {
-                            index = findSubstringIndex(exampleStrings, "Explanation", index)
-                            insertString(exampleStrings, "\n ", index - 1)
-                        }
+                        questionDescription = questionDescription.replace("\n", "<br/>")
 
+
+                        var exampleStrings =
+                            string.substring(example1, constraints).trim()
+
+                        val constraintStrings =
+                            string.substring(constraints).trim()
+
+                        val firstOccurance = exampleStrings.indexOf("Example") + 7
+
+                        exampleStrings = exampleStrings.substring(firstOccurance)
+                        exampleStrings = exampleStrings.substring(1).replace(
+                            "Example",
+                            "<br/><br/><b>Example</b>"
+                        )
+                        exampleStrings = exampleStrings.replace("Input", "Input:")
+                        exampleStrings = exampleStrings.replace("Input::", "Input:")
+                        exampleStrings = exampleStrings.replace("Input:", "<br/><b>Input:</b>")
+                        exampleStrings = exampleStrings.replace("Output", "Output:")
+                        exampleStrings = exampleStrings.replace("Output::", "Output:")
+                        exampleStrings = exampleStrings.replace("Output:", "<br/><b>Output:</b>")
+                        exampleStrings = exampleStrings.replace("Explanation", "Explanation:")
+                        exampleStrings = exampleStrings.replace("Explanation::", "Explanation:")
+                        exampleStrings =
+                            exampleStrings.replace("Explanation:", "<br/><b>Explanation:</b>")
+
+
+                        exampleStrings = exampleStrings.replace(":", ":<br/>")
+                        exampleStrings = exampleStrings.replace("\n", "")
+                        exampleStrings = exampleStrings.replace("[]", "[ ]")
                         fragmentQuestionBinding.questionDescriptionText.setHtml(
                             questionDescription.trim()
                         )
 
                         fragmentQuestionBinding.questionExamplesText.visibility = View.VISIBLE
+
+
                         fragmentQuestionBinding.questionExamplesText.setHtml(
-                            exampleStrings.substring(0, exampleStrings.length)
+                            "<b>Example </b>".plus(
+                                exampleStrings.trim()
+                            )
                         )
 
                         fragmentQuestionBinding.questionConstraintsText.setHtml(
-                            constraintStrings.trim()
+                            check.trim()
                         )
                     }
                 }

@@ -16,7 +16,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:padding="20dp"
         android:singleLine="true"
-        android:text="@string/hello_blank_fragment"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
     <TextView
@@ -26,6 +26,7 @@
         android:layout_below="@id/discussion_title"
         android:marqueeRepeatLimit="marquee_forever"
         android:padding="20dp"
-        android:text="@string/hello_blank_fragment" />
+        android:textSize="16sp"
+        android:textColor="@color/black" />
 
 </RelativeLayout>
