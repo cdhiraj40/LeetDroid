@@ -6,19 +6,18 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.DOWNLOAD_SERVICE
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.Fragment
-
-import com.google.android.material.snackbar.Snackbar
 import android.content.Intent
 import android.net.Uri
 import android.os.CountDownTimer
+import android.os.Environment
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.ProgressBar
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import android.os.Environment
-import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import com.example.leetdroid.R
+import com.google.android.material.snackbar.Snackbar
 
 
 fun Fragment.closeKeyboard() {
@@ -51,7 +50,7 @@ fun Context.copyToClipboard(text: CharSequence) {
 fun showSnackBarWithAction(
     activity: Activity,
     message: String?,
-    @StringRes actionRes: String,
+    actionRes: String,
     color: Int? = null,
     listener: (View) -> Unit
 ) {

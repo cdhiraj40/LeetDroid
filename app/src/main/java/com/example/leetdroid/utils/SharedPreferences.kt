@@ -52,4 +52,11 @@ class SharedPreferences(context: Context) {
     var minsNotificationPushed: Boolean
         get() = sharedPreferences.getBoolean("minsNotificationPushed", false)
         set(value) = sharedPreferences.edit().putBoolean("minsNotificationPushed", value).apply()
+
+    fun removeAllPreferences() {
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.clear()
+        editor.commit()
+//        sharedPreferences.edit().clear().apply()
+    }
 }

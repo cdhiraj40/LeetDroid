@@ -2,11 +2,9 @@ package com.example.leetdroid.data.db
 
 import android.content.Context
 import androidx.room.Database
-
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.leetdroid.data.dao.ContestDao
-
 import com.example.leetdroid.data.entitiy.Contest
 
 @Database(entities = [Contest::class], version = 5)
@@ -29,5 +27,4 @@ abstract class ContestsDatabase : RoomDatabase() {
             return INSTANCE!!
         }
     }
-
 }

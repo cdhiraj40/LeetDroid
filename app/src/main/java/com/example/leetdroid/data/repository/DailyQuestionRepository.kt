@@ -6,7 +6,7 @@ import com.example.leetdroid.data.entitiy.DailyQuestion
 
 class DailyQuestionRepository(private val dailyQuestionDao: DailyQuestionDao) {
 
-    val todaysQuestion = fun(id:Int):LiveData<DailyQuestion> = dailyQuestionDao.getQuestion(id)
+    val todaysQuestion = fun(id: Int): LiveData<DailyQuestion> = dailyQuestionDao.getQuestion(id)
 
     suspend fun insertQuestion(question: DailyQuestion) =
         dailyQuestionDao.insertQuestion(question)
@@ -14,6 +14,6 @@ class DailyQuestionRepository(private val dailyQuestionDao: DailyQuestionDao) {
     suspend fun updateQuestion(question: DailyQuestion) =
         dailyQuestionDao.updateQuestion(question)
 
-    suspend fun deleteQuestion(question: DailyQuestion) =
-        dailyQuestionDao.deleteQuestion(question)
+    suspend fun deleteQuestion(id: Int) =
+        dailyQuestionDao.deleteQuestion(id)
 }

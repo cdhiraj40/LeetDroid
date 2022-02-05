@@ -97,9 +97,10 @@ class MyProfileFragment : BaseFragment() {
                 it?.let {
                     username = it.username
                     email = it.email
+                    loadUser(username)
+                    preferences.userDataLoaded = true
                 }
-                loadUser(username)
-                preferences.userDataLoaded = true
+
             })
         } else {
             userViewModel.getUser.observe(viewLifecycleOwner, { it ->
@@ -283,7 +284,7 @@ class MyProfileFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.logout -> {
-                showLogOutDialog(requireActivity())
+                showLogOutDialog(requireActivity(), requireContext())
                 true
             }
             R.id.sync -> {

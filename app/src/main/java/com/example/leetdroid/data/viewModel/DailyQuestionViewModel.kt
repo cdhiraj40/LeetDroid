@@ -36,9 +36,9 @@ class DailyQuestionViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun deleteQuestion(question: DailyQuestion) {
+    fun deleteQuestion(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            dailyQuestionRepository.deleteQuestion(question)
+            dailyQuestionRepository.deleteQuestion(id)
         }
     }
 }

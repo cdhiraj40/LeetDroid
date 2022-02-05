@@ -14,8 +14,8 @@ interface FirebaseUserDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateUser(userProfile: FirebaseUserProfile?)
 
-    @Delete
-    suspend fun deleteUser(userProfile: FirebaseUserProfile?)
+    @Query("DELETE FROM firebase_user WHERE id=:id")
+    suspend fun deleteUser(id: Int)
 
     @Query("SELECT * FROM firebase_user WHERE id=:id ")
     fun getUser(id:Int): LiveData<FirebaseUserProfile>
