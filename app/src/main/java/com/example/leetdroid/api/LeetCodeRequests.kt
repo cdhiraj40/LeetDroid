@@ -144,6 +144,15 @@ data class LeetCodeRequests(
             query = "query getRecentSubmissionList(\$username: String!, \$limit: Int) { recentSubmissionList(username: \$username, limit: \$limit) " +
                     "{ title titleSlug timestamp statusDisplay lang } languageList { id name verboseName } } "
         )
+
+        val getContestRankingData = fun(username: String) = LeetCodeRequests(
+            operationName = "getContestRankingData",
+            variables = Variables(
+                username = username,
+            ),
+            query = "query getContestRankingData(\$username: String!) { userContestRanking(username: \$username) { attendedContestsCount rating globalRanking } " +
+                    "userContestRankingHistory(username: \$username) { contest { title startTime } rating ranking } }"
+        )
     }
 
     data class Variables(
