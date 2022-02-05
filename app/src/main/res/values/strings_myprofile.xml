@@ -25,6 +25,7 @@
     <string name="rating_after_contest_text">Rating after contest:</string>
     <string name="contest_ranking_text">Contest ranking: </string>
     <string name="recent_contests_heading">Recent Contests</string>
+    <string name="user_absent_contest">Did not attend the Contest!</string>
 
 
 </resources>

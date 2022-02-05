@@ -15,6 +15,7 @@ import com.example.leetdroid.databinding.FragmentContestDetailsBinding
 import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.model.ContestRankingModel
 import com.example.leetdroid.ui.fragments.AllQuestionsFragment
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
 import okhttp3.*
@@ -107,7 +108,7 @@ class ContestDetailsFragment : Fragment(), ContestHistoryAdapter.OnItemClicked {
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
-                Log.d(AllQuestionsFragment.Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("ContestDetailsFragment").toString(), call.toString(), e)
             }
 
         })

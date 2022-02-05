@@ -15,7 +15,7 @@ import com.example.leetdroid.adapter.GeneralDiscussionAdapter
 import com.example.leetdroid.api.*
 import com.example.leetdroid.databinding.FragmentGeneralDiscussionBinding
 import com.example.leetdroid.model.GeneralDiscussionModel
-import com.example.leetdroid.ui.fragments.GeneralDiscussionFragment.Constant.TAG
+import com.example.leetdroid.utils.Constant.Companion.TAG
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
 import okhttp3.*
@@ -80,7 +80,7 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(TAG, call.toString(), e)
+                Log.d(TAG("GeneralDiscussionFragment").toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -122,9 +122,5 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                 R.id.action_generalDiscussionFragment_to_generalDiscussionItemFragment,
                 bundle
             )
-    }
-
-    object Constant {
-        val TAG = GeneralDiscussionFragment::class.qualifiedName
     }
 }

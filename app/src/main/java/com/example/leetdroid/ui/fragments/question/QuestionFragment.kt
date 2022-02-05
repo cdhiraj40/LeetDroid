@@ -14,6 +14,7 @@ import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionBinding
 import com.example.leetdroid.model.QuestionContentModel
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
 import okhttp3.*
@@ -100,7 +101,7 @@ class QuestionFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG, call.toString(), e)
+                Log.d(Constant.TAG("QuestionFragment").toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -130,55 +131,100 @@ class QuestionFragment : Fragment() {
                             R.string.question_content,
                             questionContentJson.data?.question?.content
                         )
+
+
+                        // removing the tags not supported by markwon library
                         questionContentHtml =
                             questionContentHtml!!.replace("<p>", "").replace("</p>", "")
                                 .replace("</pre>", "")
                                 .replace("<pre>", "")
 
-                        val firstExample =
-                            findSubstringIndex(questionContentHtml, "Example 1", 0)
-
-                        val constraintsBlock =
+                        // finding the index of first occurrence of example in html string, to find constraints text
+                        var firstExampleOccurrence =
                             findSubstringIndex(
-                                questionContentHtml,
-                                "Constraints",
-                                firstExample
+                                inputString = questionContentHtml,
+                                whatToFind = "Example 1",
+                                startIndex = 0
                             )
-                        val check = questionContentHtml.substring(constraintsBlock).trim()
 
-                        var string: String = markwon?.toMarkdown(
+                        /**
+                         * finding the occurrence of constraints in html string for the separate constraints text,
+                         * after example block
+                         */
+                        var constraintsIndex =
+                            findSubstringIndex(
+                                inputString = questionContentHtml,
+                                whatToFind = "Constraints",
+                                startIndex = firstExampleOccurrence
+                            )
+
+                        // getting the substring of only constraints for the separate constraints text
+                        val constraintBlock = questionContentHtml.substring(constraintsIndex).trim()
+
+                        // converting html content to normal text with the help of markwon library
+                        val markwonedQuestionContent: String = markwon?.toMarkdown(
                             questionContentHtml
                         ).toString()
 
-                        val example1 =
-                            findSubstringIndex(string, "Example 1", 0)
-
-                        val constraints =
+                        // getting index of first Occurrence Example in normal text for separate example IO/OP block
+                        firstExampleOccurrence =
                             findSubstringIndex(
-                                string,
-                                "Constraints",
-                                example1
+                                inputString = markwonedQuestionContent,
+                                whatToFind = "Example 1",
+                                startIndex = 0
                             )
 
-                        var questionDescription =
-                            string.substring(0, example1)
+                        // getting index of constraint in normal text for separate example IO/OP block
+                        constraintsIndex =
+                            findSubstringIndex(
+                                inputString = markwonedQuestionContent,
+                                whatToFind = "Constraints",
+                                startIndex = firstExampleOccurrence
+                            )
 
+                        // getting the substring of only first part of question, i.e. description, before example block
+                        var questionDescription =
+                            markwonedQuestionContent.substring(0, firstExampleOccurrence)
+
+                        /**
+                         * replacing ""\n"" with html's ""<br/>"" tag, because the content from API contains many consecutive ""\n"" that
+                         * gets removed after converting to normal text, most probably its a bug
+                         * more information here: https://stackoverflow.com/questions/27640401/remove-html-tags-from-a-string-but-restore-n
+                         * https://stackoverflow.com/questions/9326447/removing-html-tags-except-line-breaks
+                         */
                         questionDescription = questionDescription.replace("\n", "<br/>")
 
 
+                        // creating example block string from normal string for example block
                         var exampleStrings =
-                            string.substring(example1, constraints).trim()
+                            markwonedQuestionContent.substring(
+                                firstExampleOccurrence,
+                                constraintsIndex
+                            ).trim()
 
-                        val constraintStrings =
-                            string.substring(constraints).trim()
 
-                        val firstOccurance = exampleStrings.indexOf("Example") + 7
+                        /**
+                         * I am adding a line break after and before every example or more specifically after "Example no. :"
+                         * but adding before first example makes the block look little ugly.
+                         * To resolve this, we are adding 7 in first occurrence to skip first "Example" in string.
+                         */
+                        firstExampleOccurrence = exampleStrings.indexOf("Example") + 7
 
-                        exampleStrings = exampleStrings.substring(firstOccurance)
+                        exampleStrings = exampleStrings.substring(firstExampleOccurrence)
+
+                        // making every instance of example bold  and adding two line breaks before to make it look better
                         exampleStrings = exampleStrings.substring(1).replace(
                             "Example",
                             "<br/><br/><b>Example</b>"
                         )
+
+                        /**
+                         * Summary: making strings like Input, Output and Explanation bold and Adding line breaks before them.
+                         *
+                         * Long Explanation: Most of the cases the strings coming from API like Input, Output and Explanation had
+                         * ":" after them, but just to be safe we are taking care of both cases if there("Input:") and not there ("Input").
+                         * Lastly we are making them bold and adding line breaks after them to make the question look less compact.
+                         */
                         exampleStrings = exampleStrings.replace("Input", "Input:")
                         exampleStrings = exampleStrings.replace("Input::", "Input:")
                         exampleStrings = exampleStrings.replace("Input:", "<br/><b>Input:</b>")
@@ -190,17 +236,29 @@ class QuestionFragment : Fragment() {
                         exampleStrings =
                             exampleStrings.replace("Explanation:", "<br/><b>Explanation:</b>")
 
-
                         exampleStrings = exampleStrings.replace(":", ":<br/>")
+
+                        /**
+                         * Extra information: removing more "\n" if there exists some with empty string as we are already adding line breaks,
+                         * empty lists "[]" were looking little compact so replaced by one extra space "[ ]"
+                         */
                         exampleStrings = exampleStrings.replace("\n", "")
                         exampleStrings = exampleStrings.replace("[]", "[ ]")
                         fragmentQuestionBinding.questionDescriptionText.setHtml(
                             questionDescription.trim()
                         )
 
+                        /**
+                         * Making the example block with colored visible.
+                         * The reason it's visibility was gone because currently there is no loading screen,
+                         * and an empty colored block looks ugly.
+                         */
                         fragmentQuestionBinding.questionExamplesText.visibility = View.VISIBLE
 
 
+                        /**
+                         * Adding and Making first Example string bold, which was removed to handle other cases mentioned above.
+                         */
                         fragmentQuestionBinding.questionExamplesText.setHtml(
                             "<b>Example </b>".plus(
                                 exampleStrings.trim()
@@ -208,7 +266,7 @@ class QuestionFragment : Fragment() {
                         )
 
                         fragmentQuestionBinding.questionConstraintsText.setHtml(
-                            check.trim()
+                            constraintBlock.trim()
                         )
                     }
                 }
@@ -220,26 +278,5 @@ class QuestionFragment : Fragment() {
     fun findSubstringIndex(inputString: String, whatToFind: String, startIndex: Int = 0): Int {
         val matchIndex = inputString.indexOf(whatToFind, startIndex)
         return if (matchIndex >= 0) matchIndex else 0
-    }
-
-    fun countMatches(string: String, subString: String): Int {
-        return string.split(subString)
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray().size - 1
-    }
-
-    fun insertString(
-        originalString: String,
-        stringToBeInserted: String,
-        index: Int
-    ): String {
-        // return the modified String
-        return (originalString.substring(0, index + 1)
-                + stringToBeInserted
-                + originalString.substring(index + 1))
-    }
-
-    object Constant {
-        val TAG = QuestionFragment::class.qualifiedName
     }
 }
