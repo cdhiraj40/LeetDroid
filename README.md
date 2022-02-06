@@ -30,7 +30,7 @@ perfect question to practice, LeetDroid can also give you any random question fr
 
 ### Screenshots
 
-<img src ="assets/eduJam_collage.png" align="center">
+<img src ="assets/leetdroid_collage.png" align="center">
 
 ### Demo Video
 
