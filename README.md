@@ -34,7 +34,7 @@ perfect question to practice, LeetDroid can also give you any random question fr
 
 ### Demo Video
 
-Click on the video to go to see the demo of the app
+Click on the video to see the demo of the app
 [![Demo Video](https://img.youtube.com/vi/4K_OnKxRmek/0.jpg)](https://youtu.be/4K_OnKxRmek)
 
 ## 👇 Prerequisites
