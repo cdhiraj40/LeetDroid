@@ -2,9 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_profile_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.user.MyProfileFragment">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -133,11 +135,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_profile_layout"
-            android:visibility="gone"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
             app:cardMaxElevation="3dp"
+            android:visibility="gone"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
 
@@ -491,5 +493,10 @@
 
         </LinearLayout>
 
+        <include
+            android:id="@+id/loading_view"
+            layout="@layout/loading_screen_layout"
+            android:visibility="gone" />
     </RelativeLayout>
+
 </ScrollView>

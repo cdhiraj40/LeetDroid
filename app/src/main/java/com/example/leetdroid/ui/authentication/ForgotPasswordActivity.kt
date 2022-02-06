@@ -3,14 +3,19 @@ package com.example.leetdroid.ui.authentication
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.leetdroid.R
 import com.example.leetdroid.databinding.ActivityForgotPasswordBinding
-import com.example.leetdroid.extensions.openActivity
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.extensions.showSnackBarWithAction
+import com.example.leetdroid.utils.CommonUtils
+import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.StringExtensions.isEmailValid
+import com.example.leetdroid.utils.hideSoftKeyboard
+import com.google.firebase.auth.FirebaseAuth
+
 
 // TODO check email if its registered before sending email
 class ForgotPasswordActivity : AppCompatActivity() {
@@ -46,7 +51,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
                         .isEmpty() -> forgotPasswordBinding.emailLayoutForgotPassword.error =
                         "Please enter an email "
 
-                    !forgotPasswordBinding.emailEditText.text.toString().trim{ it <=' '}.isEmailValid() ->
+                    !forgotPasswordBinding.emailEditText.text.toString().trim { it <= ' ' }
+                        .isEmailValid() ->
                         forgotPasswordBinding.emailLayoutForgotPassword.error =
                             "Please enter a valid email"
 
@@ -64,10 +70,30 @@ class ForgotPasswordActivity : AppCompatActivity() {
 //        }
 
         forgotPasswordBinding.forgotPasswordButton.setOnClickListener {
-            forgotPasswordBinding.emailEditText.isEnabled = false
-            forgotPasswordBinding.forgotPasswordButtonText.text =
-                getString(R.string.sent_email_button_text)
-            forgotPasswordBinding.forgotPasswordSubTitle.visibility = View.VISIBLE
+            hideSoftKeyboard(activity = this)
+            forgotPassword(forgotPasswordBinding.emailEditText.text.toString())
         }
+    }
+
+    private fun forgotPassword(email: String) {
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(Constant.TAG("ForgotPasswordActivity").toString(), "Email sent.")
+                    showSnackBarWithAction(
+                        this,
+                        "Email has been sent to if user exists!",
+                        getString(R.string.prompt_open_email),
+                        null
+                    ) {
+                        CommonUtils.openEmailApp(context = this, activity = this)
+                    }
+                    forgotPasswordBinding.forgotPasswordButtonText.text =
+                        getString(R.string.sent_email_button_text)
+                    forgotPasswordBinding.forgotPasswordButton.isEnabled = false
+                    forgotPasswordBinding.forgotPasswordSubTitle.visibility = View.VISIBLE
+                    forgotPasswordBinding.emailEditText.isEnabled = false
+                }
+            }
     }
 }

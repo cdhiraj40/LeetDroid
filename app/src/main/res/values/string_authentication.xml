@@ -6,11 +6,11 @@
 
     <string name="prompt_password">Password</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_username">Username</string>
+    <string name="prompt_username">LeetCode Username</string>
     <string name="prompt_forgot_password">Forgot Password?</string>
 
     <string name="send_email_button_text">Send Email</string>
-    <string name="sent_email_button_text">Sent Email</string>
+    <string name="sent_email_button_text">Email has been sent</string>
     <string name="open_email_button_text">Open Gmail</string>
     <string name="no_email_prompt">Didn\'t get any email? Do Check your spam folder or try again with a registered email.</string>
     <string name="forgot_password_valid_user_text">Email will be only sent to registered users</string>
@@ -21,4 +21,5 @@
     <string name="username_warning_message">You will not be able to change you username later!</string>
     <string name="username_warning_positive_message">Proceed</string>
     <string name="username_warning_negative_message">Change</string>
+    <string name="prompt_open_email">Open Gmail?</string>
 </resources>

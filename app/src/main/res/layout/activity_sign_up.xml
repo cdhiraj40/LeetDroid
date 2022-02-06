@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:baselineAligned="false"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.authentication.SignUpActivity">
 
     <TextView
         style="@style/TextAppearance.AppCompat.Large"
@@ -56,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:visibility="gone"
-                        app:SpinKit_Color="@color/black"/>
+                        app:SpinKit_Color="@color/blue" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/email_layout_signup"

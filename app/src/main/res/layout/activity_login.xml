@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:baselineAligned="false"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.authentication.LoginActivity">
 
     <TextView
         style="@style/TextAppearance.AppCompat.Large"
@@ -50,6 +52,15 @@
                     android:layout_height="match_parent"
                     android:elevation="10dp">
 
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/login_progress_bar"
+                        style="@style/SpinKitView.Large.Circle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"
+                        app:SpinKit_Color="@color/blue" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/email_layout_login"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -71,8 +82,8 @@
                             android:id="@+id/email_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textColor="@color/black"
                             android:maxLines="1"
+                            android:textColor="@color/black"
                             app:hintTextColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,18 +102,18 @@
                         app:boxCornerRadiusTopEnd="5dp"
                         app:boxCornerRadiusTopStart="5dp"
                         app:boxStrokeColor="@color/light_blue"
-                        app:hintTextColor="@color/black"
                         app:endIconMode="password_toggle"
+                        app:endIconTint="@color/black"
                         app:errorIconDrawable="@null"
-                        app:endIconTint="@color/black">
+                        app:hintTextColor="@color/black">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/password_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textColor="@color/black"
+                            android:inputType="textPassword"
                             android:maxLines="1"
-                            android:inputType="textPassword"/>
+                            android:textColor="@color/black" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
