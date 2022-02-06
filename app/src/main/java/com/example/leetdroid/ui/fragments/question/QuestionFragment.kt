@@ -130,9 +130,10 @@ class QuestionFragment : Fragment() {
                 questionSharedViewModel.getQuestionId(questionContentJson.data?.question?.questionFrontendId.toString())
                 activity?.runOnUiThread {
                     try {
-                        if (questionContentJson.data?.question?.isPaidOnly!!)
+                        if (questionContentJson.data?.question?.isPaidOnly!!) {
                             paidQuestionView.visibility = View.VISIBLE
-                        else {
+                            loadingView.visibility = View.GONE
+                        } else {
 
                             fragmentQuestionBinding.questionTitle.text =
                                 questionContentJson.data?.question?.title
@@ -283,7 +284,8 @@ class QuestionFragment : Fragment() {
 
                             loadingView.visibility = View.GONE
                             fragmentQuestionBinding.questionLayout.visibility = View.VISIBLE
-                            fragmentQuestionBinding.questionBottomNavigation.visibility = View.VISIBLE
+                            fragmentQuestionBinding.questionBottomNavigation.visibility =
+                                View.VISIBLE
                         }
                     } catch (exception: Exception) {
                         // TODO add the general error view and show here
