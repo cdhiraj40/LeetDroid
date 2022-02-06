@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/general_discussion_nested"
+    android:id="@+id/general_discussion_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.question.QuestionDiscussionFragment">
+    tools:context=".ui.fragments.GeneralDiscussionFragment">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/general_discussion_nested"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:context=".ui.fragments.question.QuestionDiscussionFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/general_discussions_recycler_view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            tools:listitem="@layout/question_discussion_item" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/discussion_list_progress_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/general_discussions_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/question_discussion_item" />
 
-</androidx.core.widget.NestedScrollView>
+            <ProgressBar
+                android:id="@+id/discussion_list_progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/loading_screen_layout"
+        android:visibility="gone" />
+</RelativeLayout>

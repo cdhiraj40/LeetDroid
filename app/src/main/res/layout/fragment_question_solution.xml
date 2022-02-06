@@ -5,26 +5,37 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.question.QuestionSolutionFragment">
 
-    <TextView
-        android:id="@+id/question_title_text"
-        style="@style/TextAppearance.AppCompat.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/hello_blank_fragment" />
-
-    <org.sufficientlysecure.htmltextview.HtmlTextView
-        android:id="@+id/question_solution"
+    <RelativeLayout
+        android:id="@+id/question_solution_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/question_title_text"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:padding="16dp"
-        android:textColor="@color/black" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/question_title_text"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/hello_blank_fragment" />
+
+        <org.sufficientlysecure.htmltextview.HtmlTextView
+            android:id="@+id/question_solution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/question_title_text"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:padding="16dp"
+            android:textColor="@color/black" />
+    </RelativeLayout>
 
     <include
         android:id="@+id/view_no_solution"
         layout="@layout/layout_no_solution"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/loading_screen_layout"
+        android:visibility="gone" />
 </RelativeLayout>

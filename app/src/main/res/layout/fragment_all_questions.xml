@@ -33,9 +33,9 @@
     <ProgressBar
         android:id="@+id/search_progress_bar"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_height="wrap_content" />
+        android:visibility="gone" />
 
     <include
         android:id="@+id/view_no_questions"
@@ -47,6 +47,10 @@
         layout="@layout/general_error_layout"
         android:visibility="gone" />
 
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/loading_screen_layout"
+        android:visibility="gone" />
 
 </RelativeLayout>
 

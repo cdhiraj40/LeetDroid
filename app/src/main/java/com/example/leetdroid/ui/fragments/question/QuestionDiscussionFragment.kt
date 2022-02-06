@@ -35,6 +35,7 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
     private lateinit var questionDiscussionsJson: QuestionDiscussionsModel
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
     private var questionDiscussionAdapter: QuestionDiscussionAdapter? = null
+    private lateinit var loadingView: View
     private var limit = 10
 
     override fun onCreateView(
@@ -45,6 +46,11 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
         fragmentQuestionDiscussionBinding =
             FragmentQuestionDiscussionBinding.inflate(layoutInflater)
         val rootView = fragmentQuestionDiscussionBinding.root
+
+        loadingView = rootView.findViewById(R.id.loading_view)
+
+        loadingView.visibility = View.VISIBLE
+        fragmentQuestionDiscussionBinding.allDiscussionNested.visibility = View.GONE
 
         questionSharedViewModel =
             ViewModelProvider(requireActivity())[QuestionSharedViewModel::class.java]
@@ -117,6 +123,9 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
                         questionDiscussionAdapter
 
                     questionDiscussionAdapter!!.setOnClick(this@QuestionDiscussionFragment)
+
+                    loadingView.visibility = View.GONE
+                    fragmentQuestionDiscussionBinding.allDiscussionNested.visibility = View.VISIBLE
                     checkIfEmpty()
                 }
             }

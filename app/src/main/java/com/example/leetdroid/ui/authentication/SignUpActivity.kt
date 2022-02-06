@@ -215,9 +215,6 @@ class SignUpActivity : AppCompatActivity() {
                     showSnackBar(this, "You are registered!")
 
                     addUserInDB(FirebaseUserProfile(uid, email, username))
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
                 } else {
                     // registration failed
                     Log.d(
@@ -291,9 +288,11 @@ class SignUpActivity : AppCompatActivity() {
             if (!SharedPreferences(this@SignUpActivity).firebaseUserRegistered) {
                 firebaseUserViewModel.addUser(firebaseUserProfile)
                 SharedPreferences(this@SignUpActivity).firebaseUserRegistered = true
+                openMainActivity()
             } else {
                 firebaseUserProfile.id = 1
                 firebaseUserViewModel.updateUser(firebaseUserProfile)
+                openMainActivity()
             }
         }
     }
@@ -306,5 +305,11 @@ class SignUpActivity : AppCompatActivity() {
 
             }
         )
+    }
+
+    private fun openMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

@@ -31,6 +31,7 @@ class QuestionSolutionFragment : Fragment() {
     private var isQuestionPaid: Boolean = false
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
     private lateinit var questionSolutionJson: QuestionSolutionModel
+    private lateinit var loadingView: View
 
     private var markwon: Markwon? = null
 
@@ -41,6 +42,11 @@ class QuestionSolutionFragment : Fragment() {
         // Inflate the layout for this fragment
         fragmentSolutionBinding = FragmentQuestionSolutionBinding.inflate(layoutInflater)
         val rootView = fragmentSolutionBinding.root
+
+        loadingView = rootView.findViewById(R.id.loading_view)
+
+        loadingView.visibility = View.VISIBLE
+        fragmentSolutionBinding.questionSolutionLayout.visibility = View.GONE
 
         val viewNoSolution: View = rootView.findViewById(R.id.view_no_solution)
         questionSharedViewModel =
@@ -63,6 +69,7 @@ class QuestionSolutionFragment : Fragment() {
                 loadQuestion()
             } else {
                 viewNoSolution.visibility = View.VISIBLE
+                loadingView.visibility = View.GONE
                 fragmentSolutionBinding.questionSolution.visibility = View.GONE
             }
         })
@@ -111,6 +118,8 @@ class QuestionSolutionFragment : Fragment() {
                         fragmentSolutionBinding.questionSolution,
                         discussionContent
                     )
+                    loadingView.visibility = View.GONE
+                    fragmentSolutionBinding.questionSolutionLayout.visibility = View.VISIBLE
                 }
             }
         })

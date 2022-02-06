@@ -25,8 +25,11 @@ import com.example.leetdroid.adapter.ContestPagerAdapter
 import com.example.leetdroid.api.ContestApi
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
+import com.example.leetdroid.data.dao.ContestDao
+import com.example.leetdroid.data.db.ContestsDatabase
 import com.example.leetdroid.data.entitiy.Contest
 import com.example.leetdroid.data.entitiy.DailyQuestion
+import com.example.leetdroid.data.repository.ContestRepository
 import com.example.leetdroid.data.viewModel.ContestViewModel
 import com.example.leetdroid.data.viewModel.DailyQuestionViewModel
 import com.example.leetdroid.databinding.FragmentHomeBinding
@@ -72,6 +75,8 @@ class HomeFragment : Fragment() {
     private lateinit var contestViewModel: ContestViewModel
     private lateinit var dailyViewModel: DailyQuestionViewModel
     private lateinit var generalErroView: View
+    private lateinit var contestDB: ContestDao
+    private lateinit var contestRepository: ContestRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,6 +91,9 @@ class HomeFragment : Fragment() {
 
         createNotificationChannel()
         setAlarm(requireContext())
+
+        contestDB = ContestsDatabase.getInstance(requireActivity().application).contestDao()
+        contestRepository = ContestRepository(contestDB)
 
         fragmentHomeBinding.contestProgressBar.visibility = View.VISIBLE
         fragmentHomeBinding.questionProgressBar.visibility = View.VISIBLE
@@ -305,9 +313,16 @@ class HomeFragment : Fragment() {
     private fun insertContests(biWeeklyContest: Contest, weeklyContest: Contest) {
         val preferences = SharedPreferences(requireContext())
         preferences.contestsInserted = true
-        contestViewModel.addContest(biWeeklyContest)
-        contestViewModel.addContest(weeklyContest)
-        displayContests()
+        lifecycleScope.launch {
+            if (contestRepository.insertContest(biWeeklyContest) != -1L
+                &&
+                contestRepository.insertContest(weeklyContest) != -1L
+            ) {
+                displayContests()
+            }
+        }
+//        contestViewModel.addContest(biWeeklyContest)
+//        contestViewModel.addContest(weeklyContest)
     }
 
     // displays the contests from database
