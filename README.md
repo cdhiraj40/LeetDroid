@@ -8,7 +8,7 @@ general discussions, currently has discussions for ``interview experience``, dai
 from leetcode's daily challenges, contest timer and notification to remind coders, and leetcode profile in the app itself to
 check ranks, acceptance rates, contest history along with every contest ranks and ratings and recent submissions too. It
 also provides random questions after every ask from the user.The app will be having more features that are
-mentioned [here](https://github.com/cdhiraj40/LeetDroid/edit/main/README.md#Future-Scope)
+mentioned [here](https://github.com/cdhiraj40/LeetDroid/main/README.md#Future-Scope)
 To use LeetDroid, You will need just an account of LeetDroid that you can create in app.
 <br/>Currently app supports for only leetcode users, app fetches data on user's username. In future this might change.
 
@@ -104,5 +104,3 @@ I am planning to these following features before releasing the first version on 
   etc. including company tags.
 - Showing different contests option along with differentiating attended & non-attended contests.
 - Improving the approach for pushing notifications.
-
-`
