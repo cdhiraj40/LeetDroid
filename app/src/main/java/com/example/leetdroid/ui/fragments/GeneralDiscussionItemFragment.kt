@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.leetdroid.R
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentGeneralDiscussionItemBinding
@@ -24,6 +25,7 @@ class GeneralDiscussionItemFragment : Fragment() {
     private var markwon: Markwon? = null
     private var discussionId: Int? = 0
     private lateinit var discussionContentJson: DiscussionItemModel
+    private lateinit var loadingView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +37,11 @@ class GeneralDiscussionItemFragment : Fragment() {
             FragmentGeneralDiscussionItemBinding.inflate(inflater)
 
         val rootView = fragmentGeneralDiscussionItemBinding.root
+
+        loadingView = rootView.findViewById(R.id.loading_view)
+
+        loadingView.visibility = View.VISIBLE
+        fragmentGeneralDiscussionItemBinding.generalDiscussionLayout.visibility = View.GONE
 
         val bundle = arguments
 
@@ -89,6 +96,9 @@ class GeneralDiscussionItemFragment : Fragment() {
                     fragmentGeneralDiscussionItemBinding.discussionTitle.isSelected = true
                     fragmentGeneralDiscussionItemBinding.discussionTitle.text =
                         discussionContentJson.data?.topic?.title
+
+                    loadingView.visibility = View.GONE
+                    fragmentGeneralDiscussionItemBinding.generalDiscussionLayout.visibility = View.VISIBLE
 
                 }
             }

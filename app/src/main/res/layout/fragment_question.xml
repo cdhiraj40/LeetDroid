@@ -7,14 +7,8 @@
     android:fillViewport="true"
     tools:context=".ui.fragments.question.QuestionFragment">
 
-    <RelativeLayout
-        android:id="@+id/fake_layout"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_above="@id/question_bottom_navigation"
-        android:layout_alignParentBottom="true" />
-
     <ScrollView
+        android:id="@+id/question_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/question_bottom_navigation">
@@ -23,11 +17,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/question_title"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:padding="20dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
 
             <org.sufficientlysecure.htmltextview.HtmlTextView
                 android:id="@+id/questionDescriptionText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@id/question_title"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -62,21 +71,86 @@
         </RelativeLayout>
     </ScrollView>
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <LinearLayout
         android:id="@+id/question_bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
-        app:labelVisibilityMode="selected"
-        app:menu="@menu/navigation_question" />
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        app:background="@android:color/transparent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/question_solution_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/alice_blue"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:cardMaxElevation="3dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/solution_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/question_solution"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_question_solution"
+                    app:drawableTint="@color/blue" />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/question_discussion_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/alice_blue"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:cardMaxElevation="3dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/discussion_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="@string/discussions"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_baseline_discuss_24"
+                    app:drawableTint="@color/blue" />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
     <include
         android:id="@+id/view_paid_question"
         layout="@layout/layout_paid_question"
         android:visibility="gone" />
+
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/loading_screen_layout"
+        android:visibility="gone" />
+
 </RelativeLayout>

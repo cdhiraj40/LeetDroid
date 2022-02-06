@@ -38,6 +38,8 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
     private lateinit var generalErrorView: View
     private lateinit var searchKeywords: String
     private var searched: Boolean = false
+    private lateinit var loadingView: View
+
     private var limit = 10
 
     override fun onCreateView(
@@ -47,6 +49,11 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         // Inflate the layout for this fragment
         fragmentAllQuestionsBinding = FragmentAllQuestionsBinding.inflate(layoutInflater)
         val rootView = fragmentAllQuestionsBinding.root
+
+        loadingView = rootView.findViewById(R.id.loading_view)
+
+        loadingView.visibility = View.VISIBLE
+        fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
 
         noQuestionsView = rootView.findViewById(R.id.view_no_questions)
         generalErrorView = rootView.findViewById(R.id.view_general_error)
@@ -155,6 +162,9 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                             allQuestionsAdapter
 
                         allQuestionsAdapter.setOnClick(this@AllQuestionsFragment)
+
+                        loadingView.visibility = View.GONE
+                        fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.VISIBLE
                         checkIfEmpty()
 
                     }

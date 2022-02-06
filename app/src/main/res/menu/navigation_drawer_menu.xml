@@ -4,7 +4,7 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/home"    />
+        android:title="@string/home" />
     <item
         android:id="@+id/generalDiscussionFragment"
         android:icon="@drawable/ic_baseline_discuss_24"
@@ -13,9 +13,4 @@
         android:id="@+id/myProfileFragment"
         android:icon="@drawable/ic_round_person_24"
         android:title="@string/profile" />
-
-    <item
-        android:id="@+id/allQuestionsFragment"
-        android:icon="@drawable/ic_round_person_24"
-        android:title="@string/all_question_list" />
 </menu>

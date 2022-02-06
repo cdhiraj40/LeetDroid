@@ -29,8 +29,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
 
     private lateinit var fragmentGeneralDiscussionBinding: FragmentGeneralDiscussionBinding
     private lateinit var generalDiscussionsJson: GeneralDiscussionModel
+    private lateinit var loadingView: View
 
-    //    private lateinit var leetCodeRequest: LeetCodeRequest = LeetCodeRequest()
     private var generalDiscussionAdapter: GeneralDiscussionAdapter? = null
     private var limit = 10
 
@@ -42,6 +42,12 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
         fragmentGeneralDiscussionBinding =
             FragmentGeneralDiscussionBinding.inflate(layoutInflater)
         val rootView = fragmentGeneralDiscussionBinding.root
+
+
+        loadingView = rootView.findViewById(R.id.loading_view)
+
+        loadingView.visibility = View.VISIBLE
+        fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
 
         loadGeneralDiscussionList(limit)
 
@@ -99,6 +105,9 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                         generalDiscussionAdapter
 
                     generalDiscussionAdapter!!.setOnClick(this@GeneralDiscussionFragment)
+
+                    loadingView.visibility = View.GONE
+                    fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.VISIBLE
                     checkIfEmpty()
                 }
             }

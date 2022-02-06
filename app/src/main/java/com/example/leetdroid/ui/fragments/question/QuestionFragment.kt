@@ -34,6 +34,8 @@ class QuestionFragment : Fragment() {
     private var questionHasSolution: Boolean? = false
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
     private lateinit var paidQuestionView: View
+    private lateinit var loadingView: View
+
     private var markwon: Markwon? = null
 
     override fun onCreateView(
@@ -46,6 +48,12 @@ class QuestionFragment : Fragment() {
 
         questionSharedViewModel =
             ViewModelProvider(requireActivity())[QuestionSharedViewModel::class.java]
+
+
+        loadingView = rootView.findViewById(R.id.loading_view)
+
+        loadingView.visibility = View.VISIBLE
+        fragmentQuestionBinding.questionLayout.visibility = View.GONE
 
         // get the data = questionTitleSlug from all questions list
         val bundle = arguments
@@ -69,18 +77,14 @@ class QuestionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(requireView(), savedInstanceState)
 
-        fragmentQuestionBinding.questionBottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.solutionFragment -> {
-                    fragmentQuestionBinding.root.findNavController()
-                        .navigate(R.id.action_questionsFragment_to_questionSolutionFragment)
-                }
-                R.id.questionDiscussionFragment -> {
-                    fragmentQuestionBinding.root.findNavController()
-                        .navigate(R.id.action_questionsFragment_to_questionDiscussionFragment)
-                }
-            }
-            true
+        fragmentQuestionBinding.questionSolutionLayout.setOnClickListener {
+            fragmentQuestionBinding.root.findNavController()
+                .navigate(R.id.action_questionsFragment_to_questionSolutionFragment)
+        }
+
+        fragmentQuestionBinding.questionDiscussionLayout.setOnClickListener {
+            fragmentQuestionBinding.root.findNavController()
+                .navigate(R.id.action_questionsFragment_to_questionDiscussionFragment)
         }
     }
 
@@ -129,6 +133,10 @@ class QuestionFragment : Fragment() {
                         if (questionContentJson.data?.question?.isPaidOnly!!)
                             paidQuestionView.visibility = View.VISIBLE
                         else {
+
+                            fragmentQuestionBinding.questionTitle.text =
+                                questionContentJson.data?.question?.title
+
                             var questionContentHtml = context?.getString(
                                 R.string.question_content,
                                 questionContentJson.data?.question?.content
@@ -272,11 +280,15 @@ class QuestionFragment : Fragment() {
                             fragmentQuestionBinding.questionConstraintsText.setHtml(
                                 constraintBlock.trim()
                             )
+
+                            loadingView.visibility = View.GONE
+                            fragmentQuestionBinding.questionLayout.visibility = View.VISIBLE
+                            fragmentQuestionBinding.questionBottomNavigation.visibility = View.VISIBLE
                         }
-                    }catch (exception:Exception){
+                    } catch (exception: Exception) {
                         // TODO add the general error view and show here
                         showSnackBar(requireActivity(), "Something went wrong")
-                        Log.d(Constant.TAG("QuestionFragment").toString(),exception.toString())
+                        Log.d(Constant.TAG("QuestionFragment").toString(), exception.toString())
                     }
                 }
             }

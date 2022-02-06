@@ -8,9 +8,9 @@
     <application
         android:allowBackup="false"
         android:fullBackupContent="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.LeetDroid">
         <activity
@@ -31,8 +31,8 @@
         </activity>
         <activity
             android:name=".ui.base.MainActivity"
-            android:windowSoftInputMode="adjustPan"
-        android:exported="true"/>
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
 
         <receiver
             android:name=".notification.DailyQuestionAlarmReceiver"

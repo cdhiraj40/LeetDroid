@@ -14,4 +14,14 @@
         app:lottie_rawRes="@raw/loading_anim"
         app:lottie_speed="1" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/lottie_main"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/horizontal_loading_anim"
+        app:lottie_speed="1" />
+
 </RelativeLayout>
