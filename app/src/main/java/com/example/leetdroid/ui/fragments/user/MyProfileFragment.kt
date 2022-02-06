@@ -49,6 +49,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 import kotlin.math.roundToInt
 
+
 //TODO do tell someone if they have a username more than 15 characters -> "we have your full username, we are just showing here only first 15 characters!"
 class MyProfileFragment : BaseFragment() {
 
@@ -58,6 +59,7 @@ class MyProfileFragment : BaseFragment() {
     private lateinit var email: String
     private lateinit var username: String
     private lateinit var alertDialogShower: AlertDialogShower
+    private lateinit var loadingView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +68,16 @@ class MyProfileFragment : BaseFragment() {
         // Inflate the layout for this fragment
         myProfileBinding = FragmentMyProfileBinding.inflate(layoutInflater)
         val rootView = myProfileBinding.root
+
+
+        loadingView = rootView.findViewById(R.id.loading_view)
+
+        // hide the views to show loading screen
+        loadingView.visibility = View.VISIBLE
+        myProfileBinding.userProfileLayout.visibility = View.GONE
+        myProfileBinding.userProblemsDetailsLayout.visibility = View.GONE
+        myProfileBinding.extraUserDetailsLayout.visibility = View.GONE
+
 
         userViewModel = ViewModelProvider(
             this,
@@ -79,6 +91,7 @@ class MyProfileFragment : BaseFragment() {
 
         alertDialogShower = AlertDialogShower(requireActivity())
 
+        getFirebaseProfile()
         return rootView
     }
 
@@ -87,19 +100,15 @@ class MyProfileFragment : BaseFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun getFirebaseProfile() {
         val preferences = SharedPreferences(requireContext())
         if (!preferences.userDataLoaded) {
-
             // get username and email from room database
-            firebaseUserViewModel.getFirebaseUser.observe(viewLifecycleOwner, { it ->
-                it?.let {
-                    username = it.username
-                    email = it.email
-                    loadUser(username)
-                    preferences.userDataLoaded = true
-                }
+            firebaseUserViewModel.getFirebaseUser.observe(this, {
+                username = it.username
+                email = it.email
+                loadUser(username)
+                preferences.userDataLoaded = true
 
             })
         } else {
@@ -159,14 +168,19 @@ class MyProfileFragment : BaseFragment() {
             .bold { append(acSubmissionNum!![3].count.toString()) }
             .append("/ ${allQuestionsCount[3].count.toString()}")
 
-        var problemsAcceptanceRate =
-            acSubmissionNum!![0].submissions?.toDouble()
-                ?.div(totalSubmissionNum!![0].submissions!!)!! * 100
+        if (acSubmissionNum!![0].submissions!! > 0 && totalSubmissionNum!![0].submissions!! > 0) {
+            var problemsAcceptanceRate =
+                acSubmissionNum[0].submissions?.toDouble()
+                    ?.div(totalSubmissionNum[0].submissions!!)!! * 100
 
-        problemsAcceptanceRate = roundDouble(problemsAcceptanceRate, 1)
-        myProfileBinding.questionProgressBar.progress = problemsAcceptanceRate.roundToInt()
-        myProfileBinding.problemsAcceptanceRate.text =
-            problemsAcceptanceRate.toString().plus("% \nAcceptance")
+            problemsAcceptanceRate = roundDouble(problemsAcceptanceRate, 1)
+            myProfileBinding.questionProgressBar.progress = problemsAcceptanceRate.roundToInt()
+            myProfileBinding.problemsAcceptanceRate.text =
+                problemsAcceptanceRate.toString().plus("% \nAcceptance")
+        } else {
+            myProfileBinding.questionProgressBar.progress = 0
+            myProfileBinding.problemsAcceptanceRate.text = "0% \nAcceptance"
+        }
 
         myProfileBinding.userProblemsSolvedCount.text = acSubmissionNum[0].count.toString()
 
@@ -187,6 +201,10 @@ class MyProfileFragment : BaseFragment() {
             myProfileBinding.root.findNavController()
                 .navigate(R.id.action_myProfileFragment_to_contest_details, bundle)
         }
+        loadingView.visibility = View.GONE
+        myProfileBinding.userProfileLayout.visibility = View.VISIBLE
+        myProfileBinding.userProblemsDetailsLayout.visibility = View.VISIBLE
+        myProfileBinding.extraUserDetailsLayout.visibility = View.VISIBLE
     }
 
     // load user from online

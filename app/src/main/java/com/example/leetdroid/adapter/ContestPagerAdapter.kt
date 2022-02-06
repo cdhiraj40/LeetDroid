@@ -85,17 +85,17 @@ class ContestPagerAdapter
 
                 // TODO some bug makes this notification push even if remaining time is more than 30 mins
                 // sending notification 30 mins before
-                if (!SharedPreferences(context).minsNotificationPushed && (diff <= 1800000L || diff >= 0)) {
-                    SharedPreferences(context).minsNotificationPushed = true
-                    Notification.showNotification(
-                        context,
-                        contest.name,
-                        "There is only 30 mins remaining to ${contest.name}\n register now!",
-                        "contest_reminder_30Mins",
-                        "contest_reminder_30Mins_channel",
-                        102
-                    )
-                }
+//                if (!SharedPreferences(context).minsNotificationPushed && (diff <= 1800000L || diff >= 0)) {
+//                    SharedPreferences(context).minsNotificationPushed = true
+//                    Notification.showNotification(
+//                        context,
+//                        contest.name,
+//                        "There is only 30 mins remaining to ${contest.name}\n register now!",
+//                        "contest_reminder_30Mins",
+//                        "contest_reminder_30Mins_channel",
+//                        102
+//                    )
+//                }
 
                 val secondsInMilli: Long = 1000
                 val minutesInMilli = secondsInMilli * 60

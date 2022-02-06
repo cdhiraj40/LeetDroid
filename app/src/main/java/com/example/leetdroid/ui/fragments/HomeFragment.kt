@@ -71,6 +71,7 @@ class HomeFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var contestViewModel: ContestViewModel
     private lateinit var dailyViewModel: DailyQuestionViewModel
+    private lateinit var generalErroView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,10 +82,13 @@ class HomeFragment : Fragment() {
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         val rootView = fragmentHomeBinding.root
 
+        generalErroView = rootView.findViewById(R.id.general_error_view)
+
         createNotificationChannel()
         setAlarm(requireContext())
 
         fragmentHomeBinding.contestProgressBar.visibility = View.VISIBLE
+        fragmentHomeBinding.questionProgressBar.visibility = View.VISIBLE
         contestViewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
@@ -115,6 +119,10 @@ class HomeFragment : Fragment() {
 
         fragmentHomeBinding.randomQuestionLayout.setOnClickListener {
             loadRandomQuestion()
+        }
+
+        fragmentHomeBinding.allQuestionsLayout.setOnClickListener {
+            fragmentHomeBinding.root.findNavController().navigate(R.id.allQuestionsFragment)
         }
         return rootView
     }
@@ -238,7 +246,7 @@ class HomeFragment : Fragment() {
 
                     saveContests(body)
 
-                    displayContests()
+//                    displayContests()
                 }
             }
 
@@ -290,6 +298,7 @@ class HomeFragment : Fragment() {
 
         weeklyContest.id = 2
         contestViewModel.updateContest(weeklyContest)
+        displayContests()
     }
 
     // inserts the contests in database
@@ -298,27 +307,39 @@ class HomeFragment : Fragment() {
         preferences.contestsInserted = true
         contestViewModel.addContest(biWeeklyContest)
         contestViewModel.addContest(weeklyContest)
+        displayContests()
     }
 
     // displays the contests from database
     private fun displayContests() {
         val contestList = ArrayList<Contest>()
         lifecycleScope.launch {
-            val biWeeklyContest = contestViewModel.getContest(1)
-            val weeklyContest = contestViewModel.getContest(2)
+            try {
+                val biWeeklyContest = contestViewModel.getContest(1)
+                val weeklyContest = contestViewModel.getContest(2)
 
-            contestList.add(weeklyContest)
-            contestList.add(biWeeklyContest)
+                if (biWeeklyContest != null && weeklyContest != null) {
+                    contestList.add(weeklyContest)
+                    contestList.add(biWeeklyContest)
 
-            val contestPagerAdapter =
-                ContestPagerAdapter(contestList, requireContext(), requireActivity())
+                    val contestPagerAdapter =
+                        ContestPagerAdapter(contestList, requireContext(), requireActivity())
 
-            fragmentHomeBinding.viewPager.adapter = contestPagerAdapter
-            TabLayoutMediator(
-                fragmentHomeBinding.pageIndicator,
-                fragmentHomeBinding.viewPager
-            ) { _, _ -> }.attach()
-            fragmentHomeBinding.contestProgressBar.visibility = View.GONE
+                    fragmentHomeBinding.viewPager.adapter = contestPagerAdapter
+                    TabLayoutMediator(
+                        fragmentHomeBinding.pageIndicator,
+                        fragmentHomeBinding.viewPager
+                    ) { _, _ -> }.attach()
+                    fragmentHomeBinding.contestProgressBar.visibility = View.GONE
+                    fragmentHomeBinding.questionProgressBar.visibility = View.GONE
+                } else {
+                    generalErroView.visibility = View.VISIBLE
+                    fragmentHomeBinding.homeLayout.visibility = View.GONE
+                }
+            } catch (exception: Exception) {
+                generalErroView.visibility = View.VISIBLE
+                fragmentHomeBinding.homeLayout.visibility = View.GONE
+            }
         }
     }
 

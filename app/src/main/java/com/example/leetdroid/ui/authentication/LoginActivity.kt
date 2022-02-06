@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.leetdroid.data.entitiy.FirebaseUserProfile
@@ -125,25 +126,30 @@ class LoginActivity : AppCompatActivity() {
             })
 
         loginBinding.loginButton.setOnClickListener {
+            loginBinding.loginProgressBar.visibility = View.VISIBLE
             hideSoftKeyboard(this)
             if (loginBinding.emailEditText.text.toString().trim { it <= ' ' }.isEmpty()) {
                 loginBinding.emailLayoutLogin.error = "Please enter an email"
+                loginBinding.loginProgressBar.visibility = View.GONE
                 return@setOnClickListener
             }
 
             if (loginBinding.passwordEditText.text.toString().isEmpty()) {
                 loginBinding.passwordLayoutLogin.error = "Please enter a password"
+                loginBinding.loginProgressBar.visibility = View.GONE
                 return@setOnClickListener
             }
 
             if (!loginBinding.emailEditText.text.toString().trim { it <= ' ' }.isEmailValid()) {
                 loginBinding.emailLayoutLogin.error = "Please enter a valid email"
+                loginBinding.loginProgressBar.visibility = View.GONE
                 return@setOnClickListener
             }
 
             if (loginBinding.passwordEditText.text.toString().length < 6) {
                 loginBinding.passwordLayoutLogin.error =
                     "Password length should be more than 6 characters"
+                loginBinding.loginProgressBar.visibility = View.GONE
                 return@setOnClickListener
             }
 
@@ -158,15 +164,10 @@ class LoginActivity : AppCompatActivity() {
 
                     if (task.isSuccessful) {
 
-                        val firebaseUser = FirebaseAuth.getInstance().currentUser
+                        loginBinding.loginProgressBar.visibility = View.GONE
                         showSnackBar(this, "Login Successful!")
-
                         // fetch data from firebase and put it in local database
                         fetchUserData()
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.flags =
-                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
 
                     } else {
                         Log.d(
@@ -177,10 +178,12 @@ class LoginActivity : AppCompatActivity() {
                             Constant.TAG("LoginActivity").toString(),
                             "message:${task.exception?.message.toString()}"
                         )
+                        loginBinding.loginProgressBar.visibility = View.GONE
                         showSnackBar(this, task.exception?.message.toString())
                     }
                 }
                 .addOnFailureListener {
+                    loginBinding.loginProgressBar.visibility = View.GONE
                     Log.d(Constant.TAG("LoginActivity").toString(), "cause: ${it.cause.toString()}")
                     Log.d(
                         Constant.TAG("LoginActivity").toString(),
@@ -210,10 +213,18 @@ class LoginActivity : AppCompatActivity() {
                         firebaseUserProfile.id = 1
                         firebaseUserViewModel.updateUser(firebaseUserProfile)
                     }
+                    login()
                 }
             }.addOnFailureListener {
                 Log.d(Constant.TAG("LoginActivity").toString(), it.message.toString())
                 showSnackBar(this, it.message)
             }
+    }
+
+    private fun login() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags =
+            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }
