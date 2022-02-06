@@ -1,6 +1,7 @@
 package com.example.leetdroid.adapter
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
@@ -13,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.data.entitiy.Contest
+import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.utils.DateUtils.getDate
 import com.example.leetdroid.utils.DateUtils.getHours
 import com.example.leetdroid.utils.DateUtils.getTime
@@ -127,14 +129,18 @@ class ContestPagerAdapter
 
         holder.contestCalendarButton.setOnClickListener()
         {
-            val intent = Intent(Intent.ACTION_EDIT)
-            intent.type = "vnd.android.cursor.item/event"
-            intent.putExtra("beginTime", startingDate.time)
-            intent.putExtra("allDay", false)
-            intent.putExtra("endTime", endingDate.time)
-            intent.putExtra("title", contest.name)
-            intent.putExtra("rrule", "FREQ=NO")
-            context.startActivity(intent)
+            try {
+                val intent = Intent(Intent.ACTION_EDIT)
+                intent.type = "vnd.android.cursor.item/event"
+                intent.putExtra("beginTime", startingDate.time)
+                intent.putExtra("allDay", false)
+                intent.putExtra("endTime", endingDate.time)
+                intent.putExtra("title", contest.name)
+                intent.putExtra("rrule", "FREQ=NO")
+                context.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                showSnackBar(activity, "There is no google account signed in with calendar")
+            }
         }
     }
 
