@@ -97,7 +97,7 @@ or [here](https://drive.google.com/file/d/19ekNQ32VACPUU-pYZAAxJXegjacGGfxJ/view
 
 ## Future Scope
 
-I am planning to these following features before releasing the first version on play store.
+I am planning to do these following features before releasing the first version on play store.
 
 - Segregating Question list with topics,tags etc.
 - Segregating general discussions with topics like ``Interview-Question``,``Compensation``,``Career``,``Study Guide``
