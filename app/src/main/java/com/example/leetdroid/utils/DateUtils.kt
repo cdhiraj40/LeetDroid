@@ -2,12 +2,11 @@ package com.example.leetdroid.utils
 
 import android.text.format.DateFormat
 import org.threeten.bp.DateTimeUtils.toDate
-import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.Instant
+import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.TemporalAccessor
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 object DateUtils {
 
@@ -17,9 +16,9 @@ object DateUtils {
         return formatISO8601Date(toDate(instant))
     }
 
-    private fun formatISO8601Date(date: Date): Date {
+    fun formatISO8601Date(date: Date): Date {
         val formatter = SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy", Locale.getDefault())
-        return formatter.parse(date.toString())
+        return formatter.parse(date.toString())!!
     }
 
     fun getDate(date: Date): String? {
@@ -27,7 +26,7 @@ object DateUtils {
     }
 
     fun getTime(date: Date?): String? {
-        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(date)
+        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(date!!)
     }
 
     fun getHours(time: String): String {
@@ -35,9 +34,8 @@ object DateUtils {
     }
 
     fun getSeconds(time: String): Int {
-        val actualTime = time.split(':');
+        val actualTime = time.split(':')
         return actualTime[0].toInt() * 60 * 60 + (actualTime[1]).toInt() * 60
-
     }
 
     fun convertDateFromMill(mill: Long): String {
@@ -45,8 +43,7 @@ object DateUtils {
     }
 
     fun convertTimeFomMill(mill: Long): String {
-        val time = DateFormat.format("hh:mm a", mill * 1000).toString()
-        return time
+        return DateFormat.format("hh:mm a", mill * 1000).toString()
     }
 
     fun convertDateTimeFomMill(mill: Long): String {
