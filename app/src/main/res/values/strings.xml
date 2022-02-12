@@ -35,4 +35,12 @@
     <string name="recent_submission_list_title">Recent Submissions</string>
     <string name="kotlin">Kotlin</string>
     <string name="python_ml">Python ML</string>
+    <string name="categories">Categories</string>
+    <string name="interview_questions">Interview Questions</string>
+    <string name="interview_experience">Interview Experience</string>
+    <string name="compensation">Compensation</string>
+    <string name="career">Career</string>
+    <string name="study_guide">Study Guide</string>
+    <string name="general_discussion">General Discussion</string>
+    <string name="support_and_feedback"><![CDATA[Support & Feedback]]></string>
 </resources>

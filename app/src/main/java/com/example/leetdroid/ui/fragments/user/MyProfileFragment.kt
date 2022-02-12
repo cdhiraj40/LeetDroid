@@ -209,7 +209,7 @@ class MyProfileFragment : BaseFragment() {
 
     // load user from online
     private fun loadUser(username: String) {
-        val call: Call = createApiCall(username)
+        val call: Call = createApiCall()
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
@@ -256,7 +256,7 @@ class MyProfileFragment : BaseFragment() {
     }
 
     // creates an okHttpClient call for user data
-    private fun createApiCall(username: String): Call {
+    private fun createApiCall(): Call {
         val okHttpClient = OkHttpClient()
         val postBody =
             Gson().toJson(LeetCodeRequests.Helper.getUserProfileRequest(this.username))

@@ -2,10 +2,10 @@ package com.example.leetdroid.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -30,6 +30,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
     private lateinit var fragmentGeneralDiscussionBinding: FragmentGeneralDiscussionBinding
     private lateinit var generalDiscussionsJson: GeneralDiscussionModel
     private lateinit var loadingView: View
+    private var category: List<String> = listOf("general-discussion")
+    private var selectedCategory: Int = 6
 
     private var generalDiscussionAdapter: GeneralDiscussionAdapter? = null
     private var limit = 10
@@ -49,7 +51,7 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
         loadingView.visibility = View.VISIBLE
         fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
 
-        loadGeneralDiscussionList(limit)
+        loadGeneralDiscussionList(limit, category)
 
         // adding pagination
         fragmentGeneralDiscussionBinding.generalDiscussionNested.setOnScrollChangeListener(
@@ -60,16 +62,19 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     limit += 10
                     fragmentGeneralDiscussionBinding.discussionListProgressBar.visibility =
                         View.VISIBLE
-                    loadGeneralDiscussionList(limit)
+                    loadGeneralDiscussionList(limit, category)
                 }
             })
+
+        clickCategory()
+        showCategories()
         return rootView
     }
 
-    private fun loadGeneralDiscussionList(limit: Int) {
+    private fun createApiCall(limit: Int, category: List<String>): Call {
         val okHttpClient = OkHttpClient()
         val postBody: String =
-            Gson().toJson(LeetCodeRequests.Helper.generalDiscussionRequest(limit))
+            Gson().toJson(LeetCodeRequests.Helper.generalDiscussionRequest(limit, category))
 
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
@@ -82,7 +87,12 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
             .post(requestBody)
             .url(URL.graphql)
             .build()
-        val call: Call = okHttpClient.newCall(request)
+        return okHttpClient.newCall(request)
+    }
+
+    private fun loadGeneralDiscussionList(limit: Int, category: List<String>) {
+
+        val call: Call = createApiCall(limit, category)
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
@@ -107,11 +117,267 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     generalDiscussionAdapter!!.setOnClick(this@GeneralDiscussionFragment)
 
                     loadingView.visibility = View.GONE
-                    fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.VISIBLE
+                    fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility =
+                        View.VISIBLE
                     checkIfEmpty()
                 }
             }
         })
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // clear the Main Activity's menu
+        menu.clear()
+        inflater.inflate(R.menu.general_discussion_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.categories -> {
+                showHideCategories()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showHideCategories() {
+        if (fragmentGeneralDiscussionBinding.categoryLayout.isVisible) {
+            showCategories()
+        } else {
+            hideCategories()
+        }
+    }
+
+    private fun hideCategories() {
+        fragmentGeneralDiscussionBinding.categoryLayout.visibility = View.VISIBLE
+    }
+
+    private fun showCategories() {
+        fragmentGeneralDiscussionBinding.categoryLayout.visibility = View.GONE
+
+        when (selectedCategory) {
+            1 -> {
+                fragmentGeneralDiscussionBinding.interviewQuestionsLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            2 -> {
+                fragmentGeneralDiscussionBinding.interviewExperienceLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            3 -> {
+                fragmentGeneralDiscussionBinding.compensationLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            4 -> {
+                fragmentGeneralDiscussionBinding.careerLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            5 -> {
+                fragmentGeneralDiscussionBinding.studyGuideLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            6 -> {
+                fragmentGeneralDiscussionBinding.generalDiscussionLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+
+            7 -> {
+                fragmentGeneralDiscussionBinding.supportAndFeedbackLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+        }
+    }
+
+    private fun resetCategory() {
+        fragmentGeneralDiscussionBinding.interviewQuestionsLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+
+        fragmentGeneralDiscussionBinding.interviewExperienceLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+
+        fragmentGeneralDiscussionBinding.compensationLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+        fragmentGeneralDiscussionBinding.careerLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+
+        fragmentGeneralDiscussionBinding.studyGuideLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+        fragmentGeneralDiscussionBinding.generalDiscussionLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+
+        fragmentGeneralDiscussionBinding.supportAndFeedbackLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+    }
+
+    private fun clickCategory() {
+
+        fragmentGeneralDiscussionBinding.interviewQuestionsLayout.setOnClickListener {
+            if (selectedCategory != 1) {
+                selectedCategory = 1
+                resetCategory()
+                fragmentGeneralDiscussionBinding.interviewQuestionsLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                loadGeneralDiscussionList(limit, listOf("interview-question"))
+            }
+        }
+        fragmentGeneralDiscussionBinding.interviewExperienceLayout.setOnClickListener {
+            if (selectedCategory != 2) {
+                selectedCategory = 2
+                resetCategory()
+                fragmentGeneralDiscussionBinding.interviewExperienceLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                loadGeneralDiscussionList(limit, listOf("interview-experience"))
+            }
+        }
+        fragmentGeneralDiscussionBinding.compensationLayout.setOnClickListener {
+            if (selectedCategory != 3) {
+                selectedCategory = 3
+                resetCategory()
+                fragmentGeneralDiscussionBinding.compensationLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                loadGeneralDiscussionList(limit, listOf("compensation"))
+            }
+        }
+        fragmentGeneralDiscussionBinding.careerLayout.setOnClickListener {
+            if (selectedCategory != 4) {
+                selectedCategory = 4
+                resetCategory()
+                fragmentGeneralDiscussionBinding.careerLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                loadGeneralDiscussionList(limit, listOf("career"))
+            }
+        }
+        fragmentGeneralDiscussionBinding.studyGuideLayout.setOnClickListener {
+            if (selectedCategory != 5) {
+                selectedCategory = 5
+                resetCategory()
+                fragmentGeneralDiscussionBinding.studyGuideLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                loadGeneralDiscussionList(limit, listOf("study-guide"))
+            }
+        }
+        fragmentGeneralDiscussionBinding.generalDiscussionLayout.setOnClickListener {
+            if (selectedCategory != 6) {
+                selectedCategory = 6
+                resetCategory()
+                fragmentGeneralDiscussionBinding.generalDiscussionLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                loadGeneralDiscussionList(limit, listOf("general-discussion"))
+            }
+        }
+        fragmentGeneralDiscussionBinding.supportAndFeedbackLayout.setOnClickListener {
+            if (selectedCategory != 7) {
+                selectedCategory = 7
+                resetCategory()
+                fragmentGeneralDiscussionBinding.supportAndFeedbackLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                loadGeneralDiscussionList(limit, listOf("feedback"))
+            }
+        }
     }
 
     private fun checkIfEmpty() {

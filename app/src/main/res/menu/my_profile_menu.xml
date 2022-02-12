@@ -15,4 +15,5 @@
         android:title="@string/logout_menu_title"
         app:iconTint="@color/black"
         app:showAsAction="ifRoom" />
+
 </menu>
