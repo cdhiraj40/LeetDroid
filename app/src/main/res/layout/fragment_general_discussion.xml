@@ -1,15 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/general_discussion_layout"
+    android:id="@+id/parent_general_discussion_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.GeneralDiscussionFragment">
+
+    <RelativeLayout
+        android:id="@+id/category_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/category_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/interview_questions_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/interview_questions_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/interview_questions"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/interview_experience_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/interview_experience_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/interview_experience"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/compensation_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/compensation_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/compensation"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/category_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_below="@id/category_layout1">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/career_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/career_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/career"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/study_guide_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/study_guide_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/study_guide"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/general_discussion_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/general_discussion_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/general_discussion"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/support_and_feedback_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/support_and_feedback_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/support_and_feedback"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/general_discussion_nested"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/category_layout"
         tools:context=".ui.fragments.question.QuestionDiscussionFragment">
 
         <LinearLayout

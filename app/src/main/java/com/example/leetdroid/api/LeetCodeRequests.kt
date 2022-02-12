@@ -9,14 +9,14 @@ data class LeetCodeRequests(
     object Helper {
 
         // request for all general discussions
-        val generalDiscussionRequest = fun(limit: Int) = LeetCodeRequests(
+        val generalDiscussionRequest = fun(limit: Int, categories: List<String>) = LeetCodeRequests(
             operationName = "categoryTopicList",
             variables = Variables(
                 orderBy = "hot",
                 query = "",
                 skip = 0,
                 first = limit,
-                categories = listOf("interview-experience"),
+                categories = categories,
             ),
             query = "query categoryTopicList(\$categories: [String!]!, \$first: Int!, \$orderBy: TopicSortingOption, \$skip: Int, \$query: String, \$tags: [String!]) { categoryTopicList" +
                     "(categories: \$categories, orderBy: \$orderBy, skip: \$skip, query: \$query, first: \$first, tags: \$tags) { ...TopicsList } } fragment TopicsList on TopicConnection " +
