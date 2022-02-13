@@ -62,7 +62,25 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     limit += 10
                     fragmentGeneralDiscussionBinding.discussionListProgressBar.visibility =
                         View.VISIBLE
-                    loadGeneralDiscussionList(limit, category)
+                    if (selectedCategory == 6) {
+                        loadGeneralDiscussionList(limit, category)
+                    } else {
+                        when (selectedCategory) {
+                            1 -> loadGeneralDiscussionList(limit, listOf("interview-question"))
+
+                            2 -> loadGeneralDiscussionList(limit, listOf("interview-experience"))
+
+                            3 -> loadGeneralDiscussionList(limit, listOf("compensation"))
+
+                            4 -> loadGeneralDiscussionList(limit, listOf("career"))
+
+                            5 -> loadGeneralDiscussionList(limit, listOf("study-guide"))
+
+                            6 -> loadGeneralDiscussionList(limit, listOf("general-discussion"))
+
+                            7 -> loadGeneralDiscussionList(limit, listOf("feedback"))
+                        }
+                    }
                 }
             })
 
@@ -284,7 +302,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     )
                 )
                 loadingView.visibility = View.VISIBLE
-                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility =
+                    View.GONE
                 loadGeneralDiscussionList(limit, listOf("interview-question"))
             }
         }
@@ -299,7 +318,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     )
                 )
                 loadingView.visibility = View.VISIBLE
-                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility =
+                    View.GONE
                 loadGeneralDiscussionList(limit, listOf("interview-experience"))
             }
         }
@@ -314,7 +334,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     )
                 )
                 loadingView.visibility = View.VISIBLE
-                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility =
+                    View.GONE
                 loadGeneralDiscussionList(limit, listOf("compensation"))
             }
         }
@@ -329,7 +350,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     )
                 )
                 loadingView.visibility = View.VISIBLE
-                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility =
+                    View.GONE
                 loadGeneralDiscussionList(limit, listOf("career"))
             }
         }
@@ -344,7 +366,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     )
                 )
                 loadingView.visibility = View.VISIBLE
-                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility =
+                    View.GONE
                 loadGeneralDiscussionList(limit, listOf("study-guide"))
             }
         }
@@ -359,7 +382,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     )
                 )
                 loadingView.visibility = View.VISIBLE
-                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility =
+                    View.GONE
                 loadGeneralDiscussionList(limit, listOf("general-discussion"))
             }
         }
@@ -374,7 +398,8 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
                     )
                 )
                 loadingView.visibility = View.VISIBLE
-                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
+                fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility =
+                    View.GONE
                 loadGeneralDiscussionList(limit, listOf("feedback"))
             }
         }
@@ -382,9 +407,11 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
 
     private fun checkIfEmpty() {
         if (generalDiscussionAdapter!!.getDataItemCount() == 0) {
-            fragmentGeneralDiscussionBinding.discussionListProgressBar.visibility = View.VISIBLE
+            fragmentGeneralDiscussionBinding.discussionListProgressBar.visibility =
+                View.VISIBLE
         } else {
-            fragmentGeneralDiscussionBinding.discussionListProgressBar.visibility = View.GONE
+            fragmentGeneralDiscussionBinding.discussionListProgressBar.visibility =
+                View.GONE
         }
     }
 

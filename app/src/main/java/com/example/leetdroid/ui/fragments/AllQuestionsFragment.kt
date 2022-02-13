@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +42,9 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
     private var searched: Boolean = false
     private lateinit var loadingView: View
 
+    private var categorySlug: String = ""
+    private var selectedCategory: Int = 1
+
     private var limit = 10
 
     override fun onCreateView(
@@ -58,7 +63,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         noQuestionsView = rootView.findViewById(R.id.view_no_questions)
         generalErrorView = rootView.findViewById(R.id.view_general_error)
         allQuestionsAdapter = AllQuestionsAdapter(requireContext(), requireActivity())
-        loadQuestionList(limit)
+        loadQuestionList(categorySlug, limit)
 
         //  adding pagination
         fragmentAllQuestionsBinding.allQuestionsNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -67,13 +72,29 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 // fetch more 10 questions when reached end
                 limit += 10
                 fragmentAllQuestionsBinding.questionListProgressBar.visibility = View.VISIBLE
-                if (!searched) {
-                    loadQuestionList(limit)
-                } else {
+                if (!searched && selectedCategory == 1) {
+                    loadQuestionList(categorySlug, limit)
+                } else if (searched) {
                     searchQuestions(limit, searchKeywords)
+                } else {
+                    when (selectedCategory) {
+                        1 -> loadQuestionList("", limit)
+
+                        2 -> loadQuestionList("algorithms", limit)
+
+                        3 -> loadQuestionList("database", limit)
+
+                        4 -> loadQuestionList("shell", limit)
+
+                        5 -> loadQuestionList("concurrency", limit)
+
+                    }
                 }
             }
         })
+
+        clickCategory()
+        showCategories()
 
         return rootView
     }
@@ -104,6 +125,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                         noQuestionsView.visibility = View.GONE
                     }
 
+                    resetCategory()
                     fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
                     searchQuestions(limit, searchKeywords)
                     fragmentAllQuestionsBinding.searchProgressBar.visibility = View.VISIBLE
@@ -118,12 +140,200 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun questionListApiCall(limit: Int, filters: LeetCodeRequests.Filters): Call {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.question_categories -> {
+                showHideCategories()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showHideCategories() {
+        if (fragmentAllQuestionsBinding.categoryLayout.isVisible) {
+            showCategories()
+        } else {
+            hideCategories()
+        }
+    }
+
+    private fun hideCategories() {
+        fragmentAllQuestionsBinding.categoryLayout.visibility = View.VISIBLE
+    }
+
+    private fun showCategories() {
+        fragmentAllQuestionsBinding.categoryLayout.visibility = View.GONE
+
+        when (selectedCategory) {
+            1 -> {
+                fragmentAllQuestionsBinding.allTopicsLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            2 -> {
+                fragmentAllQuestionsBinding.algorithmsLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            3 -> {
+                fragmentAllQuestionsBinding.databaseLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            4 -> {
+                fragmentAllQuestionsBinding.shellLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+            5 -> {
+                fragmentAllQuestionsBinding.concurrencyLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+            }
+        }
+    }
+
+    private fun resetCategory() {
+        fragmentAllQuestionsBinding.allTopicsLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+
+        fragmentAllQuestionsBinding.algorithmsLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+
+        fragmentAllQuestionsBinding.databaseLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+        fragmentAllQuestionsBinding.shellLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+
+        fragmentAllQuestionsBinding.concurrencyLayout.setCardBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+    }
+
+    private fun clickCategory() {
+
+        fragmentAllQuestionsBinding.allTopicsLayout.setOnClickListener {
+            if (selectedCategory != 1) {
+                selectedCategory = 1
+                resetCategory()
+                fragmentAllQuestionsBinding.allTopicsLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
+                loadQuestionList("", limit)
+            }
+        }
+        fragmentAllQuestionsBinding.algorithmsLayout.setOnClickListener {
+            if (selectedCategory != 2) {
+                selectedCategory = 2
+                resetCategory()
+                fragmentAllQuestionsBinding.algorithmsLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
+                loadQuestionList("algorithms", limit)
+            }
+        }
+        fragmentAllQuestionsBinding.databaseLayout.setOnClickListener {
+            if (selectedCategory != 3) {
+                selectedCategory = 3
+                resetCategory()
+                fragmentAllQuestionsBinding.databaseLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
+                loadQuestionList("database", limit)
+            }
+        }
+        fragmentAllQuestionsBinding.shellLayout.setOnClickListener {
+            if (selectedCategory != 4) {
+                selectedCategory = 4
+                resetCategory()
+                fragmentAllQuestionsBinding.shellLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
+                loadQuestionList("shell", limit)
+            }
+        }
+        fragmentAllQuestionsBinding.concurrencyLayout.setOnClickListener {
+            if (selectedCategory != 5) {
+                selectedCategory = 5
+                resetCategory()
+                fragmentAllQuestionsBinding.concurrencyLayout.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.light_grey
+                    )
+                )
+                loadingView.visibility = View.VISIBLE
+                fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
+                loadQuestionList("concurrency", limit)
+            }
+        }
+    }
+
+    private fun questionListApiCall(
+        categorySlug: String,
+        limit: Int,
+        filters: LeetCodeRequests.Filters
+    ): Call {
         val okHttpClient = OkHttpClient()
         val postBody: String =
             Gson().toJson(
                 LeetCodeRequests.Helper.getAllQuestionsRequest(
-                    "", limit,
+                    categorySlug, limit,
                     filters
                 )
             )
@@ -140,14 +350,18 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         return okHttpClient.newCall(request)
     }
 
-    private fun loadQuestionList(limit: Int) {
+    private fun loadQuestionList(categorySlug: String, limit: Int) {
 
         val call: Call =
-            questionListApiCall(limit, filters = LeetCodeRequests.Filters(tags = listOf()))
+            questionListApiCall(
+                categorySlug,
+                limit,
+                filters = LeetCodeRequests.Filters(tags = listOf())
+            )
         call.enqueue(object : Callback {
 
             override fun onResponse(call: Call, response: Response) {
-                //TODO add try catch block on every json thing, not sure why but gives error, maybe show somethign went wrong please try again
+                //TODO add try catch block on every json thing, not sure why but gives error, maybe show something went wrong please try again
                 try {
                     questionJson = JsonUtils.generateObjectFromJson(
                         response.body!!.string(),
@@ -183,7 +397,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
 
     private fun searchQuestions(limit: Int, query: String) {
         val call: Call =
-            questionListApiCall(limit, LeetCodeRequests.Filters(searchKeywords = query))
+            questionListApiCall("", limit, LeetCodeRequests.Filters(searchKeywords = query))
         call.enqueue(object : Callback {
 
             override fun onResponse(call: Call, response: Response) {
