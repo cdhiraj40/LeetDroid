@@ -1,14 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.AllQuestionsFragment">
 
+    <RelativeLayout
+        android:id="@+id/category_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/category_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/all_topics_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/all_topics_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/all_topics"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:drawableLeftCompat="@drawable/ic_baseline_topic_24" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/algorithms_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/algorithms_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/algorithms"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:drawableLeftCompat="@drawable/ic_baseline_earbuds_24" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/database_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/database_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/database"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:drawableLeftCompat="@drawable/ic_baseline_all_inbox_24" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/category_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_below="@id/category_layout1">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/shell_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/career_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/shell"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:drawableLeftCompat="@drawable/ic_baseline_code_24" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/concurrency_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardMaxElevation="3dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/study_guide_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="@string/concurrency"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:drawableLeftCompat="@drawable/ic_baseline_gesture_24" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </RelativeLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/all_questions_nested"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/category_layout">
 
         <LinearLayout
             android:layout_width="match_parent"
