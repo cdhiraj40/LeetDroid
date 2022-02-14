@@ -158,7 +158,7 @@ class HomeFragment : Fragment() {
             formattedDate = SimpleDateFormat("d MMM, yyyy", Locale.getDefault()).format(parsedDate)
             fragmentHomeBinding.dailyQuestionDate.text = formattedDate
         } catch (exception: ParseException) {
-            Log.d(Constant.TAG("HomeFragment").toString(), "$exception occurred!")
+            Log.d(Constant.TAG(HomeFragment::class.java).toString(), "$exception occurred!")
             fragmentHomeBinding.dailyQuestionDate.text =
                 SimpleDateFormat("d MMM, yyyy", Locale.getDefault()).format(
                     Date()
@@ -250,7 +250,7 @@ class HomeFragment : Fragment() {
             override fun onResponse(Call: Call<JsonArray>?, response: Response<JsonArray>?) {
                 if (response?.body() != null) {
                     val body = response.body()!!
-                    Log.d(Constant.TAG("HomeFragment").toString(), body.toString())
+                    Log.d(Constant.TAG(HomeFragment::class.java).toString(), body.toString())
 
                     saveContests(body)
 
@@ -259,7 +259,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<JsonArray>?, throwable: Throwable) {
-                Log.d(Constant.TAG("HomeFragment").toString(), "requestFailed", throwable)
+                Log.d(Constant.TAG(HomeFragment::class.java).toString(), "requestFailed", throwable)
             }
         })
     }
@@ -365,7 +365,7 @@ class HomeFragment : Fragment() {
         call.enqueue(object : okhttp3.Callback {
 
             override fun onFailure(call: okhttp3.Call, e: IOException) {
-                Log.d(Constant.TAG("HomeFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(HomeFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
@@ -374,7 +374,7 @@ class HomeFragment : Fragment() {
                     response.body!!.string(),
                     DailyQuestionModel::class.java
                 )
-                Log.d(Constant.TAG("HomeFragment").toString(), questionData.toString())
+                Log.d(Constant.TAG(HomeFragment::class.java).toString(), questionData.toString())
 
                 saveQuestion(questionData)
             }
@@ -387,7 +387,7 @@ class HomeFragment : Fragment() {
         call.enqueue(object : okhttp3.Callback {
 
             override fun onFailure(call: okhttp3.Call, e: IOException) {
-                Log.d(Constant.TAG("HomeFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(HomeFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
@@ -396,7 +396,7 @@ class HomeFragment : Fragment() {
                     response.body!!.string(),
                     DailyQuestionModel::class.java
                 )
-                Log.d(Constant.TAG("HomeFragment").toString(), questionData.toString())
+                Log.d(Constant.TAG(HomeFragment::class.java).toString(), questionData.toString())
 
                 val todaysQuestion = DailyQuestion(
                     activeDailyCodingChallengeQuestion = fromDailyQuestionDaily(questionData.data?.activeDailyCodingChallengeQuestion!!).toString(),
@@ -516,7 +516,7 @@ class HomeFragment : Fragment() {
             AlarmManager.INTERVAL_DAY,
             pendingIntent
         )
-        Log.d(Constant.TAG("HomeFragment").toString(), "alarm has been sent")
+        Log.d(Constant.TAG(HomeFragment::class.java).toString(), "alarm has been sent")
         dailyUpdateQuestion()
     }
 
@@ -540,7 +540,7 @@ class HomeFragment : Fragment() {
         call.enqueue(object : okhttp3.Callback {
 
             override fun onFailure(call: okhttp3.Call, e: IOException) {
-                Log.d(Constant.TAG("HomeFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(HomeFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
@@ -549,7 +549,7 @@ class HomeFragment : Fragment() {
                     response.body!!.string(),
                     RandomQuestionModel::class.java
                 )
-                Log.d(Constant.TAG("HomeFragment").toString(), randomQuestionData.toString())
+                Log.d(Constant.TAG(HomeFragment::class.java).toString(), randomQuestionData.toString())
 
                 openRandomQuestion(randomQuestionData.data?.randomQuestion?.titleSlug.toString())
             }

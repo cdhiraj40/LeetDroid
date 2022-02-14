@@ -8,8 +8,8 @@ class Constant {
     }
 
     companion object {
-        val TAG = fun(className: String) {
-            className::class.qualifiedName
+        fun <T> TAG(className: Class<T>?): String? {
+            return className?.name
         }
     }
 }

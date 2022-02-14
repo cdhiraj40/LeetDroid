@@ -96,7 +96,7 @@ class QuestionSolutionFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG("QuestionSolutionFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(QuestionSolutionFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {

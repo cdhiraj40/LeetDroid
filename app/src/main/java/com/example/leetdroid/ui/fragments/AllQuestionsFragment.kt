@@ -389,7 +389,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
-                Log.d(Constant.TAG("AllQuestionsFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(AllQuestionsFragment::class.java).toString(), call.toString(), e)
             }
 
         })
@@ -430,7 +430,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
-                Log.d(Constant.TAG("AllQuestionsFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(AllQuestionsFragment::class.java).toString(), call.toString(), e)
             }
         })
     }

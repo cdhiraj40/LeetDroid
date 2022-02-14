@@ -218,7 +218,7 @@ class SignUpActivity : AppCompatActivity() {
                 } else {
                     // registration failed
                     Log.d(
-                        Constant.TAG("SignUpActivity").toString(),
+                        Constant.TAG(SignUpActivity::class.java).toString(),
                         task.exception!!.message.toString()
                     )
                     showSnackBar(this, task.exception!!.message.toString())
@@ -253,7 +253,7 @@ class SignUpActivity : AppCompatActivity() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG("SignUpActivity").toString(), call.toString(), e)
+                Log.d(Constant.TAG(SignUpActivity::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {

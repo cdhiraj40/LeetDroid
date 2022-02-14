@@ -120,7 +120,7 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
-                Log.d(Constant.TAG("RecentSubmissionFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(RecentSubmissionFragment::class.java).toString(), call.toString(), e)
             }
 
         })

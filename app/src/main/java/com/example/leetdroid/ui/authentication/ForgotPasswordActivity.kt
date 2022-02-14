@@ -79,7 +79,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d(Constant.TAG("ForgotPasswordActivity").toString(), "Email sent.")
+                    Log.d(Constant.TAG(ForgotPasswordActivity::class.java).toString(), "Email sent.")
                     showSnackBarWithAction(
                         this,
                         "Email has been sent to if user exists!",
