@@ -114,7 +114,7 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(TAG("GeneralDiscussionFragment").toString(), call.toString(), e)
+                Log.d(TAG(GeneralDiscussionFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {

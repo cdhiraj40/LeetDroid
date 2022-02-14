@@ -71,7 +71,7 @@ class DiscussionItemFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG("DiscussionItemFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(DiscussionItemFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {

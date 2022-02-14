@@ -31,19 +31,19 @@ object JsonUtils {
     }
 
     fun <T> generateObjectFromJson(json: String?, type: Class<T>?): T {
-        Log.d(Constant.TAG("JsonUtils").toString(), Gson().toString())
+        Log.d(Constant.TAG(JsonUtils::class.java).toString(), Gson().toString())
         return Gson().fromJson(json, type)
     }
 
     fun <T> generateFromJsonArray(json: JsonArray?, type: Class<T>?): T {
-        Log.d(Constant.TAG("JsonUtils").toString(), Gson().toString())
+        Log.d(Constant.TAG(JsonUtils::class.java).toString(), Gson().toString())
         return Gson().fromJson(json, type)
     }
 
     fun <T> generateObjectFromJsonArray(json: String?, clazz: Class<Array<T>?>?): List<T> {
-        Log.d(Constant.TAG("JsonUtils").toString(), "generateObjectFromJsonArray:Before")
+        Log.d(Constant.TAG(JsonUtils::class.java).toString(), "generateObjectFromJsonArray:Before")
         val array: Array<T> = Gson().fromJson(json, clazz)!!
-        Log.d(Constant.TAG("JsonUtils").toString(), "generateObjectFromJsonArray: After")
+        Log.d(Constant.TAG(JsonUtils::class.java).toString(), "generateObjectFromJsonArray: After")
         return mutableListOf(*array)
     }
 }

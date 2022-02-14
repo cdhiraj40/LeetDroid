@@ -106,7 +106,7 @@ class QuestionFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG("QuestionFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(QuestionFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -290,7 +290,7 @@ class QuestionFragment : Fragment() {
                     } catch (exception: Exception) {
                         // TODO add the general error view and show here
                         showSnackBar(requireActivity(), "Something went wrong")
-                        Log.d(Constant.TAG("QuestionFragment").toString(), exception.toString())
+                        Log.d(Constant.TAG(QuestionFragment::class.java).toString(), exception.toString())
                     }
                 }
             }

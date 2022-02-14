@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             // User is signed out
-            Log.d(Constant.TAG("LoginActivity").toString(), "user not signed in!")
+            Log.d(Constant.TAG(LoginActivity::class.java).toString(), "user not signed in!")
         }
 
         firebaseUserViewModel = ViewModelProvider(
@@ -171,11 +171,11 @@ class LoginActivity : AppCompatActivity() {
 
                     } else {
                         Log.d(
-                            Constant.TAG("LoginActivity").toString(),
+                            Constant.TAG(LoginActivity::class.java).toString(),
                             "cause: ${task.exception?.cause.toString()}"
                         )
                         Log.d(
-                            Constant.TAG("LoginActivity").toString(),
+                            Constant.TAG(LoginActivity::class.java).toString(),
                             "message:${task.exception?.message.toString()}"
                         )
                         loginBinding.loginProgressBar.visibility = View.GONE
@@ -184,9 +184,12 @@ class LoginActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener {
                     loginBinding.loginProgressBar.visibility = View.GONE
-                    Log.d(Constant.TAG("LoginActivity").toString(), "cause: ${it.cause.toString()}")
                     Log.d(
-                        Constant.TAG("LoginActivity").toString(),
+                        Constant.TAG(LoginActivity::class.java).toString(),
+                        "cause: ${it.cause.toString()}"
+                    )
+                    Log.d(
+                        Constant.TAG(LoginActivity::class.java).toString(),
                         "message:${it.message.toString()}"
                     )
                     showSnackBar(this, it.message.toString())
@@ -216,7 +219,7 @@ class LoginActivity : AppCompatActivity() {
                     login()
                 }
             }.addOnFailureListener {
-                Log.d(Constant.TAG("LoginActivity").toString(), it.message.toString())
+                Log.d(Constant.TAG(LoginActivity::class.java).toString(), it.message.toString())
                 showSnackBar(this, it.message)
             }
     }

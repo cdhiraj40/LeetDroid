@@ -72,7 +72,7 @@ class GeneralDiscussionItemFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG("GeneralDiscussionItemFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(GeneralDiscussionFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {

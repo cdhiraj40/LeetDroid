@@ -104,7 +104,7 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG("QuestionDiscussionFragment").toString(), call.toString(), e)
+                Log.d(Constant.TAG(QuestionDiscussionFragment::class.java).toString(), call.toString(), e)
             }
 
             override fun onResponse(call: Call, response: Response) {
