@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.leetdroid.data.entitiy.FirebaseUserProfile
 import com.example.leetdroid.data.viewModel.FirebaseUserViewModel
 import com.example.leetdroid.databinding.ActivityLoginBinding
-import com.example.leetdroid.extensions.openActivity
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.utils.extensions.openActivity
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.ui.base.MainActivity
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.SharedPreferences

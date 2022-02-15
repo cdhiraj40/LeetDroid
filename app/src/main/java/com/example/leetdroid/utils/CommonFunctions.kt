@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
-import com.example.leetdroid.extensions.openActivity
+import com.example.leetdroid.utils.extensions.openActivity
 import com.example.leetdroid.ui.authentication.LoginActivity
 import com.example.leetdroid.utils.dialog.AlertDialogShower
 import com.example.leetdroid.utils.dialog.AppDialogs

@@ -20,7 +20,7 @@ import com.example.leetdroid.data.entitiy.User
 import com.example.leetdroid.data.viewModel.FirebaseUserViewModel
 import com.example.leetdroid.data.viewModel.UserViewModel
 import com.example.leetdroid.databinding.FragmentMyProfileBinding
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.UserProfileErrorModel
 import com.example.leetdroid.model.UserProfileModel
 import com.example.leetdroid.ui.base.BaseFragment

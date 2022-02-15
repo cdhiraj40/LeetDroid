@@ -14,7 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.data.entitiy.Contest
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.utils.DateUtils.getDate
 import com.example.leetdroid.utils.DateUtils.getHours
 import com.example.leetdroid.utils.DateUtils.getTime

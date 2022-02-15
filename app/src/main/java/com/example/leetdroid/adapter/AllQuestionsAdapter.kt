@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.AllQuestionsModel
 import com.example.leetdroid.model.AllQuestionsModel.DataNode.ProblemSetQuestionListNode.Questions
 import com.example.leetdroid.utils.CommonFunctions

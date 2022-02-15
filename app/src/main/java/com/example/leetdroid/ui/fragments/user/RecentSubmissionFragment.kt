@@ -9,14 +9,12 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leetdroid.R
-import com.example.leetdroid.adapter.AllQuestionsAdapter
 import com.example.leetdroid.adapter.RecentSubmissionsAdapter
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentRecentSubmissionBinding
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.RecentSubmissionsModel
-import com.example.leetdroid.ui.fragments.AllQuestionsFragment
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson

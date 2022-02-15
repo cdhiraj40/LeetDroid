@@ -12,7 +12,7 @@ import com.example.leetdroid.R
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionBinding
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.QuestionContentModel
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 import com.example.leetdroid.utils.Constant

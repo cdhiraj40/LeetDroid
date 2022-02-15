@@ -12,7 +12,7 @@ import com.example.leetdroid.adapter.ContestHistoryAdapter
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentContestDetailsBinding
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.ContestRankingModel
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
