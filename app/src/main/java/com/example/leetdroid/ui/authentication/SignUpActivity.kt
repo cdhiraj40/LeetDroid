@@ -15,8 +15,6 @@ import com.example.leetdroid.api.URL
 import com.example.leetdroid.data.entitiy.FirebaseUserProfile
 import com.example.leetdroid.data.viewModel.FirebaseUserViewModel
 import com.example.leetdroid.databinding.ActivitySignUpBinding
-import com.example.leetdroid.extensions.openActivity
-import com.example.leetdroid.extensions.showSnackBar
 import com.example.leetdroid.model.FirebaseUserModel
 import com.example.leetdroid.model.UserProfileErrorModel
 import com.example.leetdroid.model.UserProfileModel
@@ -27,6 +25,8 @@ import com.example.leetdroid.utils.SharedPreferences
 import com.example.leetdroid.utils.StringExtensions.isEmailValid
 import com.example.leetdroid.utils.dialog.AlertDialogShower
 import com.example.leetdroid.utils.dialog.AppDialogs
+import com.example.leetdroid.utils.extensions.openActivity
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.utils.hideSoftKeyboard
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

@@ -16,8 +16,8 @@ import com.example.leetdroid.adapter.AllQuestionsAdapter
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentAllQuestionsBinding
-import com.example.leetdroid.extensions.closeKeyboard
-import com.example.leetdroid.extensions.showSnackBar
+import com.example.leetdroid.utils.extensions.closeKeyboard
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.AllQuestionsModel
 import com.example.leetdroid.ui.base.BaseFragment
 import com.example.leetdroid.utils.Constant

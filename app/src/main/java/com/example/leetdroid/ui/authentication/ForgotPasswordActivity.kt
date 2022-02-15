@@ -9,7 +9,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.leetdroid.R
 import com.example.leetdroid.databinding.ActivityForgotPasswordBinding
-import com.example.leetdroid.extensions.showSnackBarWithAction
+import com.example.leetdroid.utils.extensions.showSnackBarWithAction
 import com.example.leetdroid.utils.CommonUtils
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.StringExtensions.isEmailValid

@@ -33,8 +33,8 @@ import com.example.leetdroid.data.repository.ContestRepository
 import com.example.leetdroid.data.viewModel.ContestViewModel
 import com.example.leetdroid.data.viewModel.DailyQuestionViewModel
 import com.example.leetdroid.databinding.FragmentHomeBinding
-import com.example.leetdroid.extensions.copyToClipboard
-import com.example.leetdroid.extensions.showSnackBarWithAction
+import com.example.leetdroid.utils.extensions.copyToClipboard
+import com.example.leetdroid.utils.extensions.showSnackBarWithAction
 import com.example.leetdroid.model.DailyQuestionModel
 import com.example.leetdroid.model.RandomQuestionModel
 import com.example.leetdroid.notification.DailyQuestionAlarmReceiver
