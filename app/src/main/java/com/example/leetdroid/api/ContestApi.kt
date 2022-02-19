@@ -6,6 +6,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
+/**
+ * Retrofit Api call to get upcoming contests
+ */
 interface ContestApi {
     @GET("leet_code")
     fun getContent(): Call<JsonArray>

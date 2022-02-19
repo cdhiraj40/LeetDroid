@@ -6,9 +6,7 @@ import com.example.leetdroid.data.entitiy.Contest
 
 class ContestRepository(private val contestDao: ContestDao) {
 
-
     val allContest: LiveData<List<Contest>> = contestDao.getAllContest()
-
 
     suspend fun insertContest(contest: Contest):Long =
         contestDao.insertContest(contest)

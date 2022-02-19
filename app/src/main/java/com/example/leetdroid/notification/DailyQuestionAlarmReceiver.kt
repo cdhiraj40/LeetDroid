@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.leetdroid.utils.dialog.Notification
 
 class DailyQuestionAlarmReceiver : BroadcastReceiver() {
+    // TODO check what was the exception
     override fun onReceive(context: Context, intent: Intent) {
         try {
             Notification.showNotification(

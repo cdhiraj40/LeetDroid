@@ -16,7 +16,7 @@ import kotlin.math.roundToInt
 class CommonFunctions {
     object Logout {
         fun showLogOutDialog(activity: Activity, context: Context): Boolean {
-            AlertDialogShower(activity).show(AppDialogs.LogOut, {
+            AlertDialogShower(activity).show(AppDialogs.Logout, {
                 FirebaseAuth.getInstance().signOut()
                 activity.openActivity(LoginActivity::class.java)
                 activity.finish()

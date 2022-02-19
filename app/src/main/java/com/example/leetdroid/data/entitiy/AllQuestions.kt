@@ -1,6 +1,9 @@
 package com.example.leetdroid.data.entitiy
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.Converters
 
@@ -19,11 +22,9 @@ data class AllQuestions(
     val title: String,
     @ColumnInfo(name = "titleSlug")
     val titleSlug: String,
-//    @ColumnInfo(name = "topicTags")
-//    val topicTags: String, // one to many
     @ColumnInfo(name = "hasSolution")
     val hasSolution: Boolean,
-){
+) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 }

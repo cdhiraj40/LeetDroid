@@ -39,7 +39,6 @@ class QuestionDiscussionAdapter(
 
         val question = questionDiscussionsList.data?.questionTopicsList?.edges?.get(position)?.node
 
-
         holder.questionDiscussionTitle.text =
             question?.title
 
@@ -112,4 +111,3 @@ class QuestionDiscussionAdapter(
     }
 
 }
-

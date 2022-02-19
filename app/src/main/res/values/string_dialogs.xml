@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Common strings-->
+    <string name="yes">YES</string>
+    <string name="warning">Warning</string>
+
+    <!--    Logout dialog-->
+    <string name="logout_dialog_title">Logout</string>
+    <string name="logout_dialog_message">Do you want to logout?</string>
+
+    <!--    Sync dialog-->
+    <string name="sync_data">Sync Data</string>
+    <string name="sync_data_dialog_message">Do you want to sync the data? \nThis may take around 10–20 seconds depending on your internet speed. </string>
+
+    <!--    UsernameWarning dialog-->
+    <string name="username_warning_message">You will not be able to change you username later!</string>
+    <string name="username_warning_positive_message">Proceed</string>
+    <string name="username_warning_negative_message">Change</string>
+
+    <!--  Premium List dialog  -->
+    <string name="premium_list_message">This list is premium and contains all premium questions that can\'t be opened.\nYou will still be able to see title of questions. Do you want to open?</string>
+    <string name="premium_list_positive_message">Take me there</string>
+
+</resources>

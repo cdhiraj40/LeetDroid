@@ -14,13 +14,13 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
 import com.example.leetdroid.data.entitiy.Contest
-import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.utils.DateUtils.getDate
 import com.example.leetdroid.utils.DateUtils.getHours
 import com.example.leetdroid.utils.DateUtils.getTime
 import com.example.leetdroid.utils.DateUtils.parseISO8601Date
 import com.example.leetdroid.utils.SharedPreferences
 import com.example.leetdroid.utils.dialog.Notification
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.google.android.material.button.MaterialButton
 import java.util.*
 
@@ -76,7 +76,7 @@ class ContestPagerAdapter
         }
 
 
-        // contest timer
+        // showing timer before contest starts
         val currentTime = Calendar.getInstance().time
         val different = endingDate.time - currentTime.time
 
@@ -129,6 +129,7 @@ class ContestPagerAdapter
 
         holder.contestCalendarButton.setOnClickListener()
         {
+            // opening google calendar
             try {
                 val intent = Intent(Intent.ACTION_EDIT)
                 intent.type = "vnd.android.cursor.item/event"

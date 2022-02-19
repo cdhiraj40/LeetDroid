@@ -13,7 +13,7 @@ sealed class AppDialogs(
     val neutralMessage: Int? = null,
     val getView: (() -> View)? = null
 ) {
-    object LogOut : AppDialogs(
+    object Logout : AppDialogs(
         title = R.string.logout_dialog_title,
         message = R.string.logout_dialog_message,
         positiveMessage = R.string.yes,
@@ -32,10 +32,19 @@ sealed class AppDialogs(
     )
 
     object UsernameWarning : AppDialogs(
-        title = R.string.username_warning_title,
+        title = R.string.warning,
         message = R.string.username_warning_message,
         positiveMessage = R.string.username_warning_positive_message,
         negativeMessage = R.string.username_warning_negative_message,
+        cancelable = true,
+        icon = R.drawable.ic_baseline_warning_24
+    )
+
+    object PremiumList : AppDialogs(
+        title = R.string.warning,
+        message = R.string.premium_list_message,
+        positiveMessage = R.string.premium_list_positive_message,
+        negativeMessage = android.R.string.cancel,
         cancelable = true,
         icon = R.drawable.ic_baseline_warning_24
     )

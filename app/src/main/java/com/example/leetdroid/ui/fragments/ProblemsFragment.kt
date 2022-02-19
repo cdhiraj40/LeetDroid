@@ -16,6 +16,8 @@ import com.example.leetdroid.databinding.FragmentProblemsBinding
 import com.example.leetdroid.model.RandomQuestionModel
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
+import com.example.leetdroid.utils.dialog.AlertDialogShower
+import com.example.leetdroid.utils.dialog.AppDialogs
 import com.example.leetdroid.utils.extensions.below
 import com.google.gson.Gson
 import okhttp3.Headers
@@ -101,19 +103,23 @@ class ProblemsFragment : Fragment() {
         }
 
         problemsBinding.curatedAlgo170Layout.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
-                    "listId" to "leetcode-curated-algo-170"
-                )
-            )
+            showPremiumListWarning(key = "listId", value = "leetcode-curated-algo-170")
+//            findNavController().navigate(
+//                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
+//                    "listId" to "leetcode-curated-algo-170"
+//                )
+//            )
         }
 
         problemsBinding.curatedSql70Layout.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
-                    "listId" to "leetcode-curated-sql-70"
-                )
-            )
+            showPremiumListWarning(key = "listId", value = "leetcode-curated-sql-70")
+
+//            findNavController().navigate(
+//                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
+//                    "listId" to "leetcode-curated-sql-70"
+//                )
+//            )
+//        }
         }
     }
 
@@ -339,6 +345,20 @@ class ProblemsFragment : Fragment() {
             .url(URL.graphql)
             .build()
         return okHttpClient.newCall(request)
+    }
+
+    private fun showPremiumListWarning(key: String, value: String) {
+        AlertDialogShower(requireActivity()).show(
+            AppDialogs.PremiumList, {
+                findNavController().navigate(
+                    R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
+                        key to value
+                    )
+                )
+            }, {
+
+            }
+        )
     }
 
     private fun openRandomQuestion(titleSlug: String) {

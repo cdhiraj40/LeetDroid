@@ -6,8 +6,6 @@ import java.io.Serializable
  *  Data Model for the all questions list
  */
 class AllQuestionsModel : Serializable {
-
-
     /**
      * data: { "problemsetQuestionList": {"total": 2137,
      * "questions": [
@@ -22,7 +20,6 @@ class AllQuestionsModel : Serializable {
          * "titleSlug": "two-sum", "topicTags": [ { "name": "Array", "id": "VG9waWNUYWdOb2RlOjU=","slug": "array"},{"name": "Hash Table","id": "VG9waWNUYWdOb2RlOjY=","slug": "hash-table" } ]
          * "hasSolution": true  } ] } } }
          */
-
         var problemsetQuestionList: ProblemSetQuestionListNode? = null
 
         class ProblemSetQuestionListNode : Serializable {
@@ -50,6 +47,7 @@ class AllQuestionsModel : Serializable {
                     var id: String? = null
                     var slug: String? = null
                 }
+
                 var hasSolution: Boolean? = null
             }
         }
