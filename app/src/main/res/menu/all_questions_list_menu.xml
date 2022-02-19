@@ -7,13 +7,13 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/search"
         app:actionViewClass="android.widget.SearchView"
-        app:iconTint="@color/black"
+        app:iconTint="@color/white"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/question_categories"
         android:icon="@drawable/ic_baseline_filter_list_24"
         android:title="@string/categories"
-        app:iconTint="@color/black"
+        app:iconTint="@color/white"
         app:showAsAction="ifRoom" />
 </menu>

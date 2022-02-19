@@ -61,8 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/light_orange"
-                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="@color/leaf_green"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="3dp"
                 app:cardMaxElevation="3dp"
                 app:cardPreventCornerOverlap="true"
@@ -74,12 +74,13 @@
 
                     <TextView
                         android:id="@+id/all_questions_title"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:text="@string/problem_set"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -91,8 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/light_orange"
-                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="@color/leaf_green"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="3dp"
                 app:cardMaxElevation="3dp"
                 app:cardPreventCornerOverlap="true"
@@ -104,12 +105,13 @@
 
                     <TextView
                         android:id="@+id/random_question_title"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:text="@string/random_question"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -120,9 +122,9 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/daily_question_layout"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:layout_below="@id/home_features_layout"
-            app:cardBackgroundColor="@color/light_orange"
+            app:cardBackgroundColor="@color/lighter_maya_blue"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
             app:cardMaxElevation="3dp"
@@ -144,16 +146,17 @@
 
                 <TextView
                     android:id="@+id/daily_question_heading"
-                    style="@style/TextAppearance.AppCompat.Large"
+                    style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_toStartOf="@id/daily_question_date"
                     android:gravity="center"
                     android:text="Today's Daily Challenge"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <TextView
@@ -165,23 +168,22 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
-                    android:layout_toStartOf="@id/daily_question_date"
+                    android:gravity="center"
                     android:maxLines="2"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/daily_question_date"
-                    style="@style/TextAppearance.AppCompat.Large"
+                    style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/daily_question_heading"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="10dp"
-                    android:textColor="@color/black"
+                    android:gravity="end"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
-
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/daily_question_link"
@@ -219,7 +221,7 @@
                     android:drawableStart="@drawable/ic_baseline_share_24"
                     android:enabled="false"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     app:backgroundTint="@color/alice_blue" />
             </RelativeLayout>

@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.user.MyProfileFragment">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="3dp"
             app:cardMaxElevation="3dp"
             app:cardPreventCornerOverlap="true"
@@ -135,11 +134,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_profile_layout"
+            android:visibility="gone"
             app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="3dp"
             app:cardMaxElevation="3dp"
-            android:visibility="gone"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
 
@@ -248,7 +247,8 @@
             android:layout_width="match_parent"
             android:layout_height="260dp"
             android:layout_below="@id/user_more_details_layout"
-            app:cardCornerRadius="20dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="10dp"
             app:cardElevation="3dp"
             app:cardMaxElevation="3dp"
             app:cardPreventCornerOverlap="true"
@@ -410,14 +410,15 @@
             android:id="@+id/extra_user_details_layout"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_below="@id/user_problems_details_layout">
+            android:layout_below="@id/user_problems_details_layout"
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/user_contest_rankings_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="3dp"
                 app:cardMaxElevation="3dp"
                 app:cardPreventCornerOverlap="true"
@@ -429,6 +430,7 @@
 
                     <TextView
                         android:id="@+id/user_rankings_title"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -457,7 +459,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="3dp"
                 app:cardMaxElevation="3dp"
                 app:cardPreventCornerOverlap="true"
@@ -469,6 +471,7 @@
 
                     <TextView
                         android:id="@+id/recent_submission_list_title"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"

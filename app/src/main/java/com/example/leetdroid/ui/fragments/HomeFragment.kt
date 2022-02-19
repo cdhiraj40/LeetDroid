@@ -33,8 +33,6 @@ import com.example.leetdroid.data.repository.ContestRepository
 import com.example.leetdroid.data.viewModel.ContestViewModel
 import com.example.leetdroid.data.viewModel.DailyQuestionViewModel
 import com.example.leetdroid.databinding.FragmentHomeBinding
-import com.example.leetdroid.utils.extensions.copyToClipboard
-import com.example.leetdroid.utils.extensions.showSnackBarWithAction
 import com.example.leetdroid.model.DailyQuestionModel
 import com.example.leetdroid.model.RandomQuestionModel
 import com.example.leetdroid.notification.DailyQuestionAlarmReceiver
@@ -47,6 +45,8 @@ import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromSt
 import com.example.leetdroid.utils.Converters.DailyQuestionTagsConverter.fromDailyQuestionTags
 import com.example.leetdroid.utils.JsonUtils
 import com.example.leetdroid.utils.SharedPreferences
+import com.example.leetdroid.utils.extensions.copyToClipboard
+import com.example.leetdroid.utils.extensions.showSnackBarWithAction
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.JsonArray
@@ -155,12 +155,12 @@ class HomeFragment : Fragment() {
         val formattedDate: String
         try {
             parsedDate = inputFormat.parse(activeDailyJson.date.toString())!!
-            formattedDate = SimpleDateFormat("d MMM, yyyy", Locale.getDefault()).format(parsedDate)
+            formattedDate = SimpleDateFormat("d MMM, yy", Locale.getDefault()).format(parsedDate)
             fragmentHomeBinding.dailyQuestionDate.text = formattedDate
         } catch (exception: ParseException) {
             Log.d(Constant.TAG(HomeFragment::class.java).toString(), "$exception occurred!")
             fragmentHomeBinding.dailyQuestionDate.text =
-                SimpleDateFormat("d MMM, yyyy", Locale.getDefault()).format(
+                SimpleDateFormat("d MMM, yy", Locale.getDefault()).format(
                     Date()
                 )
         }
@@ -549,7 +549,10 @@ class HomeFragment : Fragment() {
                     response.body!!.string(),
                     RandomQuestionModel::class.java
                 )
-                Log.d(Constant.TAG(HomeFragment::class.java).toString(), randomQuestionData.toString())
+                Log.d(
+                    Constant.TAG(HomeFragment::class.java).toString(),
+                    randomQuestionData.toString()
+                )
 
                 openRandomQuestion(randomQuestionData.data?.randomQuestion?.titleSlug.toString())
             }

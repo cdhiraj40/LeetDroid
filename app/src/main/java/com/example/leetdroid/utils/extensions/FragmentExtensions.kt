@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.RelativeLayout
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -49,6 +50,16 @@ fun Snackbar.action(@StringRes actionRes: Int, color: Int? = null, listener: (Vi
 fun Snackbar.action(action: String, color: Int? = null, listener: (View) -> Unit) {
     setAction(action, listener)
     color?.let { setActionTextColor(ContextCompat.getColor(context, color)) }
+}
+
+// usage: view1.below(view2)
+infix fun View.below(view: View) {
+    (this.layoutParams as? RelativeLayout.LayoutParams)?.addRule(RelativeLayout.BELOW, view.id)
+}
+
+// usage: view1.above(view2)
+infix fun View.above(view: View) {
+    (this.layoutParams as? RelativeLayout.LayoutParams)?.addRule(RelativeLayout.ABOVE, view.id)
 }
 
 

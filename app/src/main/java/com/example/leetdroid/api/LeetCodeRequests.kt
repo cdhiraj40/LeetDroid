@@ -172,8 +172,10 @@ data class LeetCodeRequests(
     )
 
     data class Filters(
-        val tags: List<String>? = null,
+        val tags: List<String?>? = null,
         val orderBy: String? = null,
-        val searchKeywords: String? = null
+        val searchKeywords: String? = null,
+        val listId: String? = null,
+        val difficulty: String? = null
     )
 }
