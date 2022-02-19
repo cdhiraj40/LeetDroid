@@ -13,4 +13,9 @@
         android:id="@+id/myProfileFragment"
         android:icon="@drawable/ic_round_person_24"
         android:title="@string/profile" />
+
+    <item
+        android:id="@+id/problemsFragment"
+        android:icon="@drawable/question_icon"
+        android:title="@string/problems" />
 </menu>

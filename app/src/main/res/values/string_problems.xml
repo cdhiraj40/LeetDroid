@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--TOPIC-->
+    <string name="explore_problems">EXPLORE PROBLEMS</string>
+    <string name="problems_featured_list">FEATURED LISTS</string>
+    <string name="problem_topics">PROBLEM\nTOPICS</string>
+    <string name="problem_difficulty">PROBLEM\nDIFFICULTY</string>
+    <string name="problems_tags">PROBLEM TAGS</string>
+    <string name="array">ARRAY</string>
+    <string name="string">STRING</string>
+    <string name="hash_table">HASH TABLE</string>
+    <string name="dynamic_programming">DYNAMIC PROGRAMMING</string>
+    <string name="sorting">SORTING</string>
+    <string name="greedy">GREEDY</string>
+    <string name="back_tracking">BACKTRACKING</string>
+    <string name="bit_manipulation">BIT\nMANIPULATION</string>
+    <string name="sliding_window">SLIDING WINDOW</string>
+    <string name="recursion">RECURSION</string>
+
+    <!-- difficulties    -->
+    <string name="easy">EASY</string>
+    <string name="medium">MEDIUM</string>
+    <string name="hard">HARD</string>
+
+    <!--    featured list-->
+    <string name="top_interview_questions">TOP INTERVIEW QUESTIONS</string>
+    <string name="top_100_liked_questions">TOP 100 LIKED QUESTIONS</string>
+    <string name="leetcode_curated_algo_170">LEETCODE CURATED ALGO 170</string>
+    <string name="leetcode_curated_sql_70">LEETCODE CURATED SQL 70</string>
+</resources>

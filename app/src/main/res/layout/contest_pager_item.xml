@@ -4,7 +4,8 @@
     android:id="@+id/weekly_contest_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardCornerRadius="20dp"
+    app:cardBackgroundColor="@color/lighter_maya_blue"
+    app:cardCornerRadius="10dp"
     app:cardElevation="3dp"
     app:cardMaxElevation="3dp"
     app:cardPreventCornerOverlap="true"
@@ -25,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="Contest Title"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
@@ -38,8 +38,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
-            android:text="Date"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
@@ -52,8 +51,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="16dp"
-            android:text="Duration"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
@@ -64,8 +62,7 @@
             android:layout_below="@id/contest_duration"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
-            android:text="Start Time"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
@@ -77,8 +74,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/contest_start_time"
-            android:text="End Time"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
@@ -88,22 +84,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/contest_start_time"
             android:layout_toStartOf="@id/contest_calendar_button"
-            android:text="Contest is going on "
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/contest_calendar_button"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/round_background"
             android:text="Reminder"
             android:textColor="@color/white"
-            app:backgroundTint="@color/azure_blue"
+            app:backgroundTint="@color/air_force_blue"
             app:icon="@drawable/ic_baseline_edit_calendar_24"
             app:iconTint="@color/white" />
 

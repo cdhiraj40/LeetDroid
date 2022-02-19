@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/allQuestionsFragment"
         android:name="com.example.leetdroid.ui.fragments.AllQuestionsFragment"
-        android:label="All Questions List"
+        android:label="Problem Set"
         tools:layout="@layout/fragment_all_questions">
         <action
             android:id="@+id/action_allQuestionsFragment_to_questionFragment"
@@ -143,5 +143,45 @@
         android:name="com.example.leetdroid.ui.fragments.user.ContestDetailsFragment"
         android:label="Contest Details Fragment"
         tools:layout="@layout/fragment_contest_details" />
+
+    <fragment
+        android:id="@+id/problemsFragment"
+        android:name="com.example.leetdroid.ui.fragments.ProblemsFragment"
+        android:label="Explore Problems"
+        tools:layout="@layout/fragment_problems">
+
+        <action
+            android:id="@+id/action_problemsFragment_to_allQuestionsFragment"
+            app:destination="@id/allQuestionsFragment">
+            <argument
+                android:name="tag"
+                app:argType="string" />
+
+            <argument
+                android:name="difficulty"
+                app:argType="string" />
+
+            <argument
+                android:name="listId"
+                app:argType="string" />
+        </action>
+
+        <action
+            android:id="@+id/action_problemsFragment_to_questionFragment"
+            app:destination="@id/questionFragment">
+            <argument
+                android:name="titleSlug"
+                android:defaultValue="0"
+                app:argType="string" />
+            <argument
+                android:name="hasSolution"
+                android:defaultValue="true"
+                app:argType="boolean" />
+            <argument
+                android:name="questionID"
+                android:defaultValue="0"
+                app:argType="string" />
+        </action>
+    </fragment>
 
 </navigation>

@@ -16,12 +16,12 @@ import com.example.leetdroid.adapter.AllQuestionsAdapter
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentAllQuestionsBinding
-import com.example.leetdroid.utils.extensions.closeKeyboard
-import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.AllQuestionsModel
 import com.example.leetdroid.ui.base.BaseFragment
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
+import com.example.leetdroid.utils.extensions.closeKeyboard
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -45,6 +45,9 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
     private var categorySlug: String = ""
     private var selectedCategory: Int = 1
 
+    private var tags: String? = null
+    private var difficulty: String? = null
+    private var listId: String? = null
     private var limit = 10
 
     override fun onCreateView(
@@ -63,7 +66,29 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         noQuestionsView = rootView.findViewById(R.id.view_no_questions)
         generalErrorView = rootView.findViewById(R.id.view_general_error)
         allQuestionsAdapter = AllQuestionsAdapter(requireContext(), requireActivity())
-        loadQuestionList(categorySlug, limit)
+
+        val bundle = arguments
+
+        tags = bundle?.getString("tag")
+        difficulty = bundle?.getString("difficulty")
+        listId = bundle?.getString("listId")
+
+        /**
+         * if question fragment is not opened via problems fragment then tags will be null so just make it empty.
+         * else it will not be null hence no need to make it empty
+         */
+//        if (tags == null) {
+//            tags = ""
+//        }
+
+//        if (difficulty == null) {
+//            difficulty = "null"
+//        }
+
+//        if(listId == null){
+//            listId = ""
+//        }
+        loadQuestionList(categorySlug, limit, tags, difficulty.toString())
 
         //  adding pagination
         fragmentAllQuestionsBinding.allQuestionsNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -73,20 +98,20 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 limit += 10
                 fragmentAllQuestionsBinding.questionListProgressBar.visibility = View.VISIBLE
                 if (!searched && selectedCategory == 1) {
-                    loadQuestionList(categorySlug, limit)
+                    loadQuestionList(categorySlug, limit, tags, difficulty)
                 } else if (searched) {
                     searchQuestions(limit, searchKeywords)
                 } else {
                     when (selectedCategory) {
-                        1 -> loadQuestionList("", limit)
+                        1 -> loadQuestionList("", limit, tags, difficulty)
 
-                        2 -> loadQuestionList("algorithms", limit)
+                        2 -> loadQuestionList("algorithms", limit, tags, difficulty)
 
-                        3 -> loadQuestionList("database", limit)
+                        3 -> loadQuestionList("database", limit, tags, difficulty)
 
-                        4 -> loadQuestionList("shell", limit)
+                        4 -> loadQuestionList("shell", limit, tags, difficulty)
 
-                        5 -> loadQuestionList("concurrency", limit)
+                        5 -> loadQuestionList("concurrency", limit, tags, difficulty)
 
                     }
                 }
@@ -259,7 +284,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 )
                 loadingView.visibility = View.VISIBLE
                 fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
-                loadQuestionList("", limit)
+                loadQuestionList("", limit, tags, difficulty)
             }
         }
         fragmentAllQuestionsBinding.algorithmsLayout.setOnClickListener {
@@ -274,7 +299,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 )
                 loadingView.visibility = View.VISIBLE
                 fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
-                loadQuestionList("algorithms", limit)
+                loadQuestionList("algorithms", limit, tags, difficulty)
             }
         }
         fragmentAllQuestionsBinding.databaseLayout.setOnClickListener {
@@ -289,7 +314,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 )
                 loadingView.visibility = View.VISIBLE
                 fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
-                loadQuestionList("database", limit)
+                loadQuestionList("database", limit, tags, difficulty)
             }
         }
         fragmentAllQuestionsBinding.shellLayout.setOnClickListener {
@@ -304,7 +329,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 )
                 loadingView.visibility = View.VISIBLE
                 fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
-                loadQuestionList("shell", limit)
+                loadQuestionList("shell", limit, tags, difficulty)
             }
         }
         fragmentAllQuestionsBinding.concurrencyLayout.setOnClickListener {
@@ -319,7 +344,7 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 )
                 loadingView.visibility = View.VISIBLE
                 fragmentAllQuestionsBinding.allQuestionsNested.visibility = View.GONE
-                loadQuestionList("concurrency", limit)
+                loadQuestionList("concurrency", limit, tags, difficulty)
             }
         }
     }
@@ -350,14 +375,32 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         return okHttpClient.newCall(request)
     }
 
-    private fun loadQuestionList(categorySlug: String, limit: Int) {
+    private fun loadQuestionList(
+        categorySlug: String,
+        limit: Int,
+        tags: String?,
+        difficulty: String?
+    ) {
 
-        val call: Call =
+        val call: Call = if ((tags == null || tags == "null") && (difficulty == null || difficulty == "null")) {
             questionListApiCall(
                 categorySlug,
                 limit,
-                filters = LeetCodeRequests.Filters(tags = listOf())
+                filters = LeetCodeRequests.Filters(tags = listOf(), difficulty = null)
             )
+        } else if (tags == null || tags == "null") {
+            isTagsNull(categorySlug, limit, tags, difficulty)
+        } else if (difficulty == null || difficulty == "null") {
+            isDifficultyNull(categorySlug, limit, tags, difficulty)
+        }else {
+            questionListApiCall(
+                categorySlug,
+                limit,
+                filters = LeetCodeRequests.Filters(tags = listOf(), difficulty = difficulty)
+            )
+        }
+//        call = isDifficultyNull(categorySlug, limit, tags, difficulty)
+//        call = isListIdNull(categorySlug, limit, tags, difficulty)
         call.enqueue(object : Callback {
 
             override fun onResponse(call: Call, response: Response) {
@@ -433,6 +476,64 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
                 Log.d(Constant.TAG(AllQuestionsFragment::class.java).toString(), call.toString(), e)
             }
         })
+    }
+
+    private fun isTagsNull(
+        categorySlug: String,
+        limit: Int,
+        tags: String?,
+        difficulty: String?
+    ): Call {
+        return (
+                questionListApiCall(
+                    categorySlug,
+                    limit,
+                    filters = LeetCodeRequests.Filters(tags = null, difficulty = difficulty)
+                )
+        )
+    }
+//        else {
+//            questionListApiCall(
+//                categorySlug,
+//                limit,
+//                filters = LeetCodeRequests.Filters(tags = listOf(tags), difficulty = difficulty)
+//            )
+//        }
+
+    private fun isDifficultyNull(
+        categorySlug: String,
+        limit: Int,
+        tags: String?,
+        difficulty: String?
+    ): Call {
+        return (
+                questionListApiCall(
+                    categorySlug,
+                    limit,
+                    filters = LeetCodeRequests.Filters(tags = listOf(tags), difficulty = null)
+                )
+        )
+    }
+
+    private fun isListIdNull(
+        categorySlug: String,
+        limit: Int,
+        tags: String?,
+        difficulty: String?
+    ): Call {
+        return if (difficulty == null || difficulty == "null") {
+            questionListApiCall(
+                categorySlug,
+                limit,
+                filters = LeetCodeRequests.Filters(tags = listOf(tags), difficulty = null)
+            )
+        } else {
+            questionListApiCall(
+                categorySlug,
+                limit,
+                filters = LeetCodeRequests.Filters(tags = listOf(tags), difficulty = null)
+            )
+        }
     }
 
     private fun checkIfEmpty() {

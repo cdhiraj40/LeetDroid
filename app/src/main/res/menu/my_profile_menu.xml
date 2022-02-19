@@ -6,14 +6,14 @@
         android:id="@+id/sync"
         android:icon="@drawable/ic_baseline_sync_24"
         android:title="@string/sync"
-        app:iconTint="@color/black"
+        app:iconTint="@color/white"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_baseline_logout_24"
         android:title="@string/logout_menu_title"
-        app:iconTint="@color/black"
+        app:iconTint="@color/white"
         app:showAsAction="ifRoom" />
 
 </menu>

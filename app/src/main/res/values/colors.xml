@@ -13,8 +13,6 @@
     <color name="blue_Dark">#3E97F0</color>
     <color name="md_grey_600">#757575</color>
 
-
-
     <!-- for color name search "color name and hue"-->
     <color name="alice_blue">#E6EFFF</color>
     <color name="azure_blue">#007FFF</color>
@@ -22,7 +20,7 @@
 
     <!-- color for question's difficulty-->
     <color name="easy_difficulty">#4cbb17</color>
-    <color name="medium_difficulty">#ffdf00</color>
+    <color name="medium_difficulty">#D4AF37</color>
     <color name="hard_difficulty">#ce2029</color>
 
     <color name="yellow_chartreuse">#dfff00</color>
@@ -34,4 +32,17 @@
 
     <color name="accepted_submission">#4cbb17</color>
     <color name="wrong_submission">#ce2029</color>
+
+    <color name="salmon">#FFA384</color>
+
+
+    <color name="light_blue_green">#B4FEE7</color>
+    <color name="leaf_green">#B8EE30</color>
+    <color name="air_force_blue">#5885AF</color>
+    <color name="light_sea_green">#2BB8B3</color>
+    <color name="maya_blue">#72c6ff</color>
+    <color name="moss_green">#b5e3af</color>
+    <color name="perano">#b28bff</color>
+    <color name="lighter_perano">#b2b2ff</color>
+    <color name="lighter_maya_blue">#53DBFB</color>
 </resources>
