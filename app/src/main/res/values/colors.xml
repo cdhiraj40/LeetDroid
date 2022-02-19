@@ -35,10 +35,11 @@
 
     <color name="salmon">#FFA384</color>
 
-
+    <color name="dark_purple">#5855AF</color>
     <color name="light_blue_green">#B4FEE7</color>
     <color name="leaf_green">#B8EE30</color>
     <color name="air_force_blue">#5885AF</color>
+    <color name="lighter_air_force_blue">#58A5AF</color>
     <color name="light_sea_green">#2BB8B3</color>
     <color name="maya_blue">#72c6ff</color>
     <color name="moss_green">#b5e3af</color>

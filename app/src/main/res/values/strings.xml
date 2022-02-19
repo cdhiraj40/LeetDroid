@@ -22,9 +22,8 @@
     <string name="login_button_text">LOGIN</string>
     <string name="sync">sync</string>
 
-    <string name="logout_dialog_title">Logout</string>
-    <string name="logout_dialog_message">Do you want to logout?</string>
-    <string name="yes">YES</string>
+    <string name="logout_menu_title">Log Out</string>
+
     <string name="question_paid_status">PAID</string>
     <string name="search">search</string>
 
@@ -35,15 +34,5 @@
     <string name="recent_submission_list_title">Recent Submissions</string>
     <string name="kotlin">Kotlin</string>
     <string name="python_ml">Python ML</string>
-    <string name="categories">Categories</string>
-    <string name="interview_questions">Interview Questions</string>
-    <string name="interview_experience">Interview Experience</string>
-    <string name="compensation">Compensation</string>
-    <string name="career">Career</string>
-    <string name="study_guide">Study Guide</string>
-    <string name="general_discussion">General Discussion</string>
-    <string name="support_and_feedback"><![CDATA[Support & Feedback]]></string>
-    <string name="concurrency">Concurrency</string>
-
 
 </resources>

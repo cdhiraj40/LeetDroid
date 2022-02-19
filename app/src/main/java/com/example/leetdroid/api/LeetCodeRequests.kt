@@ -1,5 +1,9 @@
 package com.example.leetdroid.api
 
+/**
+ * This Class handles all the LeetCode's GraphQL API {operationName, variables and queries} that is used in the app.
+ */
+
 data class LeetCodeRequests(
     val operationName: String,
     val variables: Variables,

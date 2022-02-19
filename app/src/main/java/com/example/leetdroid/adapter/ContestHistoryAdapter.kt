@@ -27,8 +27,9 @@ class ContestHistoryAdapter(val context: Context) :
 
     fun setData(contestsList: ContestRankingModel) {
         contestList = contestsList
+
+        // to get the latest contest
         contests =
-                // to get the latest contest
             contestsList.data?.userContestRankingHistory!!.sortedByDescending { it.contest?.startTime }
     }
 
@@ -40,7 +41,6 @@ class ContestHistoryAdapter(val context: Context) :
         )
     }
 
-    // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val contestItem = contests[position]
@@ -60,7 +60,7 @@ class ContestHistoryAdapter(val context: Context) :
             contestItem.rating.toString()
 
 
-        // setting thw date
+        // setting thw date of contest
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val time = format.format(contestItem.contest?.startTime!!.toLong().times(1000L))
         var date: Date? = null
@@ -82,10 +82,6 @@ class ContestHistoryAdapter(val context: Context) :
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
-        return contests.size
-    }
-
-    fun getDataItemCount(): Int {
         return contests.size
     }
 

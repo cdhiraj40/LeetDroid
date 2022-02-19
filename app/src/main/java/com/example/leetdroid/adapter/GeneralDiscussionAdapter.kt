@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.leetdroid.R
-import com.example.leetdroid.model.DiscussionItemModel
 import com.example.leetdroid.model.GeneralDiscussionModel
-
-import com.example.leetdroid.model.QuestionDiscussionsModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,16 +32,15 @@ class GeneralDiscussionAdapter(
         fun onItemClick(position: Int, discussionId: Int?)
     }
 
-    // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val discussionItem = generalDiscussionsList.data?.categoryTopicList?.edges?.get(position)?.node
-
+        val discussionItem =
+            generalDiscussionsList.data?.categoryTopicList?.edges?.get(position)?.node
 
         holder.generalDiscussionTitle.text =
             discussionItem?.title
 
-        if( discussionItem?.post?.author?.profile?.userAvatar !=null) {
+        if (discussionItem?.post?.author?.profile?.userAvatar != null) {
             Glide.with(context)
                 .load(
                     discussionItem.post?.author?.profile?.userAvatar
@@ -53,7 +48,7 @@ class GeneralDiscussionAdapter(
                 .circleCrop()
                 .placeholder(android.R.drawable.progress_indeterminate_horizontal)
                 .into(holder.discussionUserAvatar)
-        }else{
+        } else {
             holder.discussionUserAvatar.setImageResource(R.drawable.ic_round_person_24)
         }
         val viewCount = discussionItem?.viewCount
@@ -67,6 +62,7 @@ class GeneralDiscussionAdapter(
         holder.generalDiscussionAuthor.text = discussionItem.post?.author?.username
         holder.generalDiscussionCommentCount.text = discussionItem.commentCount.toString()
         holder.generalDiscussionUpvotes.text = discussionItem.post?.voteCount.toString()
+
 
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val time = format.format(discussionItem.post?.creationDate?.times(1000L))

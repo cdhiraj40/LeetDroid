@@ -17,9 +17,5 @@
     <string name="forgot_password_user_prompt">Forgot Password? \n No worries</string>
     <string name="forgot_password_mail_sent_text">We’ve sent you an email with instructions to reset your password*</string>
 
-    <string name="username_warning_title">Warning</string>
-    <string name="username_warning_message">You will not be able to change you username later!</string>
-    <string name="username_warning_positive_message">Proceed</string>
-    <string name="username_warning_negative_message">Change</string>
     <string name="prompt_open_email">Open Gmail?</string>
 </resources>

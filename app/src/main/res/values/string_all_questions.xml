@@ -3,6 +3,7 @@
     <string name="acceptance_rate">Acceptance Rate: %1$s</string>
     <string name="no_questions_found">No questions found with this search.</string>
     <string name="all_topics">All Topics</string>
+
     <string name="algorithms">Algorithms</string>
     <string name="database">Database</string>
     <string name="shell">Shell</string>

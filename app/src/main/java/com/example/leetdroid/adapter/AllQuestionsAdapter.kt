@@ -7,16 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
-
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leetdroid.R
-import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.AllQuestionsModel
 import com.example.leetdroid.model.AllQuestionsModel.DataNode.ProblemSetQuestionListNode.Questions
 import com.example.leetdroid.utils.CommonFunctions
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class AllQuestionsAdapter(val context: Context, val activity: Activity) :
@@ -48,7 +47,6 @@ class AllQuestionsAdapter(val context: Context, val activity: Activity) :
         )
     }
 
-    // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val questionItem = questions[position]
@@ -120,6 +118,7 @@ class AllQuestionsAdapter(val context: Context, val activity: Activity) :
         val questionHasSolution = questionItem.hasSolution
         val questionId = questionItem.frontendQuestionId
         holder.itemView.setOnClickListener {
+            // check if a question is paid, if it is then show snackbar
             if (!questionItem.paidOnly!!) {
                 onClick!!.onItemClick(
                     position,

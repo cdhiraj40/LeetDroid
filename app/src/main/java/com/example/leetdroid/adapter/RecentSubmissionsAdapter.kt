@@ -79,7 +79,8 @@ class RecentSubmissionsAdapter(val context: Context) :
         var date: Date? = null
         try {
             date = format.parse(time)
-            holder.submissionDate.text = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date!!)
+            holder.submissionDate.text =
+                SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date!!)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -91,7 +92,7 @@ class RecentSubmissionsAdapter(val context: Context) :
                 R.color.alice_blue
             )
         )
-        // setting the text and color of language button
+        // setting the text as language name and color of language button
         when (submissionItem.lang.toString()) {
             "cpp" -> {
                 holder.submissionLanguage.text = "C++"
@@ -120,7 +121,6 @@ class RecentSubmissionsAdapter(val context: Context) :
             "csharp" -> {
                 holder.submissionLanguage.text = "C#"
             }
-
             "javascript" -> {
                 holder.submissionLanguage.text = context.getString(R.string.javascript)
             }
