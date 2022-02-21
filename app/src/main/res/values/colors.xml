@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#265AE8</color>
-    <color name="light_orange">#ffdfbf</color>
+    <color name="light_orange">#ffb347</color>
     <color name="light_blue">#6FB6F4</color>
     <color name="blue_Dark">#3E97F0</color>
     <color name="md_grey_600">#757575</color>
@@ -34,6 +34,7 @@
     <color name="wrong_submission">#ce2029</color>
 
     <color name="salmon">#FFA384</color>
+    <color name="light_salmon">#FFA384</color>
 
     <color name="dark_purple">#5855AF</color>
     <color name="light_blue_green">#B4FEE7</color>

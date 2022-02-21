@@ -40,7 +40,6 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
     private lateinit var searchKeywords: String
     private var searched: Boolean = false
     private lateinit var loadingView: View
-    private lateinit var noQuestionsFound: View
 
     private var categorySlug: String = ""
     private var selectedCategory: Int = 1
@@ -71,8 +70,13 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         tags = bundle?.getString("tag")
         difficulty = bundle?.getString("difficulty")
         listId = bundle?.getString("listId")
+        categorySlug = bundle?.getString("categorySlug").toString()
 
-        loadQuestionList(categorySlug, limit, tags, difficulty, listId)
+        if (categorySlug == "null") {
+            loadQuestionList("", limit, tags, difficulty, listId)
+        } else {
+            loadQuestionList(categorySlug, limit, tags, difficulty, listId)
+        }
 
         //  adding pagination
         fragmentAllQuestionsBinding.allQuestionsNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->

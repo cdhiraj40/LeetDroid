@@ -46,6 +46,7 @@ class ProblemsFragment : Fragment() {
 
         // TODO: After going to question fragment and coming back, somehow clicking on dropdown for first time does not work that means the values are not getting created again.
         setupProblemTopics()
+        setupProblemTags()
         setupProblemDifficulties()
         setupFeaturedLists()
 
@@ -57,9 +58,34 @@ class ProblemsFragment : Fragment() {
             loadRandomQuestion()
         }
         setupTopicClickListeners()
+        setupTagsClickListeners()
         setupDiffClickListeners()
         setupListsClickListeners()
         return rootView
+    }
+
+
+    private fun setupProblemTags() {
+        problemsBinding.problemsTagsDropdownMenu.setOnClickListener {
+            if (isDropdownTopics) {
+                isDropdownTopics = false
+                // changing the dropdown rotation and its background
+                problemsBinding.problemsTagsDropdownMenu.rotation = 0F
+                problemsBinding.problemsTagsDropdownMenu.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.light_glass_background)
+                problemsBinding.problemsTagsSubLayout.visibility = View.GONE
+                problemsBinding.problemExplore4Layout.below(problemsBinding.problemExplore3Layout)
+            } else {
+                goDefault()
+                isDropdownTopics = true
+                // changing the dropdown rotation and its background
+                problemsBinding.problemsTagsDropdownMenu.rotation = 180F
+                problemsBinding.problemsTagsDropdownMenu.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.dark_glass_background)
+                problemsBinding.problemsTagsSubLayout.visibility = View.VISIBLE
+                problemsBinding.problemExplore4Layout.below(problemsBinding.problemsTagsSubLayout)
+            }
+        }
     }
 
     private fun setupFeaturedLists() {
@@ -104,23 +130,46 @@ class ProblemsFragment : Fragment() {
 
         problemsBinding.curatedAlgo170Layout.setOnClickListener {
             showPremiumListWarning(key = "listId", value = "leetcode-curated-algo-170")
-//            findNavController().navigate(
-//                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
-//                    "listId" to "leetcode-curated-algo-170"
-//                )
-//            )
         }
 
         problemsBinding.curatedSql70Layout.setOnClickListener {
             showPremiumListWarning(key = "listId", value = "leetcode-curated-sql-70")
-
-//            findNavController().navigate(
-//                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
-//                    "listId" to "leetcode-curated-sql-70"
-//                )
-//            )
-//        }
         }
+    }
+
+    private fun setupTagsClickListeners() {
+        problemsBinding.algorithmsLayout.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
+                    "categorySlug" to "algorithms"
+                )
+            )
+        }
+
+        problemsBinding.databaseLayout.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
+                    "categorySlug" to "database"
+                )
+            )
+        }
+
+        problemsBinding.shellLayout.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
+                    "categorySlug" to "shell"
+                )
+            )
+        }
+
+        problemsBinding.concurrencyLayout.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_problemsFragment_to_allQuestionsFragment, bundleOf(
+                    "categorySlug" to "concurrency"
+                )
+            )
+        }
+
     }
 
     private fun setupDiffClickListeners() {
@@ -282,6 +331,7 @@ class ProblemsFragment : Fragment() {
         problemsBinding.problemTopicsSubLayout.visibility = View.GONE
         problemsBinding.problemDifficultySubLayout.visibility = View.GONE
         problemsBinding.problemsFeaturedListSubLayout.visibility = View.GONE
+        problemsBinding.problemsTagsSubLayout.visibility = View.GONE
     }
 
     private fun defaultLayoutBelow() {
