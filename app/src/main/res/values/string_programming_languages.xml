@@ -19,4 +19,6 @@
     <string name="ruby">Ruby</string>
     <string name="javascript">JavaScript</string>
     <string name="oracle">Oracle</string>
+    <string name="kotlin">Kotlin</string>
+    <string name="python_ml">Python ML</string>
 </resources>

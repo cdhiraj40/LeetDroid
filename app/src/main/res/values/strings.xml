@@ -26,13 +26,11 @@
 
     <string name="question_paid_status">PAID</string>
     <string name="search">search</string>
+    <string name="explore_problems">Explore Problems</string>
 
     <string name="general_error">Something went wrong, \nplease try again later</string>
     <string name="user_testcases_text">Testcases</string>
     <string name="user_location_text">location</string>
     <string name="user_education_text">Education</string>
-    <string name="recent_submission_list_title">Recent Submissions</string>
-    <string name="kotlin">Kotlin</string>
-    <string name="python_ml">Python ML</string>
-
+    <string name="daily_challenge_details">"Get daily new questions to solve, that are same from leetcode's daily challenges. "</string>
 </resources>

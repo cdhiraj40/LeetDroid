@@ -16,10 +16,10 @@
             android:id="@+id/problem_explore1_layout"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/problem_set_layout"
@@ -60,7 +60,7 @@
             android:layout_below="@id/problem_explore1_layout"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/problem_topics_layout"
@@ -170,7 +170,7 @@
                 android:layout_height="80dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/problem_easy_layout"
@@ -245,7 +245,7 @@
                 android:layout_below="@id/problem_difficulty_sub_layout1"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/problem_difficulty_hard_layout"
@@ -309,7 +309,7 @@
                 android:layout_height="80dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/problem_array_layout"
@@ -384,7 +384,7 @@
                 android:layout_below="@id/problem_topics_sub_layout1"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/problem_hash_table_layout"
@@ -458,7 +458,7 @@
                 android:layout_below="@id/problem_topics_sub_layout2"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/problem_sorting_layout"
@@ -533,7 +533,7 @@
                 android:layout_below="@id/problem_topics_sub_layout2"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/problem_back_tracking_layout"
@@ -607,7 +607,7 @@
                 android:layout_below="@id/problem_topics_sub_layout4"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/problem_sliding_window_layout"
@@ -680,9 +680,9 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_below="@id/problem_difficulty_sub_layout"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/problems_tags_layout"
@@ -791,7 +791,7 @@
                 android:layout_height="100dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/top_interview_layout"
@@ -866,7 +866,7 @@
                 android:layout_below="@id/problems_featured_list_sub_layout1"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/curated_algo_170_layout"
@@ -939,9 +939,9 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_below="@id/problem_explore3_layout"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/random_question_layout"

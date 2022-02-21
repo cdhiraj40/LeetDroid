@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentQuestionDiscussionBinding
 import com.example.leetdroid.model.QuestionDiscussionsModel
+import com.example.leetdroid.sharedViewModel.QuestionDiscussionSharedViewModel
 import com.example.leetdroid.sharedViewModel.QuestionSharedViewModel
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
@@ -34,6 +36,7 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
     private lateinit var questionId: String
     private lateinit var questionDiscussionsJson: QuestionDiscussionsModel
     private lateinit var questionSharedViewModel: QuestionSharedViewModel
+    private lateinit var discussionSharedViewModel: QuestionDiscussionSharedViewModel
     private var questionDiscussionAdapter: QuestionDiscussionAdapter? = null
     private lateinit var loadingView: View
     private var limit = 10
@@ -54,11 +57,20 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
 
         questionSharedViewModel =
             ViewModelProvider(requireActivity())[QuestionSharedViewModel::class.java]
+
+        discussionSharedViewModel =
+            ViewModelProvider(requireActivity())[QuestionDiscussionSharedViewModel::class.java]
         questionSharedViewModel.questionID.observe(viewLifecycleOwner, {
             // sending questionID to load discussion list
             questionId = it
             loadQuestionDiscussionList(questionId, limit)
         })
+
+        questionSharedViewModel.questionTitle.observe(viewLifecycleOwner, {
+            // getting the question title and showing on toolbar
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = it
+        })
+
         // adding pagination
         fragmentQuestionDiscussionBinding.allDiscussionNested.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -104,7 +116,11 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG(QuestionDiscussionFragment::class.java).toString(), call.toString(), e)
+                Log.d(
+                    Constant.TAG(QuestionDiscussionFragment::class.java).toString(),
+                    call.toString(),
+                    e
+                )
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -140,10 +156,11 @@ class QuestionDiscussionFragment : Fragment(), QuestionDiscussionAdapter.OnItemC
         }
     }
 
-    override fun onItemClick(position: Int, discussionId: Int?) {
+    override fun onItemClick(position: Int, discussionId: Int?, discussionTitle: String) {
         val bundle = bundleOf(
             "discussionId" to discussionId,
         )
+        discussionSharedViewModel.getDiscussionTitle(discussionTitle)
         fragmentQuestionDiscussionBinding.root.findNavController()
             .navigate(R.id.action_questionDiscussionFragment_to_discussionItemFragment, bundle)
     }
