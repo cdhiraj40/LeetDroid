@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--TOPIC-->
-    <string name="explore_problems">EXPLORE PROBLEMS</string>
     <string name="problems_featured_list">FEATURED LISTS</string>
     <string name="problem_topics">PROBLEM\nTOPICS</string>
     <string name="problem_difficulty">PROBLEM\nDIFFICULTY</string>

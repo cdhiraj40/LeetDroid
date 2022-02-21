@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="most_recent_submissions">Most Recent Submissions</string>
+    <string name="recent_submission_list_title">Recent Submissions</string>
 </resources>

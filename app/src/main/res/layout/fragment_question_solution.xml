@@ -11,18 +11,9 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/question_title_text"
-            style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/hello_blank_fragment" />
-
-        <org.sufficientlysecure.htmltextview.HtmlTextView
             android:id="@+id/question_solution"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/question_title_text"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:padding="16dp"

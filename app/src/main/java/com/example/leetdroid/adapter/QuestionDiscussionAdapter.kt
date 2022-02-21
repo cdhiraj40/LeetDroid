@@ -31,7 +31,7 @@ class QuestionDiscussionAdapter(
     private var onClick: OnItemClicked? = null
 
     interface OnItemClicked {
-        fun onItemClick(position: Int, discussionId: Int?)
+        fun onItemClick(position: Int, discussionId: Int?, discussionTitle: String)
     }
 
     // binds the list items to a view
@@ -77,7 +77,8 @@ class QuestionDiscussionAdapter(
         holder.itemView.setOnClickListener {
             onClick!!.onItemClick(
                 position,
-                discussionId
+                discussionId,
+                question.title.toString()
             )
         }
 

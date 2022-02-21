@@ -67,7 +67,7 @@ dependencies {
     implementation 'ru.noties.markwon:core:3.0.0'
 
     // html to TextView
-    implementation 'org.sufficientlysecure:html-textview:4.0'
+    implementation 'com.github.YuanWenHai:html-textview:1.6'
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
@@ -115,5 +115,8 @@ dependencies {
 
     // rating bar
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
+
+    // showcase view
+    implementation 'com.github.mreram:showcaseview:1.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

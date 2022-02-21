@@ -5,12 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.leetdroid.R
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentDiscussionItemBinding
 import com.example.leetdroid.model.DiscussionItemModel
+import com.example.leetdroid.sharedViewModel.QuestionDiscussionSharedViewModel
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
@@ -26,6 +29,7 @@ class DiscussionItemFragment : Fragment() {
     private var discussionId: Int? = 0
     private lateinit var discussionContentJson: DiscussionItemModel
     private lateinit var loadingView: View
+    private lateinit var discussionSharedViewModel: QuestionDiscussionSharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +42,15 @@ class DiscussionItemFragment : Fragment() {
         val rootView = fragmentDiscussionItemBinding.root
 
         loadingView = rootView.findViewById(R.id.loading_view)
+
+        discussionSharedViewModel =
+            ViewModelProvider(requireActivity())[QuestionDiscussionSharedViewModel::class.java]
+
+        discussionSharedViewModel.discussionTitle.observe(viewLifecycleOwner, {
+            // getting the discussion title and showing on toolbar
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = it
+        })
+
 
         loadingView.visibility = View.VISIBLE
         fragmentDiscussionItemBinding.questionDiscussionLayout.visibility = View.GONE
@@ -71,7 +84,11 @@ class DiscussionItemFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG(DiscussionItemFragment::class.java).toString(), call.toString(), e)
+                Log.d(
+                    Constant.TAG(DiscussionItemFragment::class.java).toString(),
+                    call.toString(),
+                    e
+                )
             }
 
             override fun onResponse(call: Call, response: Response) {

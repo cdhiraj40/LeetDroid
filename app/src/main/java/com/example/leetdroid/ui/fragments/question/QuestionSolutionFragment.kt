@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.leetdroid.R
@@ -53,10 +54,13 @@ class QuestionSolutionFragment : Fragment() {
             ViewModelProvider(requireActivity())[QuestionSharedViewModel::class.java]
 
         questionSharedViewModel.questionTitleSlug.observe(viewLifecycleOwner, {
-            // updating data in Title-Text
+            // updating data in Title-Text, and showing on toolbar
             questionTitleSlug = it
+        })
 
-            fragmentSolutionBinding.questionTitleText.text = questionTitleSlug
+        questionSharedViewModel.questionTitle.observe(viewLifecycleOwner, {
+            // getting the question title and showing on toolbar
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = it
         })
 
         questionSharedViewModel.questionHasSolution.observe(viewLifecycleOwner, {
@@ -96,7 +100,11 @@ class QuestionSolutionFragment : Fragment() {
         call.enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d(Constant.TAG(QuestionSolutionFragment::class.java).toString(), call.toString(), e)
+                Log.d(
+                    Constant.TAG(QuestionSolutionFragment::class.java).toString(),
+                    call.toString(),
+                    e
+                )
             }
 
             override fun onResponse(call: Call, response: Response) {

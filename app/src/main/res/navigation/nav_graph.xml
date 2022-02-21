@@ -95,7 +95,6 @@
     <fragment
         android:id="@+id/questionFragment"
         android:name="com.example.leetdroid.ui.fragments.question.QuestionFragment"
-        android:label="Question"
         tools:layout="@layout/fragment_question">
         <action
             android:id="@+id/action_questionsFragment_to_questionSolutionFragment"
@@ -108,13 +107,11 @@
     <fragment
         android:id="@+id/questionSolutionFragment"
         android:name="com.example.leetdroid.ui.fragments.question.QuestionSolutionFragment"
-        android:label="Solution"
         tools:layout="@layout/fragment_question_solution" />
 
     <fragment
         android:id="@+id/questionDiscussionFragment"
         android:name="com.example.leetdroid.ui.fragments.question.QuestionDiscussionFragment"
-        android:label="Discussion"
         tools:layout="@layout/fragment_question_discussion">
 
         <action
@@ -129,7 +126,6 @@
     <fragment
         android:id="@+id/discussionItemFragment"
         android:name="com.example.leetdroid.ui.fragments.question.DiscussionItemFragment"
-        android:label="Discussion Fragment"
         tools:layout="@layout/fragment_discussion_item" />
 
     <fragment

@@ -60,13 +60,15 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import smartdevelop.ir.eram.showcaseviewlib.GuideView
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
+import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
 import java.io.IOException
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class HomeFragment : Fragment() {
 
@@ -77,6 +79,7 @@ class HomeFragment : Fragment() {
     private lateinit var generalErroView: View
     private lateinit var contestDB: ContestDao
     private lateinit var contestRepository: ContestRepository
+    private lateinit var contestPagerAdapter: ContestPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -132,7 +135,70 @@ class HomeFragment : Fragment() {
         fragmentHomeBinding.allQuestionsLayout.setOnClickListener {
             fragmentHomeBinding.root.findNavController().navigate(R.id.allQuestionsFragment)
         }
+
+        if (!sharedPreferences.statusShown) {
+            spotlightShowCase(
+                fragmentHomeBinding.root,
+                "Upcoming contest details",
+                getString(R.string.upcoming_contest_details),
+                2,
+                fragmentHomeBinding.viewPager.id
+            )
+        }
         return rootView
+    }
+
+    // show the help screen with proper description
+    private fun spotlightShowCase(
+        contentView: View,
+        head: String,
+        content: String,
+        nextTarget: Int,
+        id: Int
+    ) {
+        GuideView.Builder(context)
+            .setTitle(head)
+            .setContentText(content)
+            .setGravity(Gravity.center)
+            .setTargetView(contentView.findViewById(id))
+            .setContentTextSize(12)
+            .setTitleTextSize(16)
+            .setDismissType(DismissType.outside)
+            .setGuideListener {
+                when (nextTarget) {
+                    2 -> spotlightShowCase(
+                        contentView,
+                        "Add Reminder",
+                        getString(R.string.add_reminder_details),
+                        3,
+                        fragmentHomeBinding.viewPager.id
+                    )
+                    3 -> spotlightShowCase(
+                        contentView,
+                        "Problem Set",
+                        getString(R.string.problem_set_details),
+                        4,
+                        fragmentHomeBinding.allQuestionsLayout.id
+                    )
+                    4 -> spotlightShowCase(
+                        contentView,
+                        "Random Questions",
+                        getString(R.string.random_question_details),
+                        5,
+                        fragmentHomeBinding.randomQuestionLayout.id
+                    )
+                    5 -> spotlightShowCase(
+                        contentView,
+                        "Daily Challenge",
+                        getString(R.string.daily_challenge_details),
+                        6,
+                        R.id.daily_question_relative_layout
+                    )
+                    6 -> sharedPreferences.statusShown = true
+                }
+            }
+            .build()
+            .show()
     }
 
     private fun setupDailyQuestion() {
@@ -337,7 +403,7 @@ class HomeFragment : Fragment() {
                     contestList.add(weeklyContest)
                     contestList.add(biWeeklyContest)
 
-                    val contestPagerAdapter =
+                    contestPagerAdapter =
                         ContestPagerAdapter(contestList, requireContext(), requireActivity())
 
                     fragmentHomeBinding.viewPager.adapter = contestPagerAdapter
