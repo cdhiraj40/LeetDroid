@@ -160,6 +160,10 @@
             <argument
                 android:name="listId"
                 app:argType="string" />
+
+            <argument
+                android:name="categorySlug"
+                app:argType="string" />
         </action>
 
         <action
