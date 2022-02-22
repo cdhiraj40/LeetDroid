@@ -1,0 +1,115 @@
+{
+  "libraries": {
+    "library": [
+      {
+        "name": "LeetDroid",
+        "author": "Dhiraj Chauhan",
+        "website": "https://github.com/cdhiraj40/LeetDroid/",
+        "license": "MIT License"
+      },
+      {
+        "name": "Android Jetpack",
+        "author": "Google",
+        "website": "https://developer.android.com/jetpack",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "Apache Commons",
+        "author": "The Apache Software Foundation",
+        "website": "http://commons.apache.org/",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "Glide",
+        "author": "bumptech",
+        "website": "https://github.com/bumptech/glide/",
+        "license": "BSD, part MIT and Apache 2.0 License"
+      },
+      {
+        "name": "Material Design Icons",
+        "author": "Google",
+        "website": "https://github.com/google/material-design-icons",
+        "license": "Attribution-ShareAlike 4.0 International License"
+      },
+      {
+        "name": "Material Design Icons",
+        "author": "Templarian",
+        "website": "https://github.com/Templarian/MaterialDesign",
+        "license": "SIL Open Font, Version 1.1 License"
+      },
+      {
+        "name": "Material Components",
+        "author": "Google",
+        "website": "https://github.com/material-components/material-components-android",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "OkHttp",
+        "author": "Square",
+        "website": "https://github.com/square/okhttp",
+        "license": "Apache 2.0 License",
+        "self-closing": "true"
+      },
+      {
+        "name": "Retrofit",
+        "author": "Square",
+        "website": "https://github.com/square/retrofit",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "gson",
+        "author": "Google",
+        "website": "https://github.com/google/gson",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "Markwon",
+        "author": "Noties",
+        "website": "https://github.com/noties/Markwon",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "html-textview",
+        "author": "SufficientlySecure",
+        "website": "https://jitpack.io/p/YuanWenHai/html-textview",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "ThreeTenABP",
+        "author": "JakeWharton",
+        "website": "https://github.com/JakeWharton/ThreeTenABP",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "Android-SpinKit",
+        "author": "ybq",
+        "website": "https://github.com/ybq/Android-SpinKit",
+        "license": "MIT License"
+      },
+      {
+        "name": "firebase-android-sdk",
+        "author": "Firebase",
+        "website": "https://github.com/firebase/firebase-android-sdk",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "lottie-android",
+        "author": "airbnb",
+        "website": "https://github.com/airbnb/lottie-android",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "MaterialRatingBar",
+        "author": "zhanghai",
+        "website": "https://github.com/zhanghai/MaterialRatingBar",
+        "license": "Apache 2.0 License"
+      },
+      {
+        "name": "mreram",
+        "author": "ShowCaseView",
+        "website": "https://github.com/mreram/ShowCaseView",
+        "license": "Apache 2.0 License"
+      }
+    ]
+  }
+}

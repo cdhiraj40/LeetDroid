@@ -54,4 +54,9 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="leetdroid_version">LeetDroid version</string>
+    <string name="contributors">Contributors</string>
+    <string name="contributors_summary">Any contributions you make are greatly appreciated. Here are the contributors of the app.</string>
+    <string name="licenses">Licenses</string>
+    <string name="licenses_summary">Here are the epic libraries used by the LeetDroid.</string>
 </resources>

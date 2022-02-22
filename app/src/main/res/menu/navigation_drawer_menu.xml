@@ -28,7 +28,7 @@
 
         <item
             android:id="@+id/githubProject"
-            android:icon="@drawable/ic_baseline_folder_24"
+            android:icon="@drawable/ic_baseline_code_24"
             android:title="@string/source_code" />
 
         <item

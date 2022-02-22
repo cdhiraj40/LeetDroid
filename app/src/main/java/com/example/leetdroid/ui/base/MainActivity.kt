@@ -3,9 +3,11 @@ package com.example.leetdroid.ui.base
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -17,7 +19,6 @@ import com.example.leetdroid.utils.CommonUtils.createEmailBody
 import com.example.leetdroid.utils.CommonUtils.openLink
 import com.example.leetdroid.utils.dialog.AlertDialogShower
 import com.example.leetdroid.utils.dialog.AppDialogs
-import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.utils.hideSoftKeyboard
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    private lateinit var navigationHostFragment: View
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +53,26 @@ class MainActivity : AppCompatActivity() {
 
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.homeFragment -> {
+                    Navigation.findNavController(findViewById(R.id.hostFragment))
+                        .navigate(R.id.homeFragment)
+                    drawerLayout.closeDrawers()
+                }
+                R.id.generalDiscussionFragment -> {
+                    Navigation.findNavController(findViewById(R.id.hostFragment))
+                        .navigate(R.id.generalDiscussionFragment)
+                    drawerLayout.closeDrawers()
+                }
+                R.id.problemsFragment -> {
+                    Navigation.findNavController(findViewById(R.id.hostFragment))
+                        .navigate(R.id.problemsFragment)
+                    drawerLayout.closeDrawers()
+                }
+                R.id.myProfileFragment -> {
+                    Navigation.findNavController(findViewById(R.id.hostFragment))
+                        .navigate(R.id.myProfileFragment)
+                    drawerLayout.closeDrawers()
+                }
                 R.id.reportBug -> {
                     AlertDialogShower(this).show(
                         AppDialogs.ReportBug, {
@@ -69,21 +91,25 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                     )
+                    drawerLayout.closeDrawers()
                 }
                 R.id.githubProject -> {
                     openLink(
                         context = this,
                         "https://github.com/cdhiraj40/LeetDroid"
                     )
+                    drawerLayout.closeDrawers()
                 }
 
                 // TODO add link once adding to play store.
 //                R.id.rateUs -> {
 //
 //                }
-
                 R.id.about -> {
-                    showSnackBar(activity = this, "ASdas")
+                    Navigation.findNavController(findViewById(R.id.hostFragment))
+                        .navigate(R.id.about)
+                    drawerLayout.closeDrawers()
+
                 }
             }
 
@@ -91,7 +117,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
