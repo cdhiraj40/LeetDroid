@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference android:layout="@layout/drawer_header" />
+    <Preference
+        android:icon="@drawable/ic_baseline_beenhere_24"
+        android:key="about_version"
+        android:summary="1.0.0"
+        android:title="@string/leetdroid_version" />
+    <Preference
+        android:icon="@drawable/ic_contribute"
+        android:key="about_contributors"
+        android:summary="@string/contributors_summary"
+        android:title="@string/contributors" />
+    <!--    <Preference-->
+    <!--        android:icon="@drawable/ic_questionmark"-->
+    <!--        android:key="about_privacy_policy"-->
+    <!--        android:summary="www.antennapod.org/privacy"-->
+    <!--        android:title="@string/privacy_policy" />-->
+    <Preference
+        android:icon="@drawable/ic_baseline_info_24"
+        android:key="about_licenses"
+        android:summary="@string/licenses_summary"
+        android:title="@string/licenses"
+        app:enableCopying="true" />
+
+</PreferenceScreen>

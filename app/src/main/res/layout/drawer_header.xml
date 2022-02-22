@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@color/white"
-    android:padding="16dp">
+    android:background="#6DB5E7">
 
     <!--    TODO add logo here-->
     <ImageView
@@ -11,6 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:src="@drawable/app_logo" />
+        android:src="@drawable/app_banner" />
 
 </RelativeLayout>
