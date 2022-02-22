@@ -37,6 +37,12 @@
         <receiver
             android:name=".notification.DailyQuestionAlarmReceiver"
             android:enabled="true" />
+        <receiver
+            android:name=".notification.DayContestAlarmReceiver"
+            android:enabled="true" />
+        <receiver
+            android:name=".notification.MinContestAlarmReceiver"
+            android:enabled="true" />
     </application>
 
 </manifest>

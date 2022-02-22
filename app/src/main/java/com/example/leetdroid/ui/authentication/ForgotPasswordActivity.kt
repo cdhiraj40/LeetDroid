@@ -86,7 +86,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                         getString(R.string.prompt_open_email),
                         null
                     ) {
-                        CommonUtils.openEmailApp(context = this, activity = this)
+                        CommonUtils.openEmail(context = this, activity = this)
                     }
                     forgotPasswordBinding.forgotPasswordButtonText.text =
                         getString(R.string.sent_email_button_text)

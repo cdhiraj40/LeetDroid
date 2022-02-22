@@ -20,5 +20,8 @@
     <!--  Premium List dialog  -->
     <string name="premium_list_message">This list is premium and contains all premium questions that can\'t be opened.\nYou will still be able to see title of questions. Do you want to open?</string>
     <string name="premium_list_positive_message">Take me there</string>
+    <string name="report_bug_message">Which platform would you like to use to share bug description?</string>
+    <string name="report_bug_positive_message">Github</string>
+    <string name="report_bug_neutral_message">Email</string>
 
 </resources>

@@ -38,6 +38,10 @@ object DateUtils {
         return actualTime[0].toInt() * 60 * 60 + (actualTime[1]).toInt() * 60
     }
 
+    fun getCurrentTime(): String {
+        return SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+    }
+
     fun convertDateFromMill(mill: Long): String {
         return DateFormat.format("dd-MMM-yyyy", mill * 1000).toString()
     }

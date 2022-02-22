@@ -1,4 +1,4 @@
-package com.example.leetdroid.utils.dialog
+package com.example.leetdroid.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,9 +11,12 @@ import com.example.leetdroid.R
 import com.example.leetdroid.ui.base.MainActivity
 
 /**
- * 101 -> Notification for a day before contest
- * 102 -> Notification for 30 minutes before contest
- * 103 -> Notification for new daily challenge
+ * Different Notification IDs
+ * 101 -> Notification for a day before weekly contest
+ * 102 -> Notification for a day before biweekly contest
+ * 103 -> Notification for 30 minutes before weekly contest
+ * 104 -> Notification for 30 minutes before biweekly contest
+ * 105 -> Notification for new daily challenge
  */
 object Notification {
     fun showNotification(
@@ -29,7 +32,8 @@ object Notification {
 
         val intent = Intent(context, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val random = System.currentTimeMillis().toInt()
+        val pendingIntent = PendingIntent.getActivity(context, random, intent, 0)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel =

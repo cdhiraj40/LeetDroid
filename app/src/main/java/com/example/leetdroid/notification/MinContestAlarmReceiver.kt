@@ -5,18 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 
-class DailyQuestionAlarmReceiver : BroadcastReceiver() {
+class MinContestAlarmReceiver : BroadcastReceiver() {
     // TODO check what was the exception
+    var alarmName: String? = null
     override fun onReceive(context: Context, intent: Intent) {
         try {
             Notification.showNotification(
                 context,
-                "Daily Challenge has been updated",
-                "Lets complete this one too.",
-                "daily_question",
-                "daily_question_channel",
-                105
-
+                alarmName!!,
+                "There is only 30 mins remaining to $alarmName register now!",
+                "contest_reminder_30_mins_biweekly",
+                "contest_reminder_30_mins_biweekly_channel",
+                104
             )
         } catch (ex: Exception) {
             Log.d("Receive Ex", "onReceive: ${ex.printStackTrace()}")
