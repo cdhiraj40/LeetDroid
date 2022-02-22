@@ -19,7 +19,6 @@ import com.example.leetdroid.utils.DateUtils.getHours
 import com.example.leetdroid.utils.DateUtils.getTime
 import com.example.leetdroid.utils.DateUtils.parseISO8601Date
 import com.example.leetdroid.utils.SharedPreferences
-import com.example.leetdroid.utils.dialog.Notification
 import com.example.leetdroid.utils.extensions.showSnackBar
 import com.google.android.material.button.MaterialButton
 import java.util.*
@@ -62,23 +61,23 @@ class ContestPagerAdapter
         holder.contestStartTime.text = getTime(startingDate)
         holder.contestEndTime.text = getTime(endingDate)
 
-        if (contest.in_24_hours == "Yes" && !SharedPreferences(context).dayNotificationPushed) {
-            // sending notification a day before contest
-            SharedPreferences(context).dayNotificationPushed = true
-            Notification.showNotification(
-                context,
-                contest.name,
-                "There is only a day remaining to ${contest.name}\n register now!",
-                "contest_reminder_day",
-                "contest_reminder_day_channel",
-                101
-            )
-        }
+//        if (contest.in_24_hours == "Yes" && !SharedPreferences(context).dayNotificationPushed) {
+//            // sending notification a day before contest
+//            SharedPreferences(context).dayNotificationPushed = true
+//            Notification.showNotification(
+//                context,
+//                contest.name,
+//                "There is only a day remaining to ${contest.name}\n register now!",
+//                "contest_reminder_day",
+//                "contest_reminder_day_channel",
+//                101
+//            )
+//        }
 
 
         // showing timer before contest starts
         val currentTime = Calendar.getInstance().time
-        val different = endingDate.time - currentTime.time
+        val different = startingDate.time - currentTime.time
 
         object : CountDownTimer(different, 1000) {
 
@@ -121,8 +120,6 @@ class ContestPagerAdapter
 
             override fun onFinish() {
                 SharedPreferences(context).timerEnded = true
-                SharedPreferences(context).dayNotificationPushed = false
-                SharedPreferences(context).minsNotificationPushed = false
                 refreshCurrentFragment()
             }
         }.start()

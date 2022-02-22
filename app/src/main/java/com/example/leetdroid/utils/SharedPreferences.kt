@@ -45,11 +45,23 @@ class SharedPreferences(context: Context) {
         get() = sharedPreferences.getBoolean("firebaseUserRegistered", false)
         set(value) = sharedPreferences.edit().putBoolean("firebaseUserRegistered", value).apply()
 
-    var dayNotificationPushed: Boolean
+    var dailyNotificationPushed: Boolean
+        get() = sharedPreferences.getBoolean("minsNotificationPushed", false)
+        set(value) = sharedPreferences.edit().putBoolean("minsNotificationPushed", value).apply()
+
+    var dayWeeklyNotificationPushed: Boolean
         get() = sharedPreferences.getBoolean("dayNotificationPushed", false)
         set(value) = sharedPreferences.edit().putBoolean("dayNotificationPushed", value).apply()
 
-    var minsNotificationPushed: Boolean
+    var minsWeeklyNotificationPushed: Boolean
+        get() = sharedPreferences.getBoolean("minsNotificationPushed", false)
+        set(value) = sharedPreferences.edit().putBoolean("minsNotificationPushed", value).apply()
+
+    var dayBiWeeklyNotificationPushed: Boolean
+        get() = sharedPreferences.getBoolean("dayNotificationPushed", false)
+        set(value) = sharedPreferences.edit().putBoolean("dayNotificationPushed", value).apply()
+
+    var minsBiWeeklyNotificationPushed: Boolean
         get() = sharedPreferences.getBoolean("minsNotificationPushed", false)
         set(value) = sharedPreferences.edit().putBoolean("minsNotificationPushed", value).apply()
 
@@ -60,7 +72,7 @@ class SharedPreferences(context: Context) {
     fun removeAllPreferences() {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor.clear()
-        editor.commit()
+        editor.apply()
 //        sharedPreferences.edit().clear().apply()
     }
 }

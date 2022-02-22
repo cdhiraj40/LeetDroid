@@ -1,13 +1,8 @@
 package com.example.leetdroid.ui.fragments
 
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Context.ALARM_SERVICE
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -35,16 +30,14 @@ import com.example.leetdroid.data.viewModel.DailyQuestionViewModel
 import com.example.leetdroid.databinding.FragmentHomeBinding
 import com.example.leetdroid.model.DailyQuestionModel
 import com.example.leetdroid.model.RandomQuestionModel
-import com.example.leetdroid.notification.DailyQuestionAlarmReceiver
-import com.example.leetdroid.utils.Constant
-import com.example.leetdroid.utils.Converters
+import com.example.leetdroid.utils.*
+import com.example.leetdroid.utils.AlarmUtils.setAlarm
+import com.example.leetdroid.utils.CommonUtils.openLink
 import com.example.leetdroid.utils.Converters.DailyQuestionConverter.fromDailyQuestion
 import com.example.leetdroid.utils.Converters.DailyQuestionConverter.fromStringDailyQuestion
 import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromDailyQuestionDaily
 import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromStringDailyQuestionDaily
 import com.example.leetdroid.utils.Converters.DailyQuestionTagsConverter.fromDailyQuestionTags
-import com.example.leetdroid.utils.JsonUtils
-import com.example.leetdroid.utils.SharedPreferences
 import com.example.leetdroid.utils.extensions.copyToClipboard
 import com.example.leetdroid.utils.extensions.showSnackBarWithAction
 import com.google.android.material.tabs.TabLayoutMediator
@@ -93,7 +86,6 @@ class HomeFragment : Fragment() {
         generalErroView = rootView.findViewById(R.id.general_error_view)
 
         createNotificationChannel()
-        setAlarm(requireContext())
 
         contestDB = ContestsDatabase.getInstance(requireActivity().application).contestDao()
         contestRepository = ContestRepository(contestDB)
@@ -112,8 +104,14 @@ class HomeFragment : Fragment() {
 
         sharedPreferences = SharedPreferences(requireContext())
 
-        // check if contest timer has been ended or app is newly installed
+        /**
+         *  check if contest timer has been ended or app is newly installed, if yes then reset all preferences for reminders.
+         */
         if (sharedPreferences.timerEnded || !sharedPreferences.contestsInserted) {
+            sharedPreferences.dayWeeklyNotificationPushed = false
+            sharedPreferences.dayBiWeeklyNotificationPushed = false
+            sharedPreferences.minsBiWeeklyNotificationPushed = false
+            sharedPreferences.minsWeeklyNotificationPushed = false
             getContestList()
         } else {
             displayContests()
@@ -144,6 +142,12 @@ class HomeFragment : Fragment() {
                 2,
                 fragmentHomeBinding.viewPager.id
             )
+        }
+
+        if (!sharedPreferences.dailyNotificationPushed) {
+            sharedPreferences.dailyNotificationPushed = true
+            setAlarm(requireContext())
+            dailyUpdateQuestion()
         }
         return rootView
     }
@@ -239,7 +243,7 @@ class HomeFragment : Fragment() {
 
         // share link
         fragmentHomeBinding.dailyQuestionLink.setOnClickListener {
-            openLink(link)
+            openLink(requireContext(),link)
         }
 
         // show difficulty
@@ -413,6 +417,50 @@ class HomeFragment : Fragment() {
                     ) { _, _ -> }.attach()
                     fragmentHomeBinding.contestProgressBar.visibility = View.GONE
                     fragmentHomeBinding.questionProgressBar.visibility = View.GONE
+
+                    val startingWeeklyDate = DateUtils.parseISO8601Date(weeklyContest.start_time)
+                    val endingWeeklyDate = DateUtils.parseISO8601Date(weeklyContest.end_time)
+
+                    val startingBiWeeklyDate =
+                        DateUtils.parseISO8601Date(biWeeklyContest.start_time)
+                    val endingBiWeeklyDate = DateUtils.parseISO8601Date(biWeeklyContest.end_time)
+
+
+                    if (!sharedPreferences.dayWeeklyNotificationPushed) {
+                        // alarm for a day before contests
+                        AlarmUtils.setDayAlarm(
+                            requireContext(),
+                            startingWeeklyDate.time,
+                            weeklyContest.name
+                        )
+                        sharedPreferences.dayWeeklyNotificationPushed = true
+                    }
+                    if (!sharedPreferences.dayBiWeeklyNotificationPushed) {
+                        AlarmUtils.setDayAlarm(
+                            requireContext(),
+                            startingBiWeeklyDate.time,
+                            weeklyContest.name
+                        )
+                        sharedPreferences.dayBiWeeklyNotificationPushed = true
+                    }
+
+                    // alarm for 30 mins before contests
+                    if (sharedPreferences.dayBiWeeklyNotificationPushed) {
+                        AlarmUtils.set30MinsAlarm(
+                            requireContext(),
+                            startingWeeklyDate.time,
+                            weeklyContest.name
+                        )
+                        sharedPreferences.minsWeeklyNotificationPushed = true
+                    }
+                    if (sharedPreferences.minsBiWeeklyNotificationPushed) {
+                        AlarmUtils.set30MinsAlarm(
+                            requireContext(),
+                            startingBiWeeklyDate.time,
+                            weeklyContest.name
+                        )
+                        sharedPreferences.minsBiWeeklyNotificationPushed = true
+                    }
                 } else {
                     generalErroView.visibility = View.VISIBLE
                     fragmentHomeBinding.homeLayout.visibility = View.GONE
@@ -544,46 +592,6 @@ class HomeFragment : Fragment() {
         ) {
             shareLink(link)
         }
-    }
-
-    // open the link in browser
-    private fun openLink(link: String) {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(link)
-            )
-        )
-    }
-
-    private fun setAlarm(context: Context) {
-        val cal = Calendar.getInstance()
-
-        /**
-         * leetcode daily challenges gets updated 00:00 UTC everyday
-         * that is 5.30 am in IST
-         * we are gonna send notification about it every day 5 am of device's time
-         */
-        cal.set(Calendar.HOUR_OF_DAY, 5)
-        cal.set(Calendar.MINUTE, 0)
-
-        // send notification every day for a new daily question
-        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(context, DailyQuestionAlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0)
-
-        // TODO change time of compared calendar as checking and showing notification around only 5.00 AM is useless
-        if (Calendar.getInstance().after(cal)) {
-            cal.add(Calendar.DATE, 1)
-        }
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            cal.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
-            pendingIntent
-        )
-        Log.d(Constant.TAG(HomeFragment::class.java).toString(), "alarm has been sent")
-        dailyUpdateQuestion()
     }
 
     private fun createNotificationChannel() {

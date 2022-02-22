@@ -12,13 +12,18 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.leetdroid.R
 import com.example.leetdroid.utils.CommonFunctions.Logout.showLogOutDialog
+import com.example.leetdroid.utils.CommonUtils.composeEmail
+import com.example.leetdroid.utils.CommonUtils.createEmailBody
+import com.example.leetdroid.utils.CommonUtils.openLink
+import com.example.leetdroid.utils.dialog.AlertDialogShower
+import com.example.leetdroid.utils.dialog.AppDialogs
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.utils.hideSoftKeyboard
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 
 // TODO: hide keyboard when clicked on bottom navigation items,
-//  add endless recycler views at all places
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNav: BottomNavigationView
@@ -38,10 +43,53 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
 
         navigationView = findViewById(R.id.navigation_view)
+
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
 
         NavigationUI.setupWithNavController(navigationView, navController)
+
+        navigationView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.reportBug -> {
+                    AlertDialogShower(this).show(
+                        AppDialogs.ReportBug, {
+                            openLink(
+                                context = this,
+                                "https://github.com/cdhiraj40/LeetDroid/issues/new"
+                            )
+                        }, {
+
+                        }, {
+                            composeEmail(
+                                context = this,
+                                "chauhandhiraj40@gmail.com",
+                                subject = "LeetDroid Bug",
+                                body = createEmailBody(context = this)
+                            )
+                        }
+                    )
+                }
+                R.id.githubProject -> {
+                    openLink(
+                        context = this,
+                        "https://github.com/cdhiraj40/LeetDroid"
+                    )
+                }
+
+                // TODO add link once adding to play store.
+//                R.id.rateUs -> {
+//
+//                }
+
+                R.id.about -> {
+                    showSnackBar(activity = this, "ASdas")
+                }
+            }
+
+            NavigationUI.onNavDestinationSelected(it, navController)
+            true
+        }
     }
 
 
@@ -53,6 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+
             R.id.logout -> {
                 // log out from app
                 showLogOutDialog(activity = this, context = this)

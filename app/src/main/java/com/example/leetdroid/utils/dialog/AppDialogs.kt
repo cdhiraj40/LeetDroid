@@ -7,7 +7,7 @@ sealed class AppDialogs(
     val title: Int?,
     val message: Int?,
     val positiveMessage: Int,
-    val negativeMessage: Int?,
+    val negativeMessage: Int? = null,
     val cancelable: Boolean = true,
     val icon: Int? = null,
     val neutralMessage: Int? = null,
@@ -48,6 +48,16 @@ sealed class AppDialogs(
         cancelable = true,
         icon = R.drawable.ic_baseline_warning_24
     )
+
+    object ReportBug : AppDialogs(
+        title = R.string.report_bug,
+        message = R.string.report_bug_message,
+        positiveMessage = R.string.report_bug_positive_message,
+        neutralMessage = R.string.report_bug_neutral_message,
+        cancelable = true,
+        icon = R.drawable.ic_baseline_bug_report_24
+    )
+
 
     interface HasBodyFormatArgs {
         val args: List<Any>
