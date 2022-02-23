@@ -1,4 +1,4 @@
-package com.example.leetdroid.ui.fragments
+package com.example.leetdroid.ui.fragments.discussion
 
 import android.os.Bundle
 import android.util.Log
