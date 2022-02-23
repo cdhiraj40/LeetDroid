@@ -188,11 +188,17 @@
         android:id="@+id/about"
         android:name="com.example.leetdroid.ui.fragments.preferences.AboutFragment"
         android:label="About"
-        tools:layout="@layout/fragment_about"/>
+        tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/licensesFragment"
         android:name="com.example.leetdroid.ui.fragments.preferences.LicenseFragment"
         android:label="Licenses"
-        tools:layout="@layout/fragment_license"/>
+        tools:layout="@layout/fragment_license" />
+
+    <fragment
+        android:id="@+id/contributorFragment"
+        android:name="com.example.leetdroid.ui.fragments.preferences.ContributorsFragment"
+        android:label="Contributors"
+        tools:layout="@layout/fragment_contributors" />
 </navigation>

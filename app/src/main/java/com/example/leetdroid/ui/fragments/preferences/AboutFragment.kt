@@ -27,7 +27,7 @@ class AboutFragment : PreferenceFragmentCompat() {
             true
         }
         findPreference<Preference>("about_contributors")!!.setOnPreferenceClickListener { preference ->
-            showSnackBar(requireActivity(), "Contributors")
+            findNavController().navigate(R.id.contributorFragment)
             true
         }
         findPreference<Preference>("about_licenses")!!.setOnPreferenceClickListener { preference ->

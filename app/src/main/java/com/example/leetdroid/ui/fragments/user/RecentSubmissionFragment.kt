@@ -13,10 +13,11 @@ import com.example.leetdroid.adapter.RecentSubmissionsAdapter
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
 import com.example.leetdroid.databinding.FragmentRecentSubmissionBinding
-import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.RecentSubmissionsModel
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
+import com.example.leetdroid.utils.extensions.copyToClipboard
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -118,7 +119,11 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
-                Log.d(Constant.TAG(RecentSubmissionFragment::class.java).toString(), call.toString(), e)
+                Log.d(
+                    Constant.TAG(RecentSubmissionFragment::class.java).toString(),
+                    call.toString(),
+                    e
+                )
             }
 
         })
@@ -133,8 +138,8 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
     }
 
     override fun onItemClick(position: Int, questionTitleSlug: String?) {
-
-        showSnackBar(requireActivity(), "nice")
+        requireContext().copyToClipboard(questionTitleSlug.toString())
+        showSnackBar(requireActivity(), "Question title copied")
     }
 
 }

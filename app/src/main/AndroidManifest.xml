@@ -15,13 +15,16 @@
         android:theme="@style/Theme.LeetDroid">
         <activity
             android:name=".ui.authentication.ForgotPasswordActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.authentication.SignUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.authentication.LoginActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +35,7 @@
         <activity
             android:name=".ui.base.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
         <receiver

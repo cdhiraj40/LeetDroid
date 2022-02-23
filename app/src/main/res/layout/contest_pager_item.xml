@@ -21,17 +21,18 @@
 
         <TextView
             android:id="@+id/contest_title"
-            style="@style/TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_toStartOf="@id/contest_calendar_button"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/contest_date"
-            style="@style/TextAppearance.AppCompat.Small"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/contest_title"
@@ -43,7 +44,7 @@
 
         <TextView
             android:id="@+id/contest_duration"
-            style="@style/TextAppearance.AppCompat.Small"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/contest_title"
@@ -52,47 +53,51 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/contest_start_time"
-            style="@style/TextAppearance.AppCompat.Small"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/contest_duration"
+            android:layout_below="@id/contest_date"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
+            android:layout_toStartOf="@id/contest_end_time"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/contest_end_time"
-            style="@style/TextAppearance.AppCompat.Small"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/contest_duration"
-            android:layout_marginStart="8dp"
+            android:layout_below="@id/contest_date"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@id/contest_start_time"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/contest_running_text"
-            style="@style/TextAppearance.AppCompat.Small"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/contest_start_time"
-            android:layout_toStartOf="@id/contest_calendar_button"
-            android:textColor="@color/white" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/contest_calendar_button"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/round_background"

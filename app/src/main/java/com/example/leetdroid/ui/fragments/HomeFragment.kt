@@ -15,8 +15,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leetdroid.R
 import com.example.leetdroid.adapter.ContestPagerAdapter
+import com.example.leetdroid.adapter.TrendingDiscussionAdapter
 import com.example.leetdroid.api.ContestApi
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
@@ -30,6 +32,7 @@ import com.example.leetdroid.data.viewModel.DailyQuestionViewModel
 import com.example.leetdroid.databinding.FragmentHomeBinding
 import com.example.leetdroid.model.DailyQuestionModel
 import com.example.leetdroid.model.RandomQuestionModel
+import com.example.leetdroid.model.TrendingDiscussionModel
 import com.example.leetdroid.utils.*
 import com.example.leetdroid.utils.AlarmUtils.setAlarm
 import com.example.leetdroid.utils.CommonUtils.openLink
@@ -39,6 +42,7 @@ import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromDa
 import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromStringDailyQuestionDaily
 import com.example.leetdroid.utils.Converters.DailyQuestionTagsConverter.fromDailyQuestionTags
 import com.example.leetdroid.utils.extensions.copyToClipboard
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.utils.extensions.showSnackBarWithAction
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
@@ -63,7 +67,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
     private lateinit var sharedPreferences: SharedPreferences
@@ -73,6 +77,7 @@ class HomeFragment : Fragment() {
     private lateinit var contestDB: ContestDao
     private lateinit var contestRepository: ContestRepository
     private lateinit var contestPagerAdapter: ContestPagerAdapter
+    private lateinit var trendingDiscussionAdapter: TrendingDiscussionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -102,6 +107,10 @@ class HomeFragment : Fragment() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[DailyQuestionViewModel::class.java]
 
+        trendingDiscussionAdapter = TrendingDiscussionAdapter(requireContext())
+        trendingDiscussionAdapter.setOnClick(this)
+
+        loadTrendingDiscussions(10)
         sharedPreferences = SharedPreferences(requireContext())
 
         /**
@@ -243,7 +252,7 @@ class HomeFragment : Fragment() {
 
         // share link
         fragmentHomeBinding.dailyQuestionLink.setOnClickListener {
-            openLink(requireContext(),link)
+            openLink(requireContext(), link)
         }
 
         // show difficulty
@@ -475,7 +484,7 @@ class HomeFragment : Fragment() {
     // load loadDailyQuestion from online
     private fun loadDailyQuestion() {
 
-        val call: okhttp3.Call = createApiCall()
+        val call: okhttp3.Call = apiCallDailyQ()
         call.enqueue(object : okhttp3.Callback {
 
             override fun onFailure(call: okhttp3.Call, e: IOException) {
@@ -495,9 +504,43 @@ class HomeFragment : Fragment() {
         })
     }
 
+    // loads trending Discussion from online
+    private fun loadTrendingDiscussions(limit: Int) {
+
+        val call: okhttp3.Call = apiCallTrendingDiss(limit)
+        call.enqueue(object : okhttp3.Callback {
+
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                Log.d(Constant.TAG(HomeFragment::class.java).toString(), call.toString(), e)
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+
+                val trendingDiscussion: TrendingDiscussionModel = JsonUtils.generateObjectFromJson(
+                    response.body!!.string(),
+                    TrendingDiscussionModel::class.java
+                )
+                Log.d(
+                    Constant.TAG(HomeFragment::class.java).toString(),
+                    trendingDiscussion.toString()
+                )
+
+                displayTrendingDiscussions(trendingDiscussion)
+            }
+        })
+    }
+
+    private fun displayTrendingDiscussions(trendingDiscussion: TrendingDiscussionModel) {
+        trendingDiscussionAdapter.setData(trendingDiscussion)
+        fragmentHomeBinding.trendingDiscussRecyclerView.layoutManager =
+            LinearLayoutManager(context)
+        fragmentHomeBinding.trendingDiscussRecyclerView.adapter =
+            trendingDiscussionAdapter
+    }
+
     // update daily question
     private fun dailyUpdateQuestion() {
-        val call: okhttp3.Call = createApiCall()
+        val call: okhttp3.Call = apiCallDailyQ()
         call.enqueue(object : okhttp3.Callback {
 
             override fun onFailure(call: okhttp3.Call, e: IOException) {
@@ -556,9 +599,26 @@ class HomeFragment : Fragment() {
     }
 
     // creates an okHttpClient call for today's question
-    private fun createApiCall(): okhttp3.Call {
+    private fun apiCallDailyQ(): okhttp3.Call {
         val okHttpClient = OkHttpClient()
         val postBody = Gson().toJson(LeetCodeRequests.Helper.getDailyQuestion)
+        val requestBody: RequestBody =
+            postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        val headers: Headers = Headers.Builder()
+            .add("Content-Type", "application/json")
+            .build()
+        val request: Request = Request.Builder()
+            .headers(headers)
+            .post(requestBody)
+            .url(URL.graphql)
+            .build()
+        return okHttpClient.newCall(request)
+    }
+
+    // creates an okHttpClient call for Trending Discussions
+    private fun apiCallTrendingDiss(limit: Int): okhttp3.Call {
+        val okHttpClient = OkHttpClient()
+        val postBody = Gson().toJson(LeetCodeRequests.Helper.getTrendingDiscussion(limit))
         val requestBody: RequestBody =
             postBody.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val headers: Headers = Headers.Builder()
@@ -659,5 +719,9 @@ class HomeFragment : Fragment() {
             fragmentHomeBinding.root.findNavController()
                 .navigate(R.id.action_homeFragment_to_questionFragment, bundle)
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        showSnackBar(requireActivity(),"Asdsa")
     }
 }

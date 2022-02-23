@@ -157,6 +157,14 @@ data class LeetCodeRequests(
             query = "query getContestRankingData(\$username: String!) { userContestRanking(username: \$username) { attendedContestsCount rating globalRanking } " +
                     "userContestRankingHistory(username: \$username) { contest { title startTime } rating ranking } }"
         )
+
+        val getTrendingDiscussion = fun(first: Int) = LeetCodeRequests(
+            operationName = "trendingDiscuss",
+            variables = Variables(
+                first = first,
+            ),
+            query = "query trendingDiscuss(\$first: Int!) { cachedTrendingCategoryTopics(first: \$first) { id title post { id creationDate contentPreview author { username isActive profile { userAvatar } } } } } "
+        )
     }
 
     data class Variables(

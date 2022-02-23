@@ -12,4 +12,6 @@ object URL {
 
     // URL for Leetcode's Upcoming Contest API
     const val leetcodeUpcomingContest = "https://kontests.net/api/v1/"
+
+    const val githubApi = "https://api.github.com/"
 }

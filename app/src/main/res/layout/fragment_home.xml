@@ -43,7 +43,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                android:layout_marginBottom="30dp"
                 android:background="@android:color/transparent"
                 app:tabBackground="@drawable/contest_viewpager_selector_white"
                 app:tabGravity="center"
@@ -53,7 +52,7 @@
         <LinearLayout
             android:id="@+id/home_features_layout"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_below="@id/weekly_contest_layout">
 
             <com.google.android.material.card.MaterialCardView
@@ -61,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/leaf_green"
+                app:cardBackgroundColor="@color/yellow_chartreuse"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="3dp"
                 app:cardMaxElevation="3dp"
@@ -122,7 +121,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/daily_question_layout"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:layout_below="@id/home_features_layout"
             app:cardBackgroundColor="@color/lighter_maya_blue"
             app:cardCornerRadius="20dp"
@@ -134,8 +133,7 @@
             <RelativeLayout
                 android:id="@+id/daily_question_relative_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp">
+                android:layout_height="match_parent">
 
                 <ProgressBar
                     android:id="@+id/question_progress_bar"
@@ -154,7 +152,6 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_toStartOf="@id/daily_question_date"
-                    android:gravity="center"
                     android:text="Today's Daily Challenge"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
@@ -168,8 +165,11 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
+                    android:ellipsize="end"
                     android:gravity="center"
-                    android:maxLines="2"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -178,9 +178,11 @@
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="16dp"
                     android:gravity="end"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
@@ -228,7 +230,37 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <TextView
+            android:id="@+id/trending_discuss_heading"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/daily_question_layout"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@id/trending_discuss_button"
+            android:text="Trending Discussion"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/trending_discuss_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/daily_question_layout"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_baseline_open_in_new_24"
+            app:tint="@color/black" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trending_discuss_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/trending_discuss_heading"
+            tools:listitem="@layout/trending_discussion_item" />
     </RelativeLayout>
+
 
     <include
         android:id="@+id/general_error_view"
