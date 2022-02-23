@@ -49,9 +49,7 @@ class ContributorsFragment : Fragment(), ContributorListAdapter.ContributorClick
                     Log.d(
                         Constant.TAG(ContributorsFragment::class.java).toString(), body.toString()
                     )
-
                     setUpRecyclerView(body)
-
                 }
             }
 
