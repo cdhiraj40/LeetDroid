@@ -109,6 +109,12 @@
         "author": "ShowCaseView",
         "website": "https://github.com/mreram/ShowCaseView",
         "license": "Apache 2.0 License"
+      },
+      {
+        "name": "apache",
+        "author": "commons-text",
+        "website": "https://github.com/apache/commons-text",
+        "license": "Apache 2.0 License"
       }
     ]
   }

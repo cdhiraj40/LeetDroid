@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.leetdroid.R
@@ -76,13 +75,6 @@ class TrendingDiscussionAdapter(val context: Context) :
         }
         val dateString = String.format(Locale.ENGLISH, "%tB %<te,  %<tY", date)
         holder.trendingDiscussionCreationDate.text = dateString
-
-        holder.itemView.setOnClickListener {
-            onClick!!.onItemClick(
-                position
-            )
-        }
-
     }
 
 

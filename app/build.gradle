@@ -120,5 +120,9 @@ dependencies {
 
     // showcase view
     implementation 'com.github.mreram:showcaseview:1.4.0'
+
+    // converts emoji in string
+    implementation 'org.apache.commons:commons-text:1.9'
+
 }
 apply plugin: 'com.google.gms.google-services'

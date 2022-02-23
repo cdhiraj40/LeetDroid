@@ -27,6 +27,7 @@
 
     <!-- paid question color -->
     <color name="paid_question">#FFD700</color>
+    <color name="gold_yellow">#FFD700</color>
 
     <color name="light_grey">#D3D3D3</color>
 
