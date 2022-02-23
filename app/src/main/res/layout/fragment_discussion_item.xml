@@ -26,10 +26,10 @@
 
         <TextView
             android:id="@+id/discussionContent"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/topicTitle"
-            android:marqueeRepeatLimit="marquee_forever"
             android:padding="20dp"
             android:textColor="@color/black" />
 

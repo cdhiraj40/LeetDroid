@@ -4,7 +4,7 @@
     android:id="@+id/weekly_contest_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardBackgroundColor="@color/lighter_maya_blue"
+    app:cardBackgroundColor="@color/gold_yellow"
     app:cardCornerRadius="10dp"
     app:cardElevation="3dp"
     app:cardMaxElevation="3dp"

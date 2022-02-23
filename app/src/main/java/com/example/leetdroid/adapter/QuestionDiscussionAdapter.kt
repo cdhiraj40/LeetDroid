@@ -73,7 +73,7 @@ class QuestionDiscussionAdapter(
         val dateString = String.format(Locale.ENGLISH, "%tB %<te,  %<tY", date)
         holder.questionDiscussionCreationDate.text = dateString
 
-        val discussionId = question.post?.id
+        val discussionId = question.id
         holder.itemView.setOnClickListener {
             onClick!!.onItemClick(
                 position,

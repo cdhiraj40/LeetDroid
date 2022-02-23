@@ -20,6 +20,7 @@ import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.apache.commons.text.StringEscapeUtils
 import ru.noties.markwon.Markwon
 import java.io.IOException
 
@@ -100,13 +101,16 @@ class DiscussionItemFragment : Fragment() {
 
                 activity?.runOnUiThread {
 
+                    (requireActivity() as AppCompatActivity).supportActionBar?.title =
+                        discussionContentJson.data?.topic?.title
+
                     var discussionContent: String =
                         discussionContentJson.data?.topic?.post?.content.toString()
                     discussionContent = discussionContent.replace("\\n", "\n")
                     discussionContent = discussionContent.replace("\\t", "\t")
                     markwon!!.setMarkdown(
                         fragmentDiscussionItemBinding.discussionContent,
-                        discussionContent
+                        StringEscapeUtils.unescapeJava(discussionContent)
                     )
 
                     fragmentDiscussionItemBinding.topicTitle.isSelected = true

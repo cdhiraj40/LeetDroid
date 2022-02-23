@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/generalDiscussionItemFragment"
         android:name="com.example.leetdroid.ui.fragments.discussion.GeneralDiscussionItemFragment"
-        android:label="Discussion Item"
+        android:label="Discussion"
         tools:layout="@layout/general_discussion_item" />
     <fragment
         android:id="@+id/allQuestionsFragment"

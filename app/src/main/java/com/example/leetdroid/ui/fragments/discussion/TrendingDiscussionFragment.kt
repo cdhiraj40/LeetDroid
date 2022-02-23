@@ -27,7 +27,8 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
-class TrendingDiscussionFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
+// TODO add on clicks to trending discussions
+class TrendingDiscussionFragment : Fragment(){
 
     private lateinit var trendingDiscussionBinding: FragmentTrendingDiscussionBinding
     private lateinit var trendingDiscussionAdapter: TrendingDiscussionAdapter
@@ -44,7 +45,6 @@ class TrendingDiscussionFragment : Fragment(), TrendingDiscussionAdapter.OnItemC
         val rootView = trendingDiscussionBinding.root
 
         trendingDiscussionAdapter = TrendingDiscussionAdapter(requireContext())
-        trendingDiscussionAdapter.setOnClick(this)
 
         loadingView = rootView.findViewById(R.id.loading_view)
         trendingDiscussionBinding.trendingDiscussionLayout.visibility = View.GONE
@@ -133,9 +133,5 @@ class TrendingDiscussionFragment : Fragment(), TrendingDiscussionAdapter.OnItemC
             trendingDiscussionBinding.discussionListProgressBar.visibility =
                 View.GONE
         }
-    }
-
-    override fun onItemClick(position: Int) {
-        showSnackBar(requireActivity(), "asdsa")
     }
 }

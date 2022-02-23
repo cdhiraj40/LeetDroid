@@ -68,7 +68,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
+// TODO add on clicks to trending discussions
+class HomeFragment : Fragment() {
 
     private lateinit var fragmentHomeBinding: FragmentHomeBinding
     private lateinit var sharedPreferences: SharedPreferences
@@ -109,7 +110,6 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
         )[DailyQuestionViewModel::class.java]
 
         trendingDiscussionAdapter = TrendingDiscussionAdapter(requireContext())
-        trendingDiscussionAdapter.setOnClick(this)
 
         fragmentHomeBinding.trendingDiscussRecyclerView.visibility = View.GONE
         fragmentHomeBinding.discussionProgressBar.visibility = View.VISIBLE
@@ -731,9 +731,5 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
             fragmentHomeBinding.root.findNavController()
                 .navigate(R.id.action_homeFragment_to_questionFragment, bundle)
         }
-    }
-
-    override fun onItemClick(position: Int) {
-        showSnackBar(requireActivity(), "Asdsa")
     }
 }
