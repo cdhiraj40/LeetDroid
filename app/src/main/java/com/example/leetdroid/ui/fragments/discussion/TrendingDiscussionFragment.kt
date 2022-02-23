@@ -64,7 +64,6 @@ class TrendingDiscussionFragment : Fragment(), TrendingDiscussionAdapter.OnItemC
                             View.VISIBLE
                         loadTrendingDiscussions(limit)
                     }
-
                 })
         }
 
