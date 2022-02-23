@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/generalDiscussionFragment"
-        android:name="com.example.leetdroid.ui.fragments.GeneralDiscussionFragment"
+        android:name="com.example.leetdroid.ui.fragments.discussion.GeneralDiscussionFragment"
         android:label="Discussion"
         tools:layout="@layout/fragment_general_discussion">
         <action
@@ -66,7 +66,7 @@
 
     <fragment
         android:id="@+id/generalDiscussionItemFragment"
-        android:name="com.example.leetdroid.ui.fragments.GeneralDiscussionItemFragment"
+        android:name="com.example.leetdroid.ui.fragments.discussion.GeneralDiscussionItemFragment"
         android:label="Discussion Item"
         tools:layout="@layout/general_discussion_item" />
     <fragment
@@ -201,4 +201,10 @@
         android:name="com.example.leetdroid.ui.fragments.preferences.ContributorsFragment"
         android:label="Contributors"
         tools:layout="@layout/fragment_contributors" />
+
+    <fragment
+        android:id="@+id/trendingDiscussionFragment"
+        android:name="com.example.leetdroid.ui.fragments.discussion.TrendingDiscussionFragment"
+        android:label="Trending Discussions"
+        tools:layout="@layout/fragment_trending_discussion" />
 </navigation>

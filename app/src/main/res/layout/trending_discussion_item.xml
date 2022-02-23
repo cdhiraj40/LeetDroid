@@ -26,7 +26,7 @@
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/user_profile"
             android:scaleType="centerCrop"
-            android:src="@color/alice_blue" />
+            android:src="@drawable/ic_round_person_24" />
 
         <TextView
             android:id="@+id/general_discussion_title"

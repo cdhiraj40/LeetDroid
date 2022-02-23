@@ -5,7 +5,7 @@
     android:id="@+id/parent_general_discussion_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.GeneralDiscussionFragment">
+    tools:context=".ui.fragments.discussion.GeneralDiscussionFragment">
 
     <RelativeLayout
         android:id="@+id/category_layout"

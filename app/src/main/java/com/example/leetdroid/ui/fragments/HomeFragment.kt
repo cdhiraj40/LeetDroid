@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leetdroid.R
 import com.example.leetdroid.adapter.ContestPagerAdapter
@@ -110,6 +111,9 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
         trendingDiscussionAdapter = TrendingDiscussionAdapter(requireContext())
         trendingDiscussionAdapter.setOnClick(this)
 
+        fragmentHomeBinding.trendingDiscussRecyclerView.visibility = View.GONE
+        fragmentHomeBinding.discussionProgressBar.visibility = View.VISIBLE
+
         loadTrendingDiscussions(10)
         sharedPreferences = SharedPreferences(requireContext())
 
@@ -144,12 +148,13 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
         }
 
         if (!sharedPreferences.statusShown) {
+            sharedPreferences.statusShown = true
             spotlightShowCase(
                 fragmentHomeBinding.root,
                 "Upcoming contest details",
                 getString(R.string.upcoming_contest_details),
                 2,
-                fragmentHomeBinding.viewPager.id
+                fragmentHomeBinding.weeklyContestLayout.id
             )
         }
 
@@ -157,6 +162,10 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
             sharedPreferences.dailyNotificationPushed = true
             setAlarm(requireContext())
             dailyUpdateQuestion()
+        }
+
+        fragmentHomeBinding.trendingDiscussButton.setOnClickListener {
+            findNavController().navigate(R.id.trendingDiscussionFragment)
         }
         return rootView
     }
@@ -184,7 +193,7 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
                         "Add Reminder",
                         getString(R.string.add_reminder_details),
                         3,
-                        fragmentHomeBinding.viewPager.id
+                        fragmentHomeBinding.weeklyContestLayout.id
                     )
                     3 -> spotlightShowCase(
                         contentView,
@@ -524,8 +533,9 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
                     Constant.TAG(HomeFragment::class.java).toString(),
                     trendingDiscussion.toString()
                 )
-
-                displayTrendingDiscussions(trendingDiscussion)
+                activity?.runOnUiThread {
+                    displayTrendingDiscussions(trendingDiscussion)
+                }
             }
         })
     }
@@ -536,6 +546,8 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
             LinearLayoutManager(context)
         fragmentHomeBinding.trendingDiscussRecyclerView.adapter =
             trendingDiscussionAdapter
+        fragmentHomeBinding.trendingDiscussRecyclerView.visibility = View.VISIBLE
+        fragmentHomeBinding.discussionProgressBar.visibility = View.GONE
     }
 
     // update daily question
@@ -722,6 +734,6 @@ class HomeFragment : Fragment(), TrendingDiscussionAdapter.OnItemClicked {
     }
 
     override fun onItemClick(position: Int) {
-        showSnackBar(requireActivity(),"Asdsa")
+        showSnackBar(requireActivity(), "Asdsa")
     }
 }
