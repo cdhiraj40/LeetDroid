@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.leetdroid.R
 import com.example.leetdroid.model.TrendingDiscussionModel
+import org.apache.commons.text.StringEscapeUtils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,11 +47,13 @@ class TrendingDiscussionAdapter(val context: Context) :
         val trendingDiscussionItem = trendingDiscussions[position]
 
         // sets the title of a question to the textView from our itemHolder class
-        holder.trendingDiscussionTitle.text =
+        holder.trendingDiscussionTitle.text = StringEscapeUtils.unescapeJava(
             trendingDiscussionItem.title
+        )
 
-        holder.trendingDiscussionSubTitle.text = trendingDiscussionItem.post?.contentPreview
-
+        holder.trendingDiscussionSubTitle.text = StringEscapeUtils.unescapeJava(
+            trendingDiscussionItem.post?.contentPreview
+        )
         if (trendingDiscussionItem.post?.author != null) {
             holder.trendingDiscussionAuthor.text =
                 "By ".plus(trendingDiscussionItem.post.author.username)
