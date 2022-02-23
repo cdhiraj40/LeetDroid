@@ -11,36 +11,48 @@
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:id="@+id/license_item_layout"
+        android:id="@+id/contributor_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/contributor_username_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/user_profile"
+            android:scaleType="centerCrop"
+            android:src="@color/alice_blue" />
+
         <TextView
-            android:id="@+id/license_title"
+            android:id="@+id/contributor_username"
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_toEndOf="@id/contributor_username_avatar"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:maxLines="1"
             android:scrollHorizontally="true"
-            android:text="Library Name"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/license_sub_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/license_title"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="By Author, License Name"
+            android:text="Contributor Name"
             android:textColor="@color/black" />
 
+        <TextView
+            android:id="@+id/contributor_sub_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/contributor_username"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_toEndOf="@id/contributor_username_avatar"
+            android:text="Contributor"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

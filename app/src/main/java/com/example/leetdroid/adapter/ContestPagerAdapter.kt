@@ -57,23 +57,9 @@ class ContestPagerAdapter
         val endingDate = parseISO8601Date(contest.end_time)
 
         holder.contestDate.text = getDate(startingDate)
-        holder.contestDuration.text = getHours(contest.duration).plus(" Hrs")
-        holder.contestStartTime.text = getTime(startingDate)
-        holder.contestEndTime.text = getTime(endingDate)
-
-//        if (contest.in_24_hours == "Yes" && !SharedPreferences(context).dayNotificationPushed) {
-//            // sending notification a day before contest
-//            SharedPreferences(context).dayNotificationPushed = true
-//            Notification.showNotification(
-//                context,
-//                contest.name,
-//                "There is only a day remaining to ${contest.name}\n register now!",
-//                "contest_reminder_day",
-//                "contest_reminder_day_channel",
-//                101
-//            )
-//        }
-
+        holder.contestDuration.text = "Duration: ".plus(getHours(contest.duration).plus(" Hrs"))
+        holder.contestStartTime.text = "Starting Time: ${getTime(startingDate)}"
+        holder.contestEndTime.text = "Ending Time: ${getTime(endingDate)}"
 
         // showing timer before contest starts
         val currentTime = Calendar.getInstance().time
@@ -83,20 +69,6 @@ class ContestPagerAdapter
 
             override fun onTick(millisUntilFinished: Long) {
                 var diff = millisUntilFinished
-
-                // TODO some bug makes this notification push even if remaining time is more than 30 mins
-                // sending notification 30 mins before
-//                if (!SharedPreferences(context).minsNotificationPushed && (diff <= 1800000L || diff >= 0)) {
-//                    SharedPreferences(context).minsNotificationPushed = true
-//                    Notification.showNotification(
-//                        context,
-//                        contest.name,
-//                        "There is only 30 mins remaining to ${contest.name}\n register now!",
-//                        "contest_reminder_30Mins",
-//                        "contest_reminder_30Mins_channel",
-//                        102
-//                    )
-//                }
 
                 val secondsInMilli: Long = 1000
                 val minutesInMilli = secondsInMilli * 60
