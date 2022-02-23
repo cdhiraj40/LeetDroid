@@ -72,8 +72,9 @@ class AllQuestionsFragment : BaseFragment(), AllQuestionsAdapter.OnItemClicked {
         listId = bundle?.getString("listId")
         categorySlug = bundle?.getString("categorySlug").toString()
 
-        if (categorySlug == "null") {
-            loadQuestionList("", limit, tags, difficulty, listId)
+        if (categorySlug == "null" || categorySlug == null) {
+            categorySlug = ""
+            loadQuestionList(categorySlug, limit, tags, difficulty, listId)
         } else {
             loadQuestionList(categorySlug, limit, tags, difficulty, listId)
         }
