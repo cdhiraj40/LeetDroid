@@ -38,6 +38,7 @@ class TrendingDiscussionAdapter(val context: Context) :
     interface OnItemClicked {
         fun onItemClick(
             position: Int
+
         )
     }
 

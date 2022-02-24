@@ -43,7 +43,6 @@ import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromDa
 import com.example.leetdroid.utils.Converters.DailyQuestionDailyConverter.fromStringDailyQuestionDaily
 import com.example.leetdroid.utils.Converters.DailyQuestionTagsConverter.fromDailyQuestionTags
 import com.example.leetdroid.utils.extensions.copyToClipboard
-import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.utils.extensions.showSnackBarWithAction
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
@@ -130,14 +129,8 @@ class HomeFragment : Fragment() {
             displayContests()
         }
 
-        // check if questions has been loaded, if yes then only load new question
-        if (!sharedPreferences.dailyQuestionLoaded) {
-            loadDailyQuestion()
-            setupDailyQuestion()
-            sharedPreferences.dailyQuestionLoaded = true
-        } else {
-            setupDailyQuestion()
-        }
+        loadDailyQuestion()
+        setupDailyQuestion()
 
         fragmentHomeBinding.randomQuestionLayout.setOnClickListener {
             loadRandomQuestion()
@@ -147,16 +140,16 @@ class HomeFragment : Fragment() {
             fragmentHomeBinding.root.findNavController().navigate(R.id.allQuestionsFragment)
         }
 
-        if (!sharedPreferences.statusShown) {
-            sharedPreferences.statusShown = true
-            spotlightShowCase(
-                fragmentHomeBinding.root,
-                "Upcoming contest details",
-                getString(R.string.upcoming_contest_details),
-                2,
-                fragmentHomeBinding.weeklyContestLayout.id
-            )
-        }
+//        if (sharedPreferences.statusShown) {
+//            sharedPreferences.statusShown = true
+//            spotlightShowCase(
+//                fragmentHomeBinding.root,
+//                "Upcoming contest details",
+//                getString(R.string.upcoming_contest_details),
+//                2,
+//                fragmentHomeBinding.weeklyContestLayout.id
+//            )
+//        }
 
         if (!sharedPreferences.dailyNotificationPushed) {
             sharedPreferences.dailyNotificationPushed = true
@@ -195,26 +188,33 @@ class HomeFragment : Fragment() {
                         3,
                         fragmentHomeBinding.weeklyContestLayout.id
                     )
+//                    3 -> spotlightShowCase(
+//                        contentView,
+//                        "Problem Set",
+//                        getString(R.string.problem_set_details),
+//                        4,
+//                        fragmentHomeBinding.allQuestionsLayout.id
+//                    )
+//                    4 -> spotlightShowCase(
+//                        contentView,
+//                        "Random Questions",
+//                        getString(R.string.random_question_details),
+//                        5,
+//                        fragmentHomeBinding.randomQuestionLayout.id
+//                    )
                     3 -> spotlightShowCase(
-                        contentView,
-                        "Problem Set",
-                        getString(R.string.problem_set_details),
-                        4,
-                        fragmentHomeBinding.allQuestionsLayout.id
-                    )
-                    4 -> spotlightShowCase(
-                        contentView,
-                        "Random Questions",
-                        getString(R.string.random_question_details),
-                        5,
-                        fragmentHomeBinding.randomQuestionLayout.id
-                    )
-                    5 -> spotlightShowCase(
                         contentView,
                         "Daily Challenge",
                         getString(R.string.daily_challenge_details),
+                        4,
+                        fragmentHomeBinding.dailyQuestionRelativeLayout.id
+                    )
+                    4 -> spotlightShowCase(
+                        contentView,
+                        "Trending Discussions",
+                        getString(R.string.trending_home_details),
                         6,
-                        R.id.daily_question_relative_layout
+                        fragmentHomeBinding.trendingDiscussLayout.id
                     )
                     6 -> sharedPreferences.statusShown = true
                 }
@@ -243,7 +243,7 @@ class HomeFragment : Fragment() {
         val formattedDate: String
         try {
             parsedDate = inputFormat.parse(activeDailyJson.date.toString())!!
-            formattedDate = SimpleDateFormat("d MMM, yy", Locale.getDefault()).format(parsedDate)
+            formattedDate = SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(parsedDate)
             fragmentHomeBinding.dailyQuestionDate.text = formattedDate
         } catch (exception: ParseException) {
             Log.d(Constant.TAG(HomeFragment::class.java).toString(), "$exception occurred!")

@@ -22,12 +22,14 @@
         <activity
             android:name=".ui.authentication.SignUpActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.authentication.LoginActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor"
-            android:windowSoftInputMode="adjustResize">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,8 +39,9 @@
         <activity
             android:name=".ui.base.MainActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor"
-            android:windowSoftInputMode="adjustPan" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="LockedOrientationActivity" />
 
         <receiver
             android:name=".notification.DailyQuestionAlarmReceiver"

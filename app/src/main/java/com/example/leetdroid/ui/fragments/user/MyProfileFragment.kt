@@ -20,9 +20,12 @@ import com.example.leetdroid.data.entitiy.User
 import com.example.leetdroid.data.viewModel.FirebaseUserViewModel
 import com.example.leetdroid.data.viewModel.UserViewModel
 import com.example.leetdroid.databinding.FragmentMyProfileBinding
-import com.example.leetdroid.utils.extensions.showSnackBar
 import com.example.leetdroid.model.UserProfileErrorModel
 import com.example.leetdroid.model.UserProfileModel
+import com.example.leetdroid.model.UserProfileModel.DataNode.AllQuestionsCountNode
+import com.example.leetdroid.model.UserProfileModel.DataNode.MatchedUserNode
+import com.example.leetdroid.model.UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode
+import com.example.leetdroid.model.UserProfileModel.DataNode.MatchedUserNode.ContributionsNode.ProfileNode.SubmitStatsNode.AcSubmissionNumNode
 import com.example.leetdroid.ui.base.BaseFragment
 import com.example.leetdroid.utils.CommonFunctions.Logout.showLogOutDialog
 import com.example.leetdroid.utils.CommonFunctions.Round.roundDouble
@@ -41,6 +44,7 @@ import com.example.leetdroid.utils.JsonUtils
 import com.example.leetdroid.utils.SharedPreferences
 import com.example.leetdroid.utils.dialog.AlertDialogShower
 import com.example.leetdroid.utils.dialog.AppDialogs
+import com.example.leetdroid.utils.extensions.showSnackBar
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import okhttp3.*
@@ -107,7 +111,7 @@ class MyProfileFragment : BaseFragment() {
             firebaseUserViewModel.getFirebaseUser.observe(this, {
                 username = it.username
                 email = it.email
-                loadUser(username)
+                loadUser()
                 preferences.userDataLoaded = true
 
             })
@@ -129,6 +133,145 @@ class MyProfileFragment : BaseFragment() {
         val acSubmissionNum = fromStringSubmitStats(user.acSubmissionNum)
         val totalSubmissionNum = fromStringSubmitStats(user.totalSubmissionNum)
 
+        setupUser(profile, matchedUser)
+
+        setupUserSubmissions(allQuestionsCount, acSubmissionNum, totalSubmissionNum)
+
+        setupClickListeners(matchedUser)
+
+        loadingView.visibility = View.GONE
+        myProfileBinding.userProfileLayout.visibility = View.VISIBLE
+        myProfileBinding.userProblemsDetailsLayout.visibility = View.VISIBLE
+        myProfileBinding.extraUserDetailsLayout.visibility = View.VISIBLE
+    }
+
+    private fun setupClickListeners(matchedUser: MatchedUserNode?) {
+        myProfileBinding.recentSubmissionListLayout.setOnClickListener {
+            val bundle = bundleOf(
+                "username" to matchedUser?.username,
+            )
+            myProfileBinding.root.findNavController()
+                .navigate(R.id.action_myProfileFragment_to_recentSubmissions, bundle)
+        }
+
+        myProfileBinding.userContestRankingsLayout.setOnClickListener {
+            val bundle = bundleOf(
+                "username" to matchedUser?.username,
+            )
+            myProfileBinding.root.findNavController()
+                .navigate(R.id.action_myProfileFragment_to_contest_details, bundle)
+        }
+    }
+
+    /**
+     * all -> acSubmissionNum[0] / totalSubmissionNum[0] / allQuestionsCount[0]
+     * easy-> acSubmissionNum[1] / totalSubmissionNum[1] / allQuestionsCount[1]
+     * medium-> acSubmissionNum[2] / totalSubmissionNum[2] / allQuestionsCount[2]
+     * hard-> acSubmissionNum[3] / totalSubmissionNum[3] / allQuestionsCount[3]
+     */
+    private fun setupUserSubmissions(
+        allQuestionsCount: List<AllQuestionsCountNode>?,
+        acSubmissionNum: List<AcSubmissionNumNode>?,
+        totalSubmissionNum: List<AcSubmissionNumNode>?
+    ) {
+        showDifficultyStats(allQuestionsCount!!, acSubmissionNum, totalSubmissionNum)
+
+        showSnackbars(acSubmissionNum, totalSubmissionNum)
+    }
+
+    private fun showDifficultyStats(
+        allQuestionsCount: List<AllQuestionsCountNode>,
+        acSubmissionNum: List<AcSubmissionNumNode>?,
+        totalSubmissionNum: List<AcSubmissionNumNode>?
+    ) {
+        // easy difficulty
+        myProfileBinding.easyDifficultyCount.text = SpannableStringBuilder()
+            .bold { append(acSubmissionNum!![1].count.toString()) }
+            .append("/ ${allQuestionsCount[1].count.toString()}")
+
+        // medium difficulty
+        myProfileBinding.mediumDifficultyCount.text = SpannableStringBuilder()
+            .bold { append(acSubmissionNum!![2].count.toString()) }
+            .append("/ ${allQuestionsCount[2].count.toString()}")
+
+        // hard difficulty
+        myProfileBinding.hardDifficultyCount.text = SpannableStringBuilder()
+            .bold { append(acSubmissionNum!![3].count.toString()) }
+            .append("/ ${allQuestionsCount[3].count.toString()}")
+
+        // total Submission Num
+        if (acSubmissionNum!![0].submissions!! > 0 && totalSubmissionNum!![0].submissions!! > 0) {
+            var problemsAcceptanceRate =
+                acSubmissionNum[0].submissions?.toDouble()
+                    ?.div(totalSubmissionNum[0].submissions!!)!! * 100
+
+            problemsAcceptanceRate = roundDouble(problemsAcceptanceRate, 1)
+            myProfileBinding.questionProgressBar.progress = problemsAcceptanceRate.roundToInt()
+            myProfileBinding.problemsAcceptanceRate.text =
+                problemsAcceptanceRate.toString().plus("% \nAcceptance")
+        } else {
+            myProfileBinding.questionProgressBar.progress = 0
+            myProfileBinding.problemsAcceptanceRate.text = "0% \nAcceptance"
+        }
+
+        myProfileBinding.userProblemsSolvedCount.text = acSubmissionNum[0].count.toString()
+    }
+
+    private fun showSnackbars(
+        acSubmissionNum: List<AcSubmissionNumNode>?,
+        totalSubmissionNum: List<AcSubmissionNumNode>?
+    ) {
+        // easy difficulty
+        myProfileBinding.easyDifficultyCount.setOnClickListener {
+            showAcceptanceRate(
+                acSubmissionNum!![1].submissions!!.toDouble(),
+                totalSubmissionNum!![1].submissions!!
+            )
+        }
+
+        myProfileBinding.easyDifficultyText.setOnClickListener {
+            showAcceptanceRate(
+                acSubmissionNum!![1].submissions!!.toDouble(),
+                totalSubmissionNum!![1].submissions!!
+            )
+        }
+
+        // medium difficulty
+        myProfileBinding.mediumDifficultyCount.setOnClickListener {
+            showAcceptanceRate(
+                acSubmissionNum!![2].submissions!!.toDouble(),
+                totalSubmissionNum!![2].submissions!!
+            )
+        }
+
+        myProfileBinding.mediumDifficultyText.setOnClickListener {
+            showAcceptanceRate(
+                acSubmissionNum!![2].submissions!!.toDouble(),
+                totalSubmissionNum!![2].submissions!!
+            )
+        }
+
+        // hard difficulty
+        myProfileBinding.hardDifficultyCount.setOnClickListener {
+            showAcceptanceRate(
+                acSubmissionNum!![3].submissions!!.toDouble(),
+                totalSubmissionNum!![3].submissions!!
+            )
+        }
+
+        myProfileBinding.hardDifficultyText.setOnClickListener {
+            showAcceptanceRate(
+                acSubmissionNum!![3].submissions!!.toDouble(),
+                totalSubmissionNum!![3].submissions!!
+            )
+        }
+
+    }
+
+    private fun setupUser(
+        profile: ProfileNode?,
+        matchedUser: MatchedUserNode?,
+    ) {
         myProfileBinding.userFullName.text =
             profile?.realName
 
@@ -150,65 +293,12 @@ class MyProfileFragment : BaseFragment() {
             .placeholder(android.R.drawable.progress_indeterminate_horizontal)
             .into(myProfileBinding.userProfileAvatar)
 
-        /**
-         * all -> acSubmissionNum[0] / totalSubmissionNum[0] / allQuestionsCount[0]
-         * easy-> acSubmissionNum[1] / totalSubmissionNum[1] / allQuestionsCount[1]
-         * medium-> acSubmissionNum[2] / totalSubmissionNum[2] / allQuestionsCount[2]
-         * hard-> acSubmissionNum[3] / totalSubmissionNum[3] / allQuestionsCount[3]
-         */
-        myProfileBinding.easyDifficultyCount.text = SpannableStringBuilder()
-            .bold { append(acSubmissionNum!![1].count.toString()) }
-            .append("/ ${allQuestionsCount!![1].count.toString()}")
-
-        myProfileBinding.mediumDifficultyCount.text = SpannableStringBuilder()
-            .bold { append(acSubmissionNum!![2].count.toString()) }
-            .append("/ ${allQuestionsCount[2].count.toString()}")
-
-        myProfileBinding.hardDifficultyCount.text = SpannableStringBuilder()
-            .bold { append(acSubmissionNum!![3].count.toString()) }
-            .append("/ ${allQuestionsCount[3].count.toString()}")
-
-        if (acSubmissionNum!![0].submissions!! > 0 && totalSubmissionNum!![0].submissions!! > 0) {
-            var problemsAcceptanceRate =
-                acSubmissionNum[0].submissions?.toDouble()
-                    ?.div(totalSubmissionNum[0].submissions!!)!! * 100
-
-            problemsAcceptanceRate = roundDouble(problemsAcceptanceRate, 1)
-            myProfileBinding.questionProgressBar.progress = problemsAcceptanceRate.roundToInt()
-            myProfileBinding.problemsAcceptanceRate.text =
-                problemsAcceptanceRate.toString().plus("% \nAcceptance")
-        } else {
-            myProfileBinding.questionProgressBar.progress = 0
-            myProfileBinding.problemsAcceptanceRate.text = "0% \nAcceptance"
-        }
-
-        myProfileBinding.userProblemsSolvedCount.text = acSubmissionNum[0].count.toString()
-
         // ranking
         myProfileBinding.userRanking.text = "~".plus(matchedUser?.profile?.ranking.toString())
-        myProfileBinding.recentSubmissionListLayout.setOnClickListener {
-            val bundle = bundleOf(
-                "username" to matchedUser?.username,
-            )
-            myProfileBinding.root.findNavController()
-                .navigate(R.id.action_myProfileFragment_to_recentSubmissions, bundle)
-        }
-
-        myProfileBinding.userContestRankingsLayout.setOnClickListener {
-            val bundle = bundleOf(
-                "username" to matchedUser?.username,
-            )
-            myProfileBinding.root.findNavController()
-                .navigate(R.id.action_myProfileFragment_to_contest_details, bundle)
-        }
-        loadingView.visibility = View.GONE
-        myProfileBinding.userProfileLayout.visibility = View.VISIBLE
-        myProfileBinding.userProblemsDetailsLayout.visibility = View.VISIBLE
-        myProfileBinding.extraUserDetailsLayout.visibility = View.VISIBLE
     }
 
     // load user from online
-    private fun loadUser(username: String) {
+    private fun loadUser() {
         val call: Call = createApiCall()
         call.enqueue(object : Callback {
 
@@ -313,6 +403,18 @@ class MyProfileFragment : BaseFragment() {
         }
     }
 
+    private fun showAcceptanceRate(correctSubmissions: Double, allSubmissions: Int) {
+        showSnackBar(
+            requireActivity(),
+            "Acceptance Rate is ${
+                roundDouble(
+                    correctSubmissions.div(allSubmissions)
+                        .times(100), 2
+                )
+            } %"
+        )
+    }
+
     private fun showSyncDataDialog() {
         alertDialogShower.show(AppDialogs.SyncData, {
             // get username and email from room database
@@ -321,7 +423,7 @@ class MyProfileFragment : BaseFragment() {
                     username = it.username
                     email = it.email
                 }
-                loadUser(username)
+                loadUser()
             })
         }, {})
     }

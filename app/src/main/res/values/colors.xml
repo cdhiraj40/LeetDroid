@@ -20,8 +20,8 @@
 
     <!-- color for question's difficulty-->
     <color name="easy_difficulty">#4cbb17</color>
-    <color name="medium_difficulty">#D4AF37</color>
-    <color name="hard_difficulty">#ce2029</color>
+    <color name="medium_difficulty">#ffd800</color>
+    <color name="hard_difficulty">#FF3131</color>
 
     <color name="yellow_chartreuse">#dfff00</color>
 

@@ -260,6 +260,7 @@
 
                 <TextView
                     android:id="@+id/user_problems_solved_text"
+                    style="@style/TextAppearance.AppCompat.Large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -284,7 +285,7 @@
                     android:gravity="start"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+                    android:textSize="40sp"
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -320,11 +321,13 @@
                     android:layout_height="match_parent"
                     android:layout_above="@id/user_problems_difficulty_count"
                     android:layout_below="@id/question_progress_bar_layout"
+                    android:layout_alignParentBottom="true"
                     android:orientation="horizontal"
                     android:weightSum="3">
 
                     <TextView
                         android:id="@+id/easy_difficulty_text"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -336,6 +339,7 @@
 
                     <TextView
                         android:id="@+id/medium_difficulty_text"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -346,6 +350,7 @@
 
                     <TextView
                         android:id="@+id/hard_difficulty_text"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -368,10 +373,10 @@
 
                     <TextView
                         android:id="@+id/easy_difficulty_count"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:maxLines="1"
@@ -380,9 +385,9 @@
 
                     <TextView
                         android:id="@+id/medium_difficulty_count"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:maxLines="1"
@@ -391,9 +396,9 @@
 
                     <TextView
                         android:id="@+id/hard_difficulty_count"
+                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="16dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"

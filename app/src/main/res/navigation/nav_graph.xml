@@ -142,9 +142,9 @@
 
     <fragment
         android:id="@+id/problemsFragment"
-        android:name="com.example.leetdroid.ui.fragments.ProblemsFragment"
+        android:name="com.example.leetdroid.ui.fragments.ExploreProblemsFragment"
         android:label="Explore Problems"
-        tools:layout="@layout/fragment_problems">
+        tools:layout="@layout/fragment_explore_problems">
 
         <action
             android:id="@+id/action_problemsFragment_to_allQuestionsFragment"
