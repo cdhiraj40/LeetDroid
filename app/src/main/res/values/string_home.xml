@@ -6,4 +6,7 @@
     <string name="add_reminder_details">Add reminder to your Google Calendar</string>
     <string name="problem_set_details">See all the questions (around 1000+) along with their solutions, discussion for every question.</string>
     <string name="random_question_details">We all get bored after searching for a perfect question, click here and get a random question to practice on.</string>
+    <string name="daily_challenge_details">"Get daily new questions to solve, that are same from leetcode's daily challenges. "</string>
+    <string name="trending_home_details">"Checkout the trending Discussions happening on LeetCode. You can click on the button to see in whole screen."</string>
+    <string name="daily_challenge">Daily Challenge</string>
 </resources>

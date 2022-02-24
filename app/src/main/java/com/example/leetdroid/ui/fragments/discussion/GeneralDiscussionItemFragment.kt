@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.apache.commons.text.StringEscapeUtils
 import ru.noties.markwon.Markwon
 import java.io.IOException
 
@@ -90,7 +91,7 @@ class GeneralDiscussionItemFragment : Fragment() {
                     discussionContent = discussionContent.replace("\\t", "\t")
                     markwon!!.setMarkdown(
                         fragmentGeneralDiscussionItemBinding.discussionContent,
-                        discussionContent
+                        StringEscapeUtils.unescapeJava(discussionContent)
                     )
 
                     fragmentGeneralDiscussionItemBinding.discussionTitle.isSelected = true

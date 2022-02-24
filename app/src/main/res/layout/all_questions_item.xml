@@ -78,6 +78,7 @@
             android:enabled="false"
             android:textAlignment="center"
             android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:backgroundTint="@color/alice_blue" />
 

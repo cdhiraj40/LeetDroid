@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.leetdroid.R
 import com.example.leetdroid.api.LeetCodeRequests
 import com.example.leetdroid.api.URL
-import com.example.leetdroid.databinding.FragmentProblemsBinding
+import com.example.leetdroid.databinding.FragmentExploreProblemsBinding
 import com.example.leetdroid.model.RandomQuestionModel
 import com.example.leetdroid.utils.Constant
 import com.example.leetdroid.utils.JsonUtils
@@ -28,9 +28,9 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
-class ProblemsFragment : Fragment() {
+class ExploreProblemsFragment : Fragment() {
 
-    private lateinit var problemsBinding: FragmentProblemsBinding
+    private lateinit var problemsBinding: FragmentExploreProblemsBinding
     private var isDropdownTopics = false
     private var isDropdownDifficulty = false
     private var isDropdownList = false
@@ -40,7 +40,7 @@ class ProblemsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        problemsBinding = FragmentProblemsBinding.inflate(inflater, container, false)
+        problemsBinding = FragmentExploreProblemsBinding.inflate(inflater, container, false)
 
         val rootView = problemsBinding.root
 

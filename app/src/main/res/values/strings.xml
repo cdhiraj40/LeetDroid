@@ -32,7 +32,6 @@
     <string name="user_testcases_text">Testcases</string>
     <string name="user_location_text">location</string>
     <string name="user_education_text">Education</string>
-    <string name="daily_challenge_details">"Get daily new questions to solve, that are same from leetcode's daily challenges. "</string>
     <string name="rate_us">Rate Us</string>
     <string name="report_bug">Report bug</string>
     <string name="suggest_new_feature">Suggest new feature</string>
