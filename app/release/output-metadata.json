@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.example.leetdroid",
+  "applicationId": "com.cdhiraj40.leetdroid",
   "variantName": "release",
   "elements": [
     {

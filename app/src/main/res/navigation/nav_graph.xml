@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.leetdroid.ui.fragments.HomeFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.example.leetdroid.ui.fragments.user.MyProfileFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.user.MyProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_my_profile">
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/generalDiscussionFragment"
-        android:name="com.example.leetdroid.ui.fragments.discussion.GeneralDiscussionFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.discussion.GeneralDiscussionFragment"
         android:label="Discussion"
         tools:layout="@layout/fragment_general_discussion">
         <action
@@ -66,12 +66,12 @@
 
     <fragment
         android:id="@+id/generalDiscussionItemFragment"
-        android:name="com.example.leetdroid.ui.fragments.discussion.GeneralDiscussionItemFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.discussion.GeneralDiscussionItemFragment"
         android:label="Discussion"
         tools:layout="@layout/general_discussion_item" />
     <fragment
         android:id="@+id/allQuestionsFragment"
-        android:name="com.example.leetdroid.ui.fragments.AllQuestionsFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.AllQuestionsFragment"
         android:label="Problem Set"
         tools:layout="@layout/fragment_all_questions">
         <action
@@ -94,7 +94,7 @@
 
     <fragment
         android:id="@+id/questionFragment"
-        android:name="com.example.leetdroid.ui.fragments.question.QuestionFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.question.QuestionFragment"
         tools:layout="@layout/fragment_question">
         <action
             android:id="@+id/action_questionsFragment_to_questionSolutionFragment"
@@ -106,12 +106,12 @@
 
     <fragment
         android:id="@+id/questionSolutionFragment"
-        android:name="com.example.leetdroid.ui.fragments.question.QuestionSolutionFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.question.QuestionSolutionFragment"
         tools:layout="@layout/fragment_question_solution" />
 
     <fragment
         android:id="@+id/questionDiscussionFragment"
-        android:name="com.example.leetdroid.ui.fragments.question.QuestionDiscussionFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.question.QuestionDiscussionFragment"
         tools:layout="@layout/fragment_question_discussion">
 
         <action
@@ -125,24 +125,24 @@
     </fragment>
     <fragment
         android:id="@+id/discussionItemFragment"
-        android:name="com.example.leetdroid.ui.fragments.question.DiscussionItemFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.question.DiscussionItemFragment"
         tools:layout="@layout/fragment_discussion_item" />
 
     <fragment
         android:id="@+id/recentSubmissionFragment"
-        android:name="com.example.leetdroid.ui.fragments.user.RecentSubmissionFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.user.RecentSubmissionFragment"
         android:label="Recent Submission Fragment"
         tools:layout="@layout/fragment_recent_submission" />
 
     <fragment
         android:id="@+id/contestDetailsFragment"
-        android:name="com.example.leetdroid.ui.fragments.user.ContestDetailsFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.user.ContestDetailsFragment"
         android:label="Contest Details Fragment"
         tools:layout="@layout/fragment_contest_details" />
 
     <fragment
         android:id="@+id/problemsFragment"
-        android:name="com.example.leetdroid.ui.fragments.ExploreProblemsFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.ExploreProblemsFragment"
         android:label="Explore Problems"
         tools:layout="@layout/fragment_explore_problems">
 
@@ -186,25 +186,25 @@
 
     <fragment
         android:id="@+id/about"
-        android:name="com.example.leetdroid.ui.fragments.preferences.AboutFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.preferences.AboutFragment"
         android:label="About"
         tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/licensesFragment"
-        android:name="com.example.leetdroid.ui.fragments.preferences.LicenseFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.preferences.LicenseFragment"
         android:label="Licenses"
         tools:layout="@layout/fragment_license" />
 
     <fragment
         android:id="@+id/contributorFragment"
-        android:name="com.example.leetdroid.ui.fragments.preferences.ContributorsFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.preferences.ContributorsFragment"
         android:label="Contributors"
         tools:layout="@layout/fragment_contributors" />
 
     <fragment
         android:id="@+id/trendingDiscussionFragment"
-        android:name="com.example.leetdroid.ui.fragments.discussion.TrendingDiscussionFragment"
+        android:name="com.cdhiraj40.leetdroid.ui.fragments.discussion.TrendingDiscussionFragment"
         android:label="Trending Discussions"
         tools:layout="@layout/fragment_trending_discussion" />
 </navigation>

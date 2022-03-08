@@ -16,9 +16,7 @@
             android:id="@+id/problem_explore1_layout"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -58,8 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_below="@id/problem_explore1_layout"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -80,7 +76,6 @@
 
                     <TextView
                         android:id="@+id/problem_topics_title"
-                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -90,7 +85,8 @@
                         android:layout_toStartOf="@id/problem_topics_dropdown_menu"
                         android:gravity="start"
                         android:text="@string/problem_topics"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/problem_topics_dropdown_menu"
@@ -127,7 +123,6 @@
 
                     <TextView
                         android:id="@+id/problem_difficulty_title"
-                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -137,7 +132,8 @@
                         android:layout_toStartOf="@id/problem_difficulty_dropdown_menu"
                         android:gravity="start"
                         android:text="@string/problem_difficulty"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/problem_difficulty_dropdown_menu"
@@ -168,8 +164,6 @@
                 android:id="@+id/problem_difficulty_sub_layout1"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -243,8 +237,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_below="@id/problem_difficulty_sub_layout1"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -307,8 +299,6 @@
                 android:id="@+id/problem_topics_sub_layout1"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -382,8 +372,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_below="@id/problem_topics_sub_layout1"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -456,8 +444,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_below="@id/problem_topics_sub_layout2"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -531,8 +517,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_below="@id/problem_topics_sub_layout2"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -605,8 +589,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_below="@id/problem_topics_sub_layout4"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -680,8 +662,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_below="@id/problem_difficulty_sub_layout"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -702,7 +683,6 @@
 
                     <TextView
                         android:id="@+id/problems_tags_title"
-                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -712,7 +692,8 @@
                         android:layout_toStartOf="@id/problems_tags_dropdown_menu"
                         android:gravity="start"
                         android:text="@string/problems_tags"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/problems_tags_dropdown_menu"
@@ -748,7 +729,6 @@
 
                     <TextView
                         android:id="@+id/problems_featured_list_title"
-                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -758,7 +738,8 @@
                         android:layout_toStartOf="@id/problems_featured_list_dropdown_menu"
                         android:gravity="start"
                         android:text="@string/problems_featured_list"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/problems_featured_list_dropdown_menu"
@@ -789,8 +770,6 @@
                 android:id="@+id/problems_featured_list_sub_layout1"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -864,8 +843,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_below="@id/problems_featured_list_sub_layout1"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -945,8 +922,6 @@
                 android:id="@+id/problems_tags_sub_layout1"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -1020,8 +995,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_below="@id/problems_tags_sub_layout1"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.card.MaterialCardView
@@ -1096,8 +1069,6 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_below="@id/problem_explore3_layout"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -1118,7 +1089,6 @@
 
                     <TextView
                         android:id="@+id/random_question_title"
-                        style="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -1127,7 +1097,8 @@
                         android:layout_marginBottom="16dp"
                         android:gravity="start"
                         android:text="@string/random_question"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
