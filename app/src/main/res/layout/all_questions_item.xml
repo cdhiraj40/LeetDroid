@@ -51,7 +51,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="acceptance rate:"
             android:textColor="@color/black" />
 
         <TextView
@@ -78,7 +77,7 @@
             android:enabled="false"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:backgroundTint="@color/alice_blue" />
 

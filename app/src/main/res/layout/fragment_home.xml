@@ -136,8 +136,8 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/daily_question_layout"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@id/daily_question_heading"
+            android:layout_height="170dp"
+            android:layout_below="@id/home_features_layout"
             app:cardBackgroundColor="@color/lighter_maya_blue"
             app:cardCornerRadius="10dp"
             app:cardElevation="3dp"
@@ -163,21 +163,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_margin="16dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_toStartOf="@id/daily_question_date"
                     android:ellipsize="end"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:scrollHorizontally="true"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/daily_question_date"
-                    style="@style/TextAppearance.AppCompat.Large"
-                    android:layout_width="120dp"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="16dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Feb 24, 2022"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -197,8 +203,8 @@
                     android:text="Medium"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     app:backgroundTint="@color/medium_difficulty" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
