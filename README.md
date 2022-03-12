@@ -96,7 +96,7 @@ LeetDroid is licensed under the MIT License - see the [`LICENSE`](LICENSE) file 
 
 Talking about the usability of the app, you can try out latest development version for now
 from [here](https://github.com/cdhiraj40/LeetDroid/blob/main/app/release/app-release.apk)
-OR Download from [play store](https://play.google.com/store/apps/details?id=com.cdhiraj40.leetdroid)<img src="https://user-images.githubusercontent.com/75211982/158026569-8bceeb52-283c-48de-bc34-8b5f49bd60f3.png" width="24"> to get the production release
+OR Download from [play store](https://play.google.com/store/apps/details?id=com.cdhiraj40.leetdroid) to get the production release
 
 ## Future Scope
 
