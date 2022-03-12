@@ -12,6 +12,9 @@ mentioned [here](https://github.com/cdhiraj40/LeetDroid/blob/main/README.md#futu
 To use LeetDroid, You will need just an account of LeetDroid that you can create in app.
 <br/>Currently app supports for only leetcode users, app fetches data on user's username. In future this might change.
 
+## Download
+first release is out! Download from [here](https://play.google.com/store/apps/details?id=com.cdhiraj40.leetdroid)
+
 ## Why it was made:
 
 The idea came when I consecutively forgot about contests happening at leetcode, and I could not find any app that was
@@ -91,16 +94,16 @@ LeetDroid is licensed under the MIT License - see the [`LICENSE`](LICENSE) file 
 
 ## Application Link:
 
-Talking about the usability of the app, you can try out beta version for now
+Talking about the usability of the app, you can try out latest development version for now
 from [here](https://github.com/cdhiraj40/LeetDroid/blob/main/app/release/app-release.apk)
-or [here](https://drive.google.com/file/d/19ekNQ32VACPUU-pYZAAxJXegjacGGfxJ/view?usp=sharing).
+OR Download from [play store](https://play.google.com/store/apps/details?id=com.cdhiraj40.leetdroid)<img src="https://user-images.githubusercontent.com/75211982/158026569-8bceeb52-283c-48de-bc34-8b5f49bd60f3.png" width="24"> to get the production release
 
 ## Future Scope
 
-I am planning to do these following features before releasing the first version on play store.
+~~I am planning to do these following features before releasing the first version on play store.
 
-- Segregating Question list with topics,tags etc.
-- Segregating general discussions with topics like ``Interview-Question``,``Compensation``,``Career``,``Study Guide``
+- ~~Segregating Question list with topics,tags etc.
+- ~~Segregating general discussions with topics like ``Interview-Question``,``Compensation``,``Career``,``Study Guide``
   etc. including company tags.
 - Showing different contests option along with differentiating attended & non-attended contests.
 - Improving the approach for pushing notifications.
