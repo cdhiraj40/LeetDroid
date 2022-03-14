@@ -1,4 +1,4 @@
-`<h1 align="center">LeetDroid - An android client for LeetCode</h1>
+<h1 align="center">LeetDroid - An android client for LeetCode</h1>
 
 <img src ="app/src/main/res/drawable/app_logo.png" align="left" width="200" hspace="10" vspace="10">
 
@@ -51,6 +51,11 @@ If you don't have a leetcode account you can create one from [here](https://leet
 
 ## 🛠️ Installation Steps
 
+- Download from the Playstore or from the Release tab
+
+## 👨‍💻 Contributing
+
+
 1. Fork the project
 2. Clone the project
 3. Create a new branch (`git checkout -b new-feature`)
@@ -58,9 +63,6 @@ If you don't have a leetcode account you can create one from [here](https://leet
 5. Add changes to reflect the changes made (`git commit -m 'commit message'`)
 6. Push to the branch (` git push `)
 7. Create a Pull Request
-
-## 👨‍💻 Contributing
-
 - Any contributions you make are **greatly appreciated**.
 
 ### Bug / Feature Request
