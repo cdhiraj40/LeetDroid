@@ -1,4 +1,4 @@
-`<h1 align="center">LeetDroid - An android client for LeetCode</h1>
+<h1 align="center">LeetDroid - An android client for LeetCode</h1>
 
 <img src ="app/src/main/res/drawable/app_logo.png" align="left" width="200" hspace="10" vspace="10">
 
