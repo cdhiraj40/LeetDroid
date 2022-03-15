@@ -102,10 +102,10 @@ OR Download from [play store](https://play.google.com/store/apps/details?id=com.
 
 ## Future Scope
 
-~~I am planning to do these following features before releasing the first version on play store.
+~~I am planning to do these following features before releasing the first version on play store.~~
 
-- ~~Segregating Question list with topics,tags etc.
-- ~~Segregating general discussions with topics like ``Interview-Question``,``Compensation``,``Career``,``Study Guide``
-  etc. including company tags.
+- ~~Segregating Question list with topics,tags etc.~~
+- ~~Segregating general discussions with topics like ``Interview-Question``,``Compensation``,``Career``,``Study Guide`` etc. including company tags.~~
 - Showing different contests option along with differentiating attended & non-attended contests.
 - Improving the approach for pushing notifications.
+- letting a guest user to explore problems, and all the features except user profiles etc.
