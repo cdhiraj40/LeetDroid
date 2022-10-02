@@ -15,12 +15,14 @@
         app:cardElevation="3dp"
         app:cardMaxElevation="3dp"
         app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        >
 
         <RelativeLayout
             android:id="@+id/user_profile_relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <TextView
                 android:id="@+id/no_contest_attended_text"
@@ -83,7 +85,8 @@
                 android:layout_marginBottom="16dp"
                 android:maxLines="1"
                 android:text="@string/global_ranking_text"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                />
 
             <TextView
                 android:id="@+id/user_contest_global_ranking"
@@ -113,7 +116,8 @@
         android:gravity="center"
         android:text="@string/recent_contests_heading"
         android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contest_history_recycler_view"
@@ -130,8 +134,8 @@
         android:visibility="gone" />
 
     <include
-        android:id="@+id/view_general_error"
-        layout="@layout/general_error_layout"
+        android:id="@+id/loading_view"
+        layout="@layout/loading_screen_layout"
         android:visibility="gone" />
 
 </RelativeLayout>
