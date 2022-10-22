@@ -1,51 +1,56 @@
-package com.cdhiraj40.leetdroid.utils
+package com.example.cdhiraj40.utils
 
 import com.cdhiraj40.leetdroid.utils.DateUtils.formatISO8601Date
 import com.cdhiraj40.leetdroid.utils.DateUtils.getDate
 import com.cdhiraj40.leetdroid.utils.DateUtils.getHours
 import com.cdhiraj40.leetdroid.utils.DateUtils.getSeconds
 import com.cdhiraj40.leetdroid.utils.DateUtils.getTime
+import com.example.cdhiraj40.UTCRule
 import com.google.common.truth.Truth.assertThat
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.threeten.bp.DateTimeUtils
-import org.threeten.bp.Instant
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.temporal.TemporalAccessor
+import java.time.Instant
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 @RunWith(JUnit4::class)
 class DateUtilsTest {
 
     private val dateISO8601 = "2022-02-19T14:30:00.000Z"
 
+    @get:Rule
+    var utcRule: UTCRule = UTCRule()
+
     @Test
     fun parseISO8601DateTest() {
-        val result = parseISO8601Date(dateISO8601)
-        val expected = "Sat Feb 19 20:00:00 IST 2022"
-        assertThat(result.toString()).isEqualTo(expected)
+        val result = parseISO8601Date(dateISO8601).toString()
+        val expected = "Sat Feb 19 14:30:00 UTC 2022"
+        assertThat(result).isEqualTo(expected)
     }
 
     @Test
     fun formatISO8601DateTest() {
         val instant = parseISO8601Date(dateISO8601)
         val result = formatISO8601Date(instant)
-        val expected = "Sat Feb 19 20:00:00 IST 2022"
+        val expected = "Sat Feb 19 14:30:00 UTC 2022"
         assertThat(result.toString()).isEqualTo(expected)
     }
 
     @Test
     fun getDateTest() {
-        val result = getDate(DateUtils.parseISO8601Date(dateISO8601))
+        val result = getDate(parseISO8601Date(dateISO8601))
         val expected = "Feb 19, 2022"
         assertThat(result).isEqualTo(expected)
     }
 
     @Test
     fun getTimeTest() {
-        val result = getTime(DateUtils.parseISO8601Date(dateISO8601))
-        val expected = "20:00"
+        val result = getTime(parseISO8601Date(dateISO8601))
+        val expected = "14:30"
         assertThat(result).isEqualTo(expected)
     }
 
@@ -64,8 +69,9 @@ class DateUtilsTest {
     }
 
     private fun parseISO8601Date(date: String): Date {
-        val temporalAccessor: TemporalAccessor = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(date)
-        val instant = Instant.from(temporalAccessor)
-        return DateTimeUtils.toDate(instant)
+        val timeFormatter = DateTimeFormatter.ISO_DATE_TIME
+        val offsetDateTime = OffsetDateTime.parse(date, timeFormatter)
+
+        return Date.from(Instant.from(offsetDateTime))
     }
 }
