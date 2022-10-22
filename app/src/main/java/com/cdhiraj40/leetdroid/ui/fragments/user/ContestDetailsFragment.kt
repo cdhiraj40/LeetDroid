@@ -29,6 +29,7 @@ class ContestDetailsFragment : Fragment(), ContestHistoryAdapter.OnItemClicked {
     private lateinit var contestHistoryAdapter: ContestHistoryAdapter
     private lateinit var generalErrorView: View
     private lateinit var username: String
+    private lateinit var loadingView: View
     private var limit = 10
 
     override fun onCreateView(
@@ -38,7 +39,7 @@ class ContestDetailsFragment : Fragment(), ContestHistoryAdapter.OnItemClicked {
         // Inflate the layout for this fragment
         fragmentContestDetailsBinding = FragmentContestDetailsBinding.inflate(layoutInflater)
         val rootView = fragmentContestDetailsBinding.root
-
+        loadingView = rootView.findViewById(R.id.loading_view)
         generalErrorView = rootView.findViewById(R.id.view_general_error)
         contestHistoryAdapter = ContestHistoryAdapter(requireContext())
         val bundle = arguments
@@ -71,6 +72,7 @@ class ContestDetailsFragment : Fragment(), ContestHistoryAdapter.OnItemClicked {
 
     private fun loadContestDetails(username: String) {
         fragmentContestDetailsBinding.contestHistoryProgressBar.visibility = View.VISIBLE
+        loadingView.visibility = View.VISIBLE
         val call: Call =
             rankingDetailsApiCall(username)
         call.enqueue(object : Callback {
@@ -99,8 +101,11 @@ class ContestDetailsFragment : Fragment(), ContestHistoryAdapter.OnItemClicked {
                         contestHistoryAdapter.setOnClick(this@ContestDetailsFragment)
                         fragmentContestDetailsBinding.contestHistoryProgressBar.visibility =
                             View.GONE
+                        loadingView.visibility = View.GONE;
+
                     }
                 } catch (exception: Exception) {
+                    loadingView.visibility = View.GONE
                     generalErrorView.visibility = View.VISIBLE
                 }
             }
