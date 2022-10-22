@@ -9,10 +9,9 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.threeten.bp.DateTimeUtils
-import org.threeten.bp.Instant
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.temporal.TemporalAccessor
+import java.time.Instant
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @RunWith(JUnit4::class)
@@ -22,9 +21,9 @@ class DateUtilsTest {
 
     @Test
     fun parseISO8601DateTest() {
-        val result = parseISO8601Date(dateISO8601)
+        val result = parseISO8601Date(dateISO8601).toString()
         val expected = "Sat Feb 19 20:00:00 IST 2022"
-        assertThat(result.toString()).isEqualTo(expected)
+        assertThat(result).isEqualTo(expected)
     }
 
     @Test
@@ -64,8 +63,10 @@ class DateUtilsTest {
     }
 
     private fun parseISO8601Date(date: String): Date {
-        val temporalAccessor: TemporalAccessor = DateTimeFormatter.ISO_DATE_TIME.parse(date)
-        val instant = Instant.from(temporalAccessor)
-        return DateTimeUtils.toDate(instant)
+        val timeFormatter = DateTimeFormatter.ISO_DATE_TIME
+        val offsetDateTime: OffsetDateTime =
+            OffsetDateTime.parse(date, timeFormatter)
+
+        return Date.from(Instant.from(offsetDateTime))
     }
 }
