@@ -1,4 +1,4 @@
-package com.cdhiraj40.leetdroid.utils
+package com.example.cdhiraj40.utils
 
 import com.cdhiraj40.leetdroid.utils.DateUtils.formatISO8601Date
 import com.cdhiraj40.leetdroid.utils.DateUtils.getDate
@@ -37,14 +37,14 @@ class DateUtilsTest {
 
     @Test
     fun getDateTest() {
-        val result = getDate(DateUtils.parseISO8601Date(dateISO8601))
+        val result = getDate(parseISO8601Date(dateISO8601))
         val expected = "Feb 19, 2022"
         assertThat(result).isEqualTo(expected)
     }
 
     @Test
     fun getTimeTest() {
-        val result = getTime(DateUtils.parseISO8601Date(dateISO8601))
+        val result = getTime(parseISO8601Date(dateISO8601))
         val expected = "20:00"
         assertThat(result).isEqualTo(expected)
     }
@@ -64,7 +64,7 @@ class DateUtilsTest {
     }
 
     private fun parseISO8601Date(date: String): Date {
-        val temporalAccessor: TemporalAccessor = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(date)
+        val temporalAccessor: TemporalAccessor = DateTimeFormatter.ISO_DATE_TIME.parse(date)
         val instant = Instant.from(temporalAccessor)
         return DateTimeUtils.toDate(instant)
     }
