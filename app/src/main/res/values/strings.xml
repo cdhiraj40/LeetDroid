@@ -58,4 +58,5 @@
     <string name="contributors_summary">Any contributions you make are greatly appreciated. Here are the contributors of the app.</string>
     <string name="licenses">Licenses</string>
     <string name="licenses_summary">Here are the epic libraries used by the LeetDroid.</string>
+    <string name="internet_error">Please check your internet connection</string>
 </resources>
