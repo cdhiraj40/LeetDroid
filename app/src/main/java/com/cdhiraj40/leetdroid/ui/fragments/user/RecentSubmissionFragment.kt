@@ -32,6 +32,7 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
     private lateinit var generalErrorView: View
     private lateinit var username: String
     private var limit = 10
+    private lateinit var loadingView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +41,8 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
         // Inflate the layout for this fragment
         fragmentRecentSubmissionBinding = FragmentRecentSubmissionBinding.inflate(layoutInflater)
         val rootView = fragmentRecentSubmissionBinding.root
-
+        loadingView = rootView.findViewById(R.id.loading_view)
+        loadingView.visibility = View.VISIBLE
         generalErrorView = rootView.findViewById(R.id.view_general_error)
         submissionsAdapter = RecentSubmissionsAdapter(requireContext())
 
@@ -56,7 +58,7 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
                 if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
                     // fetch more 10 questions when reached end
                     limit += 10
-                    fragmentRecentSubmissionBinding.submissionListProgressBar.visibility =
+                    loadingView.visibility =
                         View.VISIBLE
                     loadRecentSubmissions(username, limit)
 
@@ -114,11 +116,13 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
                     }
                 } catch (exception: Exception) {
                     generalErrorView.visibility = View.VISIBLE
+                    loadingView.visibility = View.GONE
                 }
             }
 
             override fun onFailure(call: Call, e: IOException) {
                 showSnackBar(requireActivity(), e.message)
+                loadingView.visibility = View.GONE
                 Log.d(
                     Constant.TAG(RecentSubmissionFragment::class.java).toString(),
                     call.toString(),
@@ -131,9 +135,9 @@ class RecentSubmissionFragment : Fragment(), RecentSubmissionsAdapter.OnItemClic
 
     private fun checkIfEmpty() {
         if (submissionsAdapter.getDataItemCount() == 0) {
-            fragmentRecentSubmissionBinding.submissionListProgressBar.visibility = View.VISIBLE
+            loadingView.visibility = View.VISIBLE
         } else {
-            fragmentRecentSubmissionBinding.submissionListProgressBar.visibility = View.GONE
+            loadingView.visibility = View.GONE
         }
     }
 

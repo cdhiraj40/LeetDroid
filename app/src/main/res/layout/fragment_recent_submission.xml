@@ -32,10 +32,11 @@
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/recent_submissions_item" />
 
-            <ProgressBar
-                android:id="@+id/submission_list_progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/loading_view"
+                layout="@layout/loading_screen_layout"
+                android:visibility="gone" />
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
