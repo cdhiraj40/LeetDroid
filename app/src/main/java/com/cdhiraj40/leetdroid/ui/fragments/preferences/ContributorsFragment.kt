@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cdhiraj40.leetdroid.R
 import com.cdhiraj40.leetdroid.adapter.ContributorListAdapter
 import com.cdhiraj40.leetdroid.api.GithubApi
 import com.cdhiraj40.leetdroid.databinding.FragmentContributorsBinding
@@ -21,12 +22,20 @@ class ContributorsFragment : Fragment(), ContributorListAdapter.ContributorClick
 
     private lateinit var contributorsBinding: FragmentContributorsBinding
     private lateinit var contributorListAdapter: ContributorListAdapter
+    private lateinit var loadingView: View
+    private lateinit var errorLoadingView:View;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         contributorsBinding = FragmentContributorsBinding.inflate(inflater)
+        val root_view = contributorsBinding.root
+
+        loadingView = root_view.findViewById(R.id.loading_view)
+        errorLoadingView=root_view.findViewById(R.id.view_general_error)
+        loadingView.visibility = View.VISIBLE
+        contributorsBinding.contributorRecyclerView.visibility=View.GONE;
 
         val rootView = contributorsBinding.root
 
@@ -50,6 +59,8 @@ class ContributorsFragment : Fragment(), ContributorListAdapter.ContributorClick
                         Constant.TAG(ContributorsFragment::class.java).toString(), body.toString()
                     )
                     setUpRecyclerView(body)
+                    loadingView.visibility = View.GONE
+                    contributorsBinding.contributorRecyclerView.visibility=View.VISIBLE;
                 }
             }
 
@@ -59,6 +70,8 @@ class ContributorsFragment : Fragment(), ContributorListAdapter.ContributorClick
                     throwable.message,
                     throwable
                 )
+                errorLoadingView.visibility=View.VISIBLE;
+                loadingView.visibility = View.GONE
             }
         })
     }
