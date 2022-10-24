@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -13,12 +14,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.cdhiraj40.leetdroid.R
+import com.cdhiraj40.leetdroid.data.viewModel.ConnectionLiveData
 import com.cdhiraj40.leetdroid.utils.CommonFunctions.Logout.showLogOutDialog
 import com.cdhiraj40.leetdroid.utils.CommonUtils.composeEmail
 import com.cdhiraj40.leetdroid.utils.CommonUtils.createEmailBody
 import com.cdhiraj40.leetdroid.utils.CommonUtils.openLink
 import com.cdhiraj40.leetdroid.utils.dialog.AlertDialogShower
 import com.cdhiraj40.leetdroid.utils.dialog.AppDialogs
+import com.cdhiraj40.leetdroid.utils.extensions.showSnackBar
+import com.cdhiraj40.leetdroid.utils.extensions.toast
 import com.cdhiraj40.leetdroid.utils.hideSoftKeyboard
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -33,6 +37,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navigationView: NavigationView
     private lateinit var navigationHostFragment: View
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var connectionLiveData: ConnectionLiveData
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +46,14 @@ class MainActivity : AppCompatActivity() {
         bottomNav = findViewById(R.id.bottom_navigation)
 
         navController = findNavController(R.id.hostFragment)
+        connectionLiveData = ConnectionLiveData(this)
+        connectionLiveData.observe(this) { isNetworkAvailable ->
+            isNetworkAvailable?.let {
+                if(!it){
+                    showSnackBar(this, "Please check your internet connection")
+                }
+            }
+        }
         setupBottomNavigation()
 
         drawerLayout = findViewById(R.id.drawer_layout)
