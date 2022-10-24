@@ -40,7 +40,7 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         if (!requireContext().hasNetwork()){
-            showSnackBar(requireActivity(),getString(R.string.internet_error))
+            showSnackBar(requireActivity(),getString(R.string.internet_off_error))
         }
 
         loadingView.visibility = View.VISIBLE
