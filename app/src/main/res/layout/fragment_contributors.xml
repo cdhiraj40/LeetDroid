@@ -10,5 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/contibutors_item" />
-
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/loading_screen_layout"
+        android:visibility="gone" />
+    <include
+        android:id="@+id/view_general_error"
+        layout="@layout/general_error_layout"
+        android:visibility="gone" />
 </RelativeLayout>
