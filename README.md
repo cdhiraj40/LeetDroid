@@ -57,42 +57,26 @@ If you don't have a leetcode account you can create one from [here](https://leet
 ```
 git clone https://github.com/<your_username>/LeetDroid.git
 ```
-#### `STEP 3` : Navigate to the project directory .
-```
-cd resume-builder
-```
-#### `STEP 4` : Add a reference (remote) to the original repository.
-```
-git remote add upstream https://github.com/cdhiraj40/LeetDroid.git
-```
-#### `STEP 5` : Check the remotes for this repository.
-```
-git remote -v
-```
-#### `STEP 6` : Always take a pull from the upstream repository to your master branch to keep it at par with the main project (updated repository).
-```
-git pull upstream master
-```
-#### `STEP 7` : Create a new branch.
+#### `STEP 3` : Create a new branch.
 ```
 git checkout -b <your_branch_name>
 ```
-#### `STEP 8` : Perform your desired changes to the code base.
-#### `STEP 9` : Track your changes .
+#### `STEP 4` : Perform your desired changes to the code base.
+#### `STEP 5` : Track your changes .
 ```
 git add . 
 ```
-#### `STEP 10` : Commit your changes .
+#### `STEP 6` : Commit your changes .
 ```
 git commit -m "Relevant message"
 ```
-#### `STEP 11` : Push the committed changes in your feature branch to your remote repo.
+#### `STEP 7` : Push the committed changes in your feature branch to your remote repo.
 ```
 git push -u origin <your_branch_name>
 ```
-#### `STEP 12` : To create a pull request, click on `compare and pull requests`. Please ensure you compare your feature branch to the desired branch of the repository you are supposed to make a PR to.
-#### `STEP 13` : Add appropriate title and description to your pull request explaining your changes and efforts done.
-#### `STEP 14` : Click on `Create Pull Request`.
+#### `STEP 8` : To create a pull request, click on `compare and pull requests`. Please ensure you compare your feature branch to the desired branch of the repository you are supposed to make a PR to.
+#### `STEP 9` : Add appropriate title and description to your pull request explaining your changes and efforts done.
+#### `STEP 10` : Click on `Create Pull Request`.
 
 #### Voila! You have made a PR to the LeetDroid. Sit back patiently and relax while your PR is reviewed
 
