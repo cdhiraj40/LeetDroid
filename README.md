@@ -74,12 +74,7 @@ git commit -m "Relevant message"
 ```
 git push -u origin <your_branch_name>
 ```
-#### `STEP 8` : To create a pull request, click on `compare and pull requests`. Please ensure you compare your feature branch to the desired branch of the repository you are supposed to make a PR to.
-#### `STEP 9` : Add appropriate title and description to your pull request explaining your changes and efforts done.
-#### `STEP 10` : Click on `Create Pull Request`.
-
-#### Voila! You have made a PR to the LeetDroid. Sit back patiently and relax while your PR is reviewed
-
+#### `STEP 8` : Create Pull Request.
 ---
 
 ## 👨‍💻 Contributing
