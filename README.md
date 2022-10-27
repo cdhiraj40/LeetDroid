@@ -51,13 +51,31 @@ If you don't have a leetcode account you can create one from [here](https://leet
 
 ## 🛠️ Installation Steps
 
-1. Fork the project
-2. Clone the project
-3. Create a new branch (`git checkout -b new-feature`)
-4. Make the appropriate changes in the files (` git add . `)
-5. Add changes to reflect the changes made (`git commit -m 'commit message'`)
-6. Push to the branch (` git push `)
-7. Create a Pull Request
+#### `STEP 1` :  Fork [this](https://github.com/cdhiraj40/LeetDroid.git) repository.
+
+#### `STEP 2` :  Clone your forked copy of the project.
+```
+git clone https://github.com/<your_username>/LeetDroid.git
+```
+#### `STEP 3` : Create a new branch.
+```
+git checkout -b <your_branch_name>
+```
+#### `STEP 4` : Perform your desired changes to the code base.
+#### `STEP 5` : Track your changes .
+```
+git add . 
+```
+#### `STEP 6` : Commit your changes .
+```
+git commit -m "Relevant message"
+```
+#### `STEP 7` : Push the committed changes in your feature branch to your remote repo.
+```
+git push -u origin <your_branch_name>
+```
+#### `STEP 8` : Create Pull Request.
+---
 
 ## 👨‍💻 Contributing
 
