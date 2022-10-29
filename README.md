@@ -37,7 +37,7 @@ LeetCode activities, upcoming contests, and question lists (including their solu
 The app also shows daily LeetCode challenges that get updated every day at 5.30 AM with respect to your device's timezone. Furthermore,
 LeetDroid provides info about your LeetCode profile right in your pocket with information from contest history to
 recent submissions, rankings to no. of problems solved, and acceptance rate. We all get bored after searching for a
-perfect question to practice, LeetDroid can also suggest random questions for you to practice :happy:
+perfect question to practice, LeetDroid can also suggest random questions for you to practice.
 
 ## Screenshots
 
