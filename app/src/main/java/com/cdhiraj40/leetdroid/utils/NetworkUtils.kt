@@ -3,6 +3,7 @@ package com.cdhiraj40.leetdroid.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.NetworkInfo
 import android.os.Build
 import androidx.annotation.RequiresApi
 
@@ -31,4 +32,16 @@ fun checkConnectedLegacy(connectivityManager: ConnectivityManager): Boolean {
     val networkInfo = connectivityManager.activeNetworkInfo
     networkInfo ?: return false
     return networkInfo.isConnected && (networkInfo.type == ConnectivityManager.TYPE_WIFI || networkInfo.type == ConnectivityManager.TYPE_MOBILE)
+}
+
+fun checkConnectivity(context: Context): Boolean{
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+
+    if(activeNetwork?.isConnected != null){
+        return activeNetwork.isConnected
+    } else{
+        return false
+    }
+
 }

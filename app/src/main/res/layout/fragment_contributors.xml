@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlContributor"
+    layout_height="match_parent"
+    layout_width="match_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.preferences.ContributorsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contributor_recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/contibutors_item" />
-    <include
-        android:id="@+id/loading_view"
-        layout="@layout/loading_screen_layout"
-        android:visibility="gone" />
-    <include
-        android:id="@+id/view_general_error"
-        layout="@layout/general_error_layout"
-        android:visibility="gone" />
-</RelativeLayout>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contributor_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/contibutors_item" />
+
+        <include
+            android:id="@+id/loading_view"
+            layout="@layout/loading_screen_layout"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/view_general_error"
+            layout="@layout/general_error_layout"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
