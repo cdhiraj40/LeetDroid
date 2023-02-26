@@ -19,11 +19,11 @@ import com.cdhiraj40.leetdroid.utils.Constant
 import com.cdhiraj40.leetdroid.utils.JsonUtils
 import com.cdhiraj40.leetdroid.utils.extensions.showSnackBar
 import com.google.gson.Gson
+import io.noties.markwon.Markwon
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.sufficientlysecure.htmltextview.HtmlTextView
-import ru.noties.markwon.Markwon
 import java.io.IOException
 
 
@@ -176,6 +176,30 @@ class QuestionFragment : Fragment() {
                 startIndex = 0
             )
 
+        // finding the boundaries of list in question description
+        val descriptionListBeginning =
+            findSubstringIndex(
+                inputString = questionContentHtml,
+                whatToFind = "<ul>",
+                startIndex = 0
+            )
+
+        val descriptionListEnd =
+            findSubstringIndex(
+                inputString = questionContentHtml,
+                whatToFind = "</ul>",
+                startIndex = 0
+            )+5
+
+        var descriptionListBlock = ""
+
+        // check if list is in the question description
+        if (descriptionListBeginning < firstExampleOccurrence
+            && descriptionListEnd < firstExampleOccurrence) {
+            // getting the substring of list in question description
+            descriptionListBlock = questionContentHtml.substring(descriptionListBeginning, descriptionListEnd).trim()
+        }
+
         /**
          * finding the occurrence of constraints in html string for the separate constraints text,
          * after example block
@@ -222,8 +246,18 @@ class QuestionFragment : Fragment() {
          * more information here: https://stackoverflow.com/questions/27640401/remove-html-tags-from-a-string-but-restore-n
          * https://stackoverflow.com/questions/9326447/removing-html-tags-except-line-breaks
          */
-        questionDescription = questionDescription.replace("\n", "<br/>")
+        questionDescription = questionDescription.replace("\n", "<br/>").trim()
 
+        // if there is a list in the question description, add it
+        if (descriptionListBlock != "") {
+            val br = questionDescription.substring(questionDescription.length-10,questionDescription.length)
+
+            if (br == "<br/><br/>") {
+                questionDescription = questionDescription.substring(0, questionDescription.length-10)
+            }
+
+            questionDescription = questionDescription.plus(descriptionListBlock)
+        }
 
         // creating example block string from normal string for example block
         var exampleStrings =

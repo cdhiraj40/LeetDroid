@@ -17,12 +17,13 @@ import com.cdhiraj40.leetdroid.databinding.FragmentGeneralDiscussionBinding
 import com.cdhiraj40.leetdroid.model.GeneralDiscussionModel
 import com.cdhiraj40.leetdroid.utils.Constant.Companion.TAG
 import com.cdhiraj40.leetdroid.utils.JsonUtils
+import com.cdhiraj40.leetdroid.utils.extensions.showSnackBar
+import com.cdhiraj40.leetdroid.utils.hasNetwork
 import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
-import java.util.*
 
 
 class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemClicked {
@@ -36,17 +37,11 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
     private var generalDiscussionAdapter: GeneralDiscussionAdapter? = null
     private var limit = 10
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        fragmentGeneralDiscussionBinding =
-            FragmentGeneralDiscussionBinding.inflate(layoutInflater)
-        val rootView = fragmentGeneralDiscussionBinding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-
-        loadingView = rootView.findViewById(R.id.loading_view)
+        if (!requireContext().hasNetwork()){
+            showSnackBar(requireActivity(),getString(R.string.internet_off_error))
+        }
 
         loadingView.visibility = View.VISIBLE
         fragmentGeneralDiscussionBinding.generalDiscussionNested.visibility = View.GONE
@@ -86,6 +81,18 @@ class GeneralDiscussionFragment : Fragment(), GeneralDiscussionAdapter.OnItemCli
 
         clickCategory()
         showCategories()
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        fragmentGeneralDiscussionBinding =
+            FragmentGeneralDiscussionBinding.inflate(layoutInflater)
+        val rootView = fragmentGeneralDiscussionBinding.root
+        loadingView = rootView.findViewById(R.id.loading_view)
         return rootView
     }
 

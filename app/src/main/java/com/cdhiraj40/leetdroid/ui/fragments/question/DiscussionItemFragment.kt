@@ -17,11 +17,11 @@ import com.cdhiraj40.leetdroid.sharedViewModel.QuestionDiscussionSharedViewModel
 import com.cdhiraj40.leetdroid.utils.Constant
 import com.cdhiraj40.leetdroid.utils.JsonUtils
 import com.google.gson.Gson
+import io.noties.markwon.Markwon
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.apache.commons.text.StringEscapeUtils
-import ru.noties.markwon.Markwon
 import java.io.IOException
 
 class DiscussionItemFragment : Fragment() {
